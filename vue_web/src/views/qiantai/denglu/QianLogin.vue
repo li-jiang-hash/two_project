@@ -237,7 +237,7 @@
                         that.pobj={};
 
                     }else if(resp.data.code===4000){
-                        //该手机号号以注册
+                        //该手机号以注册
                         that.$message.error(resp.data.msg);
                         that.changetab(1);
                         that.pobj={};
