@@ -12,7 +12,7 @@ public class Result<T> {
     /**
      * 状态码
      */
-    private Integer code=200;
+    private Integer code=2000;
     /**
      * 信息
      */
@@ -24,7 +24,7 @@ public class Result<T> {
     private T data;
 
     public Result(T t) {
-        this.code=200;
+        this.code=2000;
         this.msg="操作成功！！";
         this.data = t;
     }

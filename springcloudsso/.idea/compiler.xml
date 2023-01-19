@@ -18,6 +18,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="springcloudssodemo" options="" />
       <module name="sys-comm" options="-parameters" />
       <module name="sys-gateway" options="-parameters" />
       <module name="sys-order" options="-parameters" />

@@ -2,6 +2,8 @@ package com.yyl.entity;
 
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,7 +25,8 @@ public class ERole implements Serializable {
     /**
      * 角色id
      */
-    private String id;
+    @TableId(type = IdType.AUTO)
+    private Integer id;
 
     /**
      * 角色名称
@@ -44,7 +47,7 @@ public class ERole implements Serializable {
      * 逻辑删除 0 未删除 1 删除
      */
     @TableLogic // 逻辑删除
-    private Integer isDeleted;
+    private Integer isDeleted=0;
 
 
 }

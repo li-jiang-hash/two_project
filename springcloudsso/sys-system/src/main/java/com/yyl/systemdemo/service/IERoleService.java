@@ -1,7 +1,11 @@
 package com.yyl.systemdemo.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yyl.entity.ERole;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yyl.util.PageInfo;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -13,4 +17,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IERoleService extends IService<ERole> {
 
+    Page getPageData(PageInfo page, ERole role);
+
+    Map<String,Object> getPermissionData(Integer id);
 }

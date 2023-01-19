@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="sys-comm" />
+        <module name="sys-product1" />
+        <module name="sys-pay" />
+        <module name="sys-order" />
+        <module name="sys-gateway" />
+        <module name="sys-system" />
+        <module name="sys-sso" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="springcloudssodemo" target="1.8" />
+      <module name="sys-comm" target="1.8" />
+      <module name="sys-gateway" target="1.8" />
+      <module name="sys-order" target="1.8" />
+      <module name="sys-pay" target="1.8" />
+      <module name="sys-product1" target="1.8" />
+      <module name="sys-service" target="1.8" />
+      <module name="sys-sso" target="1.8" />
+      <module name="sys-system" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="sys-comm" options="-parameters" />
+      <module name="sys-gateway" options="-parameters" />
+      <module name="sys-order" options="-parameters" />
+      <module name="sys-pay" options="-parameters" />
+      <module name="sys-product1" options="-parameters" />
+      <module name="sys-sso" options="-parameters" />
+      <module name="sys-system" options="-parameters" />
+    </option>
+  </component>
+</project>

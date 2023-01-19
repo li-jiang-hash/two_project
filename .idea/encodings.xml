@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/springcloudsso/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloudsso/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloudsso/sys-comm/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloudsso/sys-comm/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloudsso/sys-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloudsso/sys-gateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloudsso/sys-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloudsso/sys-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloudsso/sys-service/sys-order/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloudsso/sys-service/sys-order/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloudsso/sys-service/sys-pay/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloudsso/sys-service/sys-pay/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloudsso/sys-service/sys-product1/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloudsso/sys-service/sys-product1/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloudsso/sys-sso/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloudsso/sys-sso/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloudsso/sys-system/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springcloudsso/sys-system/src/main/resources" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>
