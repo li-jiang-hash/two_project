@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/group_three.iml" filepath="$PROJECT_DIR$/.idea/group_three.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sys-comm/sys-comm.iml" filepath="$PROJECT_DIR$/sys-comm/sys-comm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sys-gateway/sys-gateway.iml" filepath="$PROJECT_DIR$/sys-gateway/sys-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sys-service/sys-order/sys-order.iml" filepath="$PROJECT_DIR$/sys-service/sys-order/sys-order.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sys-service/sys-pay/sys-pay.iml" filepath="$PROJECT_DIR$/sys-service/sys-pay/sys-pay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sys-service/sys-service.iml" filepath="$PROJECT_DIR$/sys-service/sys-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sys-sso/sys-sso.iml" filepath="$PROJECT_DIR$/sys-sso/sys-sso.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sys-system/sys-system.iml" filepath="$PROJECT_DIR$/sys-system/sys-system.iml" />
+    </modules>
+  </component>
+</project>
