@@ -33,5 +33,4 @@ public class TRoleMenu implements Serializable {
      */
     private Integer mid;
 
-
 }

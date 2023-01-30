@@ -1,5 +1,6 @@
 package com.aaa.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,9 +26,8 @@ public class EEmpInfo implements Serializable {
     /**
      * 管理员id
      */
-    @TableId
-    private String id;
-
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
     /**
      * 管理员名字
      */
@@ -87,6 +87,7 @@ public class EEmpInfo implements Serializable {
      * 逻辑删除 1（true）已删除， 0（false）未删除
      */
     private Integer isDeleted;
+
 
 
 }

@@ -7,7 +7,6 @@ import com.aaa.sso.service.MyCustomUserDetailsService;
 import com.aaa.util.Result;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,28 +27,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-    @Autowired
+    @Resource
     private MyCustomUserDetailsService userDetailsService;
+
 
     @Resource
     private MultipleLoginAuthenticationSecurityConfig multipleLoginAuthenticationSecurityConfig;
 
+
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        auth.inMemoryAuthentication()
-//                .passwordEncoder(passwordEncoder)
-//                .withUser("syf")
-//                .password(passwordEncoder.encode("123456"))
-//                .roles("admin");
         //auth.userDetailsService(userDetailsService);
         auth.authenticationProvider(daoAuthenticationProvider());
         auth.authenticationProvider(customAuthenticationProvider2());
     }
+
     // 获取token的时候使用的
     private AuthenticationProvider daoAuthenticationProvider() {
         MyDaoAuthenricationProvider daoAuthenticationProvider = new MyDaoAuthenricationProvider();
@@ -67,41 +64,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return customAuthenticationProvider2;
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.formLogin()
-//                //.loginPage("/index1.html")
-//                //.usernameParameter("username").passwordParameter("password")//这一行默认是username和password，可以省略这一行
-//                .loginProcessingUrl("/login")
-//                .defaultSuccessUrl("/quit.jsp").permitAll()
-//                .and()
-//                .logout().logoutUrl("/logout").logoutSuccessUrl("/")
-//                .and().exceptionHandling().accessDeniedPage(("/403.html"))
-//                .and()
-//                .authorizeRequests().antMatchers("/","/my/info").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .csrf().disable();
-//    }
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.apply(multipleLoginAuthenticationSecurityConfig);
+        //
         http.formLogin()
-//                .loginProcessingUrl("/login")
-//                .successHandler(getSuccessHadler()).permitAll()
-//                .failureHandler(getFileureHandler())
+//               .successHandler(getSuccessHandler())
+//                .failureHandler(getFailtureHandler())
+//                .permitAll()
                 .and()
-                .logout().logoutUrl("/logout").logoutSuccessHandler(getLogOut()).permitAll()
-                .and().exceptionHandling().accessDeniedHandler(getAccessDefined())
+                .logout().logoutUrl("/logout").logoutSuccessHandler(getLogOut()).permitAll() // 退出路径是/logout 成功 index.html
+                //.and().authorizeRequests().antMatchers("/my/**").hasAnyRole("admin2","admin")//.hasAnyAuthority("admin","admin2")
+                .and().exceptionHandling().accessDeniedHandler(getAccessDefined())// 403异常的时候
                 .and()
                 .authorizeRequests().antMatchers("/","/login").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .cors()//允许跨域
+                .anyRequest().authenticated() // 除去上面的你写路径其他的路径全部需要认证
+                .and().cors()// 允许跨域
                 .and()
                 .csrf().disable();
+
     }
 
     /**
@@ -109,83 +92,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * @return
      */
     private AccessDeniedHandler getAccessDefined() {
-        return ((request, response, accessDeniedException) -> {
+        return (httpServletRequest, response, e) -> {
             Result result = new Result(403,"没有权限",null);
             printJsonData(response,result);
-        });
+        };
     }
 
-    public void printJsonData(HttpServletResponse response,Result result) throws IOException {
-            response.setContentType("application/json;charset=utf8");
-            PrintWriter writer = response.getWriter();
-            ObjectMapper mapper = new ObjectMapper();
-            String s = mapper.writeValueAsString(result);
-
-            writer.print(s);
-            writer.flush();
-            writer.close();
-
-    }
     /**
-     * 退出之后的handler
+     * 退出成功之后的handler
      * @return
      */
+
     private LogoutSuccessHandler getLogOut() {
-        return ((request, response, authentication) -> {
-            Result result = new Result(200, "退出成功", null);
+        return (httpServletRequest, response, authentication) -> {
+            Result result = new Result(200,"退出成功",null);
             printJsonData(response,result);
-        });
+        };
     }
 
-//    /**
-//     * 认证成功
-//     * @return
-//     */
-//    public AuthenticationSuccessHandler getSuccessHadler(){
-//        return (request, response, authentication) -> {
-//
-//            //http://localhost:7200/oauth/token?username=ls&password=123456&client_id=client_id&client_secret=secret&grant_type=password
-//            String url="http://localhost:7200/oauth/token";
-//            HashMap<String, String> map = new HashMap<>();
-//            map.put("client_id","client_id");
-//            map.put("client_secret","secret");
-//            map.put("grant_type","password");
-//            String username = request.getParameter("username");
-//            String password = request.getParameter("password");
-//            map.put("username",username);
-//            map.put("password",password);
-//
-//            Response res = OkHttpClientUtil.getInstance().postData(url, map);
-//            System.out.println("res = " + res);
-//            String s = Objects.requireNonNull(res.body().string());
-//            System.out.println("JSON"+s);
-//            Map<String, Object> map1 = new HashMap<>();
-//            try {
-//                map1=json2map(s);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            String o = map1.get("access_token").toString();
-//            System.out.println("access_token = " + o);
-//            String type = map1.get("token_type").toString();
-//            String token=type+" "+o;
-//            System.out.println("token = " + token);
-//            Result result = new Result(token);
-//           printJsonData(response,result);
-//        };
-//    }
 
-//    /**
-//     * 认证失败
-//     * @return
-//     */
-//    private AuthenticationFailureHandler getFileureHandler(){
-//        return (request, response, authentication) -> {
-//            Result result = new Result(5000,"认证失败",null);
-//            printJsonData(response,result);
-//        };
-//    }
 
+    public  void printJsonData(HttpServletResponse response,Result result) throws IOException {
+        // 返回认证成功.
+        response.setContentType("application/json;charset=utf8");
+        PrintWriter writer = response.getWriter();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String s1 = objectMapper.writeValueAsString(result);
+        writer.print(s1);
+        writer.flush();
+        writer.close();
+    }
 
 
     @Bean
@@ -194,10 +131,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 认证管理器
+     * 认证管理器 注入到spring容器里面
      * @return
      * @throws Exception
      */
+
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         List<AuthenticationProvider> providers = new ArrayList<>();
@@ -207,8 +145,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new ProviderManager(providers);
     }
 
-    public static <T> Map<String, Object> json2map(String jsonString) throws Exception {
+    public Map<String, Object> json2map(String jsonString) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        return mapper.readValue(jsonString, Map.class);    }
+        return mapper.readValue(jsonString, Map.class);
+    }
 }

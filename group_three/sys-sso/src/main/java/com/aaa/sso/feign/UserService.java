@@ -1,20 +1,21 @@
 package com.aaa.sso.feign;
 
-import com.aaa.entity.EEmpInfo;
-import com.aaa.entity.UUserInfo;
+import com.aaa.entity.TRole;
+import com.aaa.entity.TUser;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 // 调用的是哪一个微服务
-@FeignClient("sys-system")
+@FeignClient("syssystem")
 public interface UserService {
-    //根据用户名获取UUser
-    @PostMapping("sys-sso/getUserByName/{username}")
-    UUserInfo getByName(@PathVariable String username);
-    //根据用户手机号查询用户信息
-    @PostMapping("sys-sso/getUserByPhone/{telephone}")
-    UUserInfo getByPhone(@PathVariable String telephone);
-    @PostMapping("e-emp-info/getEmpByPhone/{telephone}")
-    EEmpInfo getEmpByPhone(@PathVariable String telephone);
+
+    // 根据用户名 获取TUser
+    @GetMapping("t-user/getUserByName/{username}")
+    TUser getByUserName(@PathVariable String username);
+
+    @GetMapping("t-role/{uid}")
+    List<TRole> findByUid(@PathVariable Integer uid);
 }

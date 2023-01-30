@@ -81,7 +81,7 @@ public class MultipleLoginAuthenticationSecurityConfig extends SecurityConfigure
 
             // java 发出一个post请求
             //
-            String url="http://localhost:7600/oauth/token";
+            String url="http://localhost:7200/oauth/token";
             Map<String, String> map = new HashMap<>();
             map.put("client_id","client_id");
             map.put("client_secret","secret");

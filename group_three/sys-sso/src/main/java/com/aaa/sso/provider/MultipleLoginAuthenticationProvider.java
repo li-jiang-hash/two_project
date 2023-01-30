@@ -45,7 +45,6 @@ public class MultipleLoginAuthenticationProvider  implements AuthenticationProvi
         Map<String, String> details = (Map<String, String>) authenticationToken.getDetails();
         // 获取自定义的loginType参数
         String loginType = details.get("loginType");
-        System.out.println("===="+loginType);
         // 使用自定义的loginType在userDetailServceice中查询不同的数据库
         UserDetails user = this.myCustomUserDetailsService.loadUserByUsernameAndType(authentication.getName(),loginType);
         if (user == null) {

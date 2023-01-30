@@ -2,13 +2,10 @@ package com.aaa.group_three.controller;
 
 import com.aaa.entity.ERole;
 import com.aaa.group_three.service.IERoleService;
+import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -24,23 +21,54 @@ public class ERoleController {
     @Resource
     private IERoleService roleService;
 
-    public ERoleController() {
+    // 查询所有的role
+    @PostMapping
+    public Result getAllRole(PageInfo page, ERole role){
+
+
+        Page page1 = roleService.getPageData(page, role);
+        return new Result(page1);
     }
 
-    @PostMapping
-    public Result getAllRole(Integer currentPage, Integer pageSize, ERole role) {
-        System.out.println("role的值：" + role);
-        Page page = new Page((long)currentPage, (long)pageSize);
-        QueryWrapper queryWrapper = new QueryWrapper();
-        if (StringUtils.isNotBlank(role.getStatus())) {
-            queryWrapper.eq("status", role.getStatus());
-        }
 
-        if (StringUtils.isNotBlank(role.getRoleName())) {
-            queryWrapper.like("role_name", role.getRoleName());
-        }
+    /**
+     * 添加角色信息
+     * @param role
+     * @return
+     */
+    @PostMapping("addRole")
+    public Result addRole(ERole role){
+        //saveOrUpdate  添加或修改
+        //role  对象有id的值的时候 修改
+        //id没有值的时候 添加
+        return new Result(roleService.saveOrUpdate(role));
+    }
 
-        Page page1 = (Page)this.roleService.page(page, queryWrapper);
-        return new Result(page1);
+    /**
+     * 修改角色信息
+     */
+    @PostMapping("upStatus/{id}/{status}")
+    public Result updRole(@PathVariable Integer id, @PathVariable String status){
+        ERole role=new ERole();
+        role.setStatus(status);
+        role.setId(id);
+        return new Result(roleService.updateById(role));
+    }
+
+
+    /**
+     * 删除角色信息
+     */
+    @DeleteMapping("{id}")
+    public Result delRole(@PathVariable Integer id){
+        return new Result(roleService.removeById(id));
+    }
+
+    /**
+     * 权限分配的时候 使用的数据
+     */
+    @PostMapping("selectPermission/{id}")
+    public Result selPermission(@PathVariable Integer id){
+        return new Result(roleService.getPermissionData(id));
     }
 }

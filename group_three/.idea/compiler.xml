@@ -8,31 +8,20 @@
         <outputRelativeToContentRoot value="true" />
         <module name="sys-pay" />
         <module name="sys-order" />
-        <module name="sys-gateway" />
         <module name="sys-comm" />
+        <module name="sys-gateway" />
         <module name="sys-system" />
         <module name="sys-sso" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="group_three" target="1.8" />
-      <module name="sys-comm" target="1.8" />
-      <module name="sys-gateway" target="1.8" />
-      <module name="sys-order" target="1.8" />
-      <module name="sys-pay" target="1.8" />
-      <module name="sys-service" target="1.8" />
-      <module name="sys-sso" target="1.8" />
-      <module name="sys-system" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="group_three" options="" />
       <module name="sys-comm" options="-parameters" />
       <module name="sys-gateway" options="-parameters" />
       <module name="sys-order" options="-parameters" />
       <module name="sys-pay" options="-parameters" />
-      <module name="sys-service" options="" />
+      <module name="sys-service" options="-parameters" />
       <module name="sys-sso" options="-parameters" />
       <module name="sys-system" options="-parameters" />
     </option>
