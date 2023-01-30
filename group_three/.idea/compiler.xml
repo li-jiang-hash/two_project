@@ -31,6 +31,8 @@
       <module name="sys-gateway" options="-parameters" />
       <module name="sys-order" options="-parameters" />
       <module name="sys-pay" options="-parameters" />
+
+      <module name="sys-service" options="-parameters" />
       <module name="sys-sso" options="-parameters" />
       <module name="sys-system" options="-parameters" />
     </option>

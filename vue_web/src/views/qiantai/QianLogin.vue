@@ -26,7 +26,7 @@
                         <form action="" @submit="regSubmit">
                             <input type="text" v-model="pobj.mobile" placeholder="请输入手机号">
                             <div class="phone_yzm">
-                                <input type="text" name="code" placeholder="请输入手机验证码" class="phone" v-model="pobj.code" maxlength="4">
+                                <input type="text" name="code" placeholder="请输入手机验证码" class="phone" v-model="pobj.code" maxlength="6">
                                 <button class="yzm_btn" type="button" @click="getCode">{{txt}}</button>
                             </div>
                             <input type="password" v-model="pobj.qianPassword" placeholder="6-20位密码，可用数字/字母/符号组合">
@@ -114,7 +114,7 @@
             //验证码
             getCode () {
                 var that=this;
-                if (!/^1[3|4|5|8|7][0-9]\d{8}$/.test(this.pobj.mobile)) {
+                if (!/^1[3|4|5|8|7|9|6][0-9]\d{8}$/.test(this.pobj.mobile)) {
                     this.$message.error("请输入正确手机号码");
                     return false;
                 }
@@ -130,6 +130,7 @@
             },
             //验证码按钮倒计时
             timeOut () {
+                console.log(this.txt)
                 this.disabled = true;
                 let num = 60;
                 this.txt = num;
@@ -160,7 +161,7 @@
                 }
                 this.errTip1 = '';
                 this.errTip2 = '';
-                if (!(/^1[3|4|5|8|7][0-9]\d{4,8}$/.test(this.obj.mobile.trim())) && !(/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/).test(this.obj.mobile.trim())) {
+                if (!(/^1[3|4|5|8|7|9][0-9]\d{4,8}$/.test(this.obj.mobile.trim())) && !(/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/).test(this.obj.mobile.trim())) {
                     this.errTip1 = '请输入正确手机号或者邮箱';
                     return false;
                 }
@@ -193,7 +194,7 @@
                 if (this.subState) {
                     return false;
                 }
-                if (!(/^1[3|4|5|8|7][0-9]\d{4,8}$/.test(this.pobj.mobile.trim())) || this.pobj.mobile.trim().length !== 11) {
+                if (!(/^1[3|4|5|8|7|9][0-9]\d{4,8}$/.test(this.pobj.mobile.trim())) || this.pobj.mobile.trim().length !== 11) {
                     this.$message.error("请输入正确手机");
                     return false;
                 }

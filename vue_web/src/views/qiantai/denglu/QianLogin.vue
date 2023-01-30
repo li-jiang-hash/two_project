@@ -131,7 +131,7 @@
                          that.timeOut();
                         //console.log(result)
                     }else {
-                        this.$message.error("验证码获取失败");
+                        alert("验证码获取失败");
                     }
                 })
             },
