@@ -94,10 +94,9 @@ public class RegisterController {
             System.out.println("random = " + code);
             boolean isSend = com.yyl.util.Send.SendCode(AccessKey_ID, AccessKey_Secret, templateCode, phone, code);
             System.out.println("是否发送成功 : " + isSend);
-            System.out.println("templateCode = " + templateCode+isSend);
             if (isSend) {
                 redisTemplate.opsForValue().set(phone, code, 300L, TimeUnit.SECONDS);
-                System.out.println("发送成功" + code);
+                System.out.println("发送成功：" + code);
                 return new Result(code);
             } else {
                 return new Result();

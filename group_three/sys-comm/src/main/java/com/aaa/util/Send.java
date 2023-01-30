@@ -42,7 +42,7 @@ public class Send {
         try {
             // 复制代码运行请自行打印 API 的返回值
             SendSmsResponse sendSmsResponse = client.sendSmsWithOptions(sendSmsRequest, runtime);
-            System.out.println("123"+sendSmsResponse.getStatusCode());
+            System.out.println("工具类状态码："+sendSmsResponse.getStatusCode());
             return sendSmsResponse.getStatusCode() == 200;
         } catch (TeaException error) {
             // 如有需要，请打印 error
