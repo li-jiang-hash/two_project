@@ -126,7 +126,7 @@
 
                 //通过手机号获取验证码
                 this.$http.get('/user/noteByPhone/'+this.pobj.mobile).then(function (result) {
-                    if (result.data.code===2000){
+                    if (result.data.code===200){
                          that.shureCode=result.data.data;
                          that.timeOut();
                         //console.log(result)
@@ -179,7 +179,7 @@
                 var that=this;
                 this.subState = true;
                 this.$http.post("/sso/login",this.obj).then(function (resp) {
-                    if (resp.data.code===2000){
+                    if (resp.data.code===200){
                         //console.log(resp.data.result)
                         that.subState = false;
                         that.$message.success(resp.data.msg);
@@ -231,12 +231,12 @@
                 var that=this;
 
                 this.$http.post(`/user/signInsert/${this.pobj.mobile}/${this.pobj.qianPassword}`).then(function (resp) {
-                    if (resp.data.code===2000){
+                    if (resp.data.code===200){
                         that.$message.success(resp.data.msg);
                         that.changetab(1);
                         that.pobj={};
 
-                    }else if(resp.data.code===4000){
+                    }else if(resp.data.code===400){
                         //该手机号以注册
                         that.$message.error(resp.data.msg);
                         that.changetab(1);
