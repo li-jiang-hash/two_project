@@ -15,62 +15,6 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
-<!--    <dependencies>-->
-<!--        <dependency>-->
-<!--            <groupId>com.aaa</groupId>-->
-<!--            <artifactId>sys-comm</artifactId>-->
-<!--            <version>2023.1</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-web</artifactId>-->
-<!--        </dependency>-->
-
-
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
-<!--        </dependency>-->
-<!--&lt;!&ndash;        不懂的东西&ndash;&gt;-->
-<!--&lt;!&ndash;        <dependency>&ndash;&gt;-->
-<!--&lt;!&ndash;            <groupId>com.aaa</groupId>&ndash;&gt;-->
-<!--&lt;!&ndash;            <artifactId>group_three</artifactId>&ndash;&gt;-->
-<!--&lt;!&ndash;            <version>2023.1</version>&ndash;&gt;-->
-<!--&lt;!&ndash;            <scope>compile</scope>&ndash;&gt;-->
-<!--&lt;!&ndash;        </dependency>&ndash;&gt;-->
-<!--        &lt;!&ndash; &ndash;&gt;-->
-<!--        &lt;!&ndash;短信验证码&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.aliyun</groupId>-->
-<!--            <artifactId>aliyun-java-sdk-core</artifactId>-->
-<!--            <version>4.0.3</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash;加入redis连接&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
-<!--        </dependency>-->
-
-<!--        &lt;!&ndash;spring cache连接池依赖包&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.commons</groupId>-->
-<!--            <artifactId>commons-pool2</artifactId>-->
-<!--            <version>2.6.2</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash;Spring-Boot-Test&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-test</artifactId>-->
-<!--                        <scope>test</scope>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash;        <dependency>&ndash;&gt;-->
-<!--        &lt;!&ndash;            <groupId>commons-lang</groupId>&ndash;&gt;-->
-<!--        &lt;!&ndash;            <artifactId>commons-lang</artifactId>&ndash;&gt;-->
-<!--        &lt;!&ndash;            <version>2.6</version>&ndash;&gt;-->
-<!--        &lt;!&ndash;        </dependency>&ndash;&gt;-->
-<!--    </dependencies>-->
-
-
     <dependencies>
         <dependency>
             <groupId>com.aaa</groupId>

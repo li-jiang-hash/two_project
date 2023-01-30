@@ -5,6 +5,7 @@ import com.aaa.entity.UUserInfo;
 import com.aaa.group_three.service.IUUserInfoService;
 import com.aaa.util.PassTools;
 import com.aaa.util.Result;
+import com.aaa.util.Send;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,7 +93,7 @@ public class RegisterController {
             String code = Integer.toString((int) ((Math.random() * 9 + 1) * 100000));
             System.out.println("phone = " + phone);
             System.out.println("random = " + code);
-            boolean isSend = com.yyl.util.Send.SendCode(AccessKey_ID, AccessKey_Secret, templateCode, phone, code);
+            boolean isSend = Send.SendCode(AccessKey_ID, AccessKey_Secret, templateCode, phone, code);
             System.out.println("是否发送成功 : " + isSend);
             if (isSend) {
                 redisTemplate.opsForValue().set(phone, code, 300L, TimeUnit.SECONDS);

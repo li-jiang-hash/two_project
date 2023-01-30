@@ -1,4 +1,4 @@
-package com.yyl.util;
+package com.aaa.util;
 
 
 import com.aliyun.dysmsapi20170525.models.SendSmsResponse;
