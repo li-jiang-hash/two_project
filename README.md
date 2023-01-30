@@ -7,11 +7,13 @@
 软件架构说明
 
 
-#### 安装教程
+#### 前端安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1. npm i / npm install / yarn
+
+   运行教程
+
+2. npm run serve
 
 #### 使用说明
 
