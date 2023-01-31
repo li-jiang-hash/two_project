@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b216fc80-ac4d-4132-8e48-4cb410bc1639" name="变更" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sys-gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sys-gateway/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sys-gateway/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sys-gateway/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sys-sso/src/main/java/com/aaa/sso/service/MyCustomUserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/sys-sso/src/main/java/com/aaa/sso/service/MyCustomUserDetailsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sys-sso/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sys-sso/src/main/resources/bootstrap.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sys-sso/target/classes/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sys-sso/target/classes/bootstrap.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sys-system/src/main/java/com/aaa/group_three/controller/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/sys-system/src/main/java/com/aaa/group_three/controller/RegisterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sys-system/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sys-system/src/main/resources/bootstrap.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sys-system/target/classes/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sys-system/target/classes/bootstrap.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,7 +184,7 @@
       <workItem from="1675037718581" duration="3002000" />
       <workItem from="1675047058191" duration="1565000" />
       <workItem from="1675049787134" duration="5248000" />
-      <workItem from="1675162789905" duration="4213000" />
+      <workItem from="1675162789905" duration="4714000" />
     </task>
     <servers />
   </component>
