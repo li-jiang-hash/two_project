@@ -6,7 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="1fa6708d-cb85-47ca-9ebc-705049e82eba" name="变更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sys-system/src/main/java/com/aaa/group_three/controller/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/sys-system/src/main/java/com/aaa/group_three/controller/RegisterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys-gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sys-gateway/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys-gateway/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sys-gateway/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys-sso/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sys-sso/src/main/resources/bootstrap.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys-sso/target/classes/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sys-sso/target/classes/bootstrap.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys-system/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sys-system/src/main/resources/bootstrap.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys-system/target/classes/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sys-system/target/classes/bootstrap.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tui_school/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../tui_school/package-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,10 +136,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.SsoApplication" />
+        <item itemvalue="Spring Boot.GateWayApplication" />
         <item itemvalue="Spring Boot.SystemApplication" />
         <item itemvalue="应用程序.com.yyl.util.Send" />
-        <item itemvalue="Spring Boot.GateWayApplication" />
-        <item itemvalue="Spring Boot.SsoApplication" />
       </list>
     </recent_temporary>
   </component>
