@@ -129,7 +129,7 @@
                     if (result.data.code===2000){
                          that.shureCode=result.data.data;
                          that.timeOut();
-                        //console.log(result)
+                        console.log(result)
                     }else {
                         this.$message.error("验证码获取失败");
                     }
