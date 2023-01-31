@@ -105,8 +105,8 @@ public class GeneratorTest {
         mpg.setDataSource(dsc);
         // 包配置
         PackageConfig pc = new PackageConfig();
-        //pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.yyl.systemdemo");
+        pc.setModuleName(scanner("sys-sso"));
+        pc.setParent("com.aaa.group_three");
         //pc.setXml("");
         pc.setEntity("entity");//实体的包
         pc.setMapper("dao");//dao的包
