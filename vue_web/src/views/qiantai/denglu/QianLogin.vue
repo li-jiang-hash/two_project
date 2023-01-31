@@ -125,10 +125,10 @@
                 }
 
                 //通过手机号获取验证码
-                this.$http.get('/user/noteByPhone/'+this.pobj.mobile).then(function (result) {
+                this.$http.get('/syssystem/user/noteByPhone/'+this.pobj.mobile).then(function (result) {
                     if (result.data.code===2000){
                          that.shureCode=result.data.data;
-                         that.timeOut();
+                        //  that.timeOut();
                         console.log(result)
                     }else {
                         this.$message.error("验证码获取失败");
@@ -230,7 +230,7 @@
 
                 var that=this;
 
-                this.$http.post(`/user/signInsert/${this.pobj.mobile}/${this.pobj.qianPassword}`).then(function (resp) {
+                this.$http.post(`/syssystem/user/signInsert/${this.pobj.mobile}/${this.pobj.qianPassword}`).then(function (resp) {
                     if (resp.data.code===2000){
                         that.$message.success(resp.data.msg);
                         that.changetab(1);

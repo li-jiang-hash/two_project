@@ -26,7 +26,6 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 @RequestMapping({"/user"})
-@CrossOrigin
 public class RegisterController {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
