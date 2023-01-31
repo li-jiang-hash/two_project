@@ -30,7 +30,7 @@
                         <form action="" @submit="regSubmit">
                             <input type="text" v-model="pobj.mobile" placeholder="请输入手机号">
                             <div class="phone_yzm">
-                                <input type="text" name="code" placeholder="请输入手机验证码" class="phone" v-model="pobj.code" maxlength="4">
+                                <input type="text" name="code" placeholder="请输入手机验证码" class="phone" v-model="pobj.code" maxlength="6">
                                 <button class="yzm_btn" type="button" :disabled="disabled" @click="getCode">{{txt}}</button>
                             </div>
                             <input type="password" v-model="pobj.qianPassword" placeholder="6-20位密码，可用数字/字母/符号组合">
@@ -206,7 +206,7 @@
                     this.$message.error("请输入正确手机");
                     return false;
                 }
-                if (!this.pobj.code || this.pobj.code.length !== 4) {
+                if (!this.pobj.code || this.pobj.code.length !== 6) {
                     this.$message.error("请输入正确的手机验证码");
                     return false;
                 }

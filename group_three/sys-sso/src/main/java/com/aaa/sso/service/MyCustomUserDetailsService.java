@@ -41,9 +41,10 @@ public class MyCustomUserDetailsService implements CustomUserDetailService{
     private UserDetails loadUserByUsername1(String username) {
         QueryWrapper<EEmpInfo> queryWrapper = new QueryWrapper();
         queryWrapper.eq("telephone",username);
-        System.out.println("数据库条数:"+ieEmpInfoService.list(queryWrapper).size());
-        if(ieEmpInfoService.list(queryWrapper).size() != 1){
-            System.out.println("用户名不对");
+        if(ieEmpInfoService.list(queryWrapper).size() > 1){
+            System.out.println("用户名异常");
+            throw  new UsernameNotFoundException("用户名异常");
+        } else if (ieEmpInfoService.list(queryWrapper).size() == 0) {
             throw  new UsernameNotFoundException("用户名不对");
         }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -52,13 +53,15 @@ public class MyCustomUserDetailsService implements CustomUserDetailService{
     private UserDetails loadUserByUsername2(String username) {
         QueryWrapper<UUserInfo> queryWrapper = new QueryWrapper();
         queryWrapper.eq("telephone",username);
-        System.out.println("数据库条数:"+iuUserInfoService.list(queryWrapper).size());
-        if(iuUserInfoService.list(queryWrapper).size() != 1){
-            System.out.println("用户名不对");
+        if(iuUserInfoService.list(queryWrapper).size() > 1){
+            System.out.println("用户名异常");
+            throw  new UsernameNotFoundException("用户名异常");
+        } else if (iuUserInfoService.list(queryWrapper).size() == 0) {
             throw  new UsernameNotFoundException("用户名不对");
         }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return new User(username,passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_user"));
+        String password="";
+        return new User(username,passwordEncoder.encode(password), AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_user"));
     }
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {

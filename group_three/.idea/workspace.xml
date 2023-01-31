@@ -5,20 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b216fc80-ac4d-4132-8e48-4cb410bc1639" name="变更" comment="">
-      <change afterPath="$PROJECT_DIR$/sys-sso/src/main/java/com/aaa/sso/service/IEEmpInfoService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sys-sso/src/main/java/com/aaa/sso/service/impl/EEmpInfoServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sys-sso/src/main/resources/mapper/EEmpInfoMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sys-comm/src/main/java/com/aaa/entity/EEmpInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/sys-comm/src/main/java/com/aaa/entity/EEmpInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sys-sso/src/main/java/com/aaa/sso/SsoApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/sys-sso/src/main/java/com/aaa/sso/SsoApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys-gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sys-gateway/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys-gateway/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sys-gateway/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sys-sso/src/main/java/com/aaa/sso/service/MyCustomUserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/sys-sso/src/main/java/com/aaa/sso/service/MyCustomUserDetailsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sys-system/src/main/java/com/aaa/group_three/controller/EEmpInfoController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sys-system/src/main/java/com/aaa/group_three/dao/EEmpInfoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/sys-sso/src/main/java/com/aaa/sso/dao/EEmpInfoMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sys-system/src/main/java/com/aaa/group_three/service/IEEmpInfoService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sys-system/src/main/java/com/aaa/group_three/service/impl/EEmpInfoServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sys-system/src/main/java/com/aaa/group_three/test/GeneratorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/sys-system/src/main/java/com/aaa/group_three/test/GeneratorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys-sso/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sys-sso/src/main/resources/bootstrap.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys-sso/target/classes/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sys-sso/target/classes/bootstrap.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys-system/src/main/java/com/aaa/group_three/controller/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/sys-system/src/main/java/com/aaa/group_three/controller/RegisterController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sys-system/src/main/resources/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sys-system/src/main/resources/bootstrap.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tui_school/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../tui_school/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sys-system/target/classes/bootstrap.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sys-system/target/classes/bootstrap.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +60,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "spring.configuration.checksum": "bd8e776babd10ee77fca7f7f700475ae"
+    "spring.configuration.checksum": "2c1be1c69487bffa53d948efdd3011ae"
   }
 }]]></component>
   <component name="RebelAgentSelection">
@@ -172,18 +167,18 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="应用程序.GeneratorTest" />
-        <item itemvalue="Spring Boot.SsoApplication" />
         <item itemvalue="Spring Boot.SystemApplication" />
-        <item itemvalue="JUnit.GeneratorTest.K" />
+        <item itemvalue="Spring Boot.SsoApplication" />
         <item itemvalue="Spring Boot.GateWayApplication" />
+        <item itemvalue="应用程序.GeneratorTest" />
+        <item itemvalue="JUnit.GeneratorTest.K" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
-      <changelist id="1fa6708d-cb85-47ca-9ebc-705049e82eba" name="变更" comment="" />
+      <changelist id="b216fc80-ac4d-4132-8e48-4cb410bc1639" name="变更" comment="" />
       <created>1673067514023</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -197,6 +192,7 @@
       <workItem from="1675037718581" duration="3002000" />
       <workItem from="1675047058191" duration="1565000" />
       <workItem from="1675049787134" duration="5248000" />
+      <workItem from="1675162789905" duration="4213000" />
     </task>
     <servers />
   </component>
