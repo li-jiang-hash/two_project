@@ -2,9 +2,11 @@ package com.aaa.sso.service;
 
 import com.aaa.entity.EEmpInfo;
 import com.aaa.entity.UUserInfo;
+import com.aaa.sso.feign.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,9 +15,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class MyCustomUserDetailsService implements CustomUserDetailService{
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
     @Autowired
     private IEEmpInfoService ieEmpInfoService;
     @Autowired
@@ -51,16 +57,20 @@ public class MyCustomUserDetailsService implements CustomUserDetailService{
         return new User(username,passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_emp,ROLE_admin"));
     }
     private UserDetails loadUserByUsername2(String username) {
+
         QueryWrapper<UUserInfo> queryWrapper = new QueryWrapper();
         queryWrapper.eq("telephone",username);
-        if(iuUserInfoService.list(queryWrapper).size() > 1){
+        List<UUserInfo> list = iuUserInfoService.list(queryWrapper);
+        System.out.println("list = " + list);
+        System.out.println("++++++++++++++++++++++++++++"+((list.get(0).getPassword() == null) ? "" : list.get(0).getPassword()));
+        if(list.size() > 1){
             System.out.println("用户名异常");
             throw  new UsernameNotFoundException("用户名异常");
         } else if (iuUserInfoService.list(queryWrapper).size() == 0) {
             throw  new UsernameNotFoundException("用户名不对");
         }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String password="";
+        String password= list.get(0).getPassword() == null ? "" : list.get(0).getPassword();
         return new User(username,passwordEncoder.encode(password), AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_user"));
     }
     @Override

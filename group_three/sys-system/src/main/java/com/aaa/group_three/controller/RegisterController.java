@@ -39,8 +39,8 @@ public class RegisterController {
     @PostMapping({"/signInsert/{phone}/{password}"})
     public Result Register(@PathVariable String phone, @PathVariable String password) {
         Map<String, String> Key = PassTools.makePasswordSalt(password);
-        String pass = (String) Key.get("password");
-        String salt = (String) Key.get("salt");
+        String pass = Key.get("password");
+        String salt = Key.get("salt");
         QueryWrapper<UUserInfo> queryWrapper = new QueryWrapper();
         queryWrapper.eq("telephone", phone);
         int list = iuUserInfoService.list(queryWrapper).size();
