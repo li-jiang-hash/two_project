@@ -189,7 +189,13 @@
                         // sessionStorage.setItem("isTeacher", resp.data.result.isTeacher);
                         // sessionStorage.setItem("mobile", resp.data.result.mobile);
                         // sessionStorage.setItem("memberId", resp.data.result.memberId);
-                        that.$router.push("/");
+                        console.log(that.obj.loginType==="USER_PHONE")
+                        if(that.obj.loginType==="USER_PHONE"){
+                            that.$router.push("/")
+                        }else if(that.obj.loginType==="EMP_PHONE"){
+                            // that.$router.replace("http:///localhost:8085/")
+                            window.location.href="http:///localhost:8085/dashboard"
+                        }
                     }else {
                         that.subState = false;
                         that.$message.error(resp.data.msg);
