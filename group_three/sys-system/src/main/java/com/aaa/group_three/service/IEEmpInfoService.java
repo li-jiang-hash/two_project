@@ -1,4 +1,4 @@
-package com.aaa.sso.service;
+package com.aaa.group_three.service;
 
 import com.aaa.entity.EEmpInfo;
 import com.baomidou.mybatisplus.extension.service.IService;

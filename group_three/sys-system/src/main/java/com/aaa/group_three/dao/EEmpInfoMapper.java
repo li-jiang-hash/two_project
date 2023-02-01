@@ -1,4 +1,4 @@
-package com.aaa.sso.dao;
+package com.aaa.group_three.dao;
 
 import com.aaa.entity.EEmpInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

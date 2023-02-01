@@ -20,7 +20,7 @@
                             <div class="error_msg">{{errTip2}}</div>
                             <div id="changge">
                                 <el-radio v-model="obj.loginType" label="USER_PHONE">用户平台</el-radio>
-                                <el-radio v-model="obj.loginType" label="BUSINESS_PHONE">商家平台</el-radio>
+                                <el-radio v-model="obj.loginType" label="EMP_PHONE">商家平台</el-radio>
                             </div>
                             <input type="submit" v-if="subState" disabled="disabled" value="登录中···" class="btn" />
                             <input type="submit" v-else value="登录" class="btn" />
@@ -71,12 +71,14 @@
 </template>
 <script>
     import YButton from '@/components/common/CodeButton'
+    import qs from "qs"
     export default {
         components: {
             // YHeader,
             YButton
         },
         data () {
+            
             return {
                 /*验证码的获取*/
                 txt: '获取验证码',
@@ -178,7 +180,7 @@
 
                 var that=this;
                 this.subState = true;
-                this.$http.post("/sso/login",this.obj).then(function (resp) {
+                this.$http.post("/syssso/login",qs.stringify(this.obj)).then(function (resp) {
                     if (resp.data.code===2000){
                         //console.log(resp.data.result)
                         that.subState = false;

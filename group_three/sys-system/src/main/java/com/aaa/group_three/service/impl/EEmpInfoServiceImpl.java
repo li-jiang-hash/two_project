@@ -1,8 +1,8 @@
-package com.aaa.sso.service.impl;
+package com.aaa.group_three.service.impl;
 
 import com.aaa.entity.EEmpInfo;
-import com.aaa.sso.dao.EEmpInfoMapper;
-import com.aaa.sso.service.IEEmpInfoService;
+import com.aaa.group_three.dao.EEmpInfoMapper;
+import com.aaa.group_three.service.IEEmpInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
