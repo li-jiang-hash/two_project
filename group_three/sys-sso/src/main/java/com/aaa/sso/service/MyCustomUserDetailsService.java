@@ -1,22 +1,32 @@
 package com.aaa.sso.service;
 
+import com.aaa.entity.EEmpInfo;
+import com.aaa.sso.feign.UserService;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class MyCustomUserDetailsService implements CustomUserDetailService{
+
+    @Resource
+    private UserService userService;
     @Override
     public UserDetails loadUserByUsernameAndType(String var1, String var2) throws UsernameNotFoundException {
-        //
-        System.out.println("var1 = " + var1);
-        System.out.println("var2 = " + var2);
+//        System.out.println("var1 = " + var1);
+//        System.out.println("var2 = " + var2);
         // EMP_PHONE -> emp
         // USER_PHONE ->user
         // BUSSINESS_PHONE->bussiness
+        System.out.println(var2);
         if(var2.equals("EMP_PHONE")){
             // 查询 emp表   123    123456
            return loadUserByUsername1(var1);
@@ -26,25 +36,35 @@ public class MyCustomUserDetailsService implements CustomUserDetailService{
         }
         return null;
     }
+    /**
+     * 查询的是e_emp_info
+     * @param var1
+     * @return
+     */
+    private UserDetails loadUserByUsername1(String var1) {
+        System.out.println("var1 = " + var1);
+        EEmpInfo emp = userService.getByUserName(var1);
+        if(emp==null){
+            System.out.println("用户名不对");
+            System.out.println(var1);
+            throw  new UsernameNotFoundException("用户名不对");
+        }
+        System.out.println("emp.getId() = " + emp.getId());
+        List<String> byUid = userService.getRoleList(emp.getId());
+        List<SimpleGrantedAuthority> collect = byUid.stream().map(s -> new SimpleGrantedAuthority(s)).collect(Collectors.toList());
+
+        return new User(var1,emp.getPassword(), collect);
+    }
 
     private UserDetails loadUserByUsername2(String var1) {
         if(!var1.equals("123")){
             System.out.println("用户名不对");
+            System.out.println(var1);
             throw  new UsernameNotFoundException("用户名不对");
         }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return new User(var1,passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_user"));
     }
-
-    private UserDetails loadUserByUsername1(String var1) {
-        if(!var1.equals("110")){
-            System.out.println("用户名不对");
-            throw  new UsernameNotFoundException("用户名不对");
-        }
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return new User(var1,passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_emp,ROLE_admin"));
-    }
-
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {

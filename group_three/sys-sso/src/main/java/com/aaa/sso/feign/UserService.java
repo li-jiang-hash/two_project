@@ -1,5 +1,6 @@
 package com.aaa.sso.feign;
 
+import com.aaa.entity.EEmpInfo;
 import com.aaa.entity.TRole;
 import com.aaa.entity.TUser;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -13,9 +14,9 @@ import java.util.List;
 public interface UserService {
 
     // 根据用户名 获取TUser
-    @GetMapping("t-user/getUserByName/{username}")
-    TUser getByUserName(@PathVariable String username);
+    @GetMapping("/login/getUserByName/{username}")
+    EEmpInfo getByUserName(@PathVariable String username);
 
-    @GetMapping("t-role/{uid}")
-    List<TRole> findByUid(@PathVariable Integer uid);
+    @GetMapping("/login/{eid}")
+    List<String> getRoleList(@PathVariable Integer eid);
 }
