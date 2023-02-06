@@ -33,6 +33,7 @@ public class TbZoneController {
     public Result getZone(){
         QueryWrapper<TbZone> wrapper = new QueryWrapper<>();
         wrapper.eq("is_disable","0");
+        wrapper.select("id","zone_name","zone_desc");
         return new Result<>(zoneService.list(wrapper));
     }
 }
