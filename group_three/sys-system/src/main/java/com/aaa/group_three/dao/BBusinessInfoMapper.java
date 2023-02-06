@@ -5,6 +5,7 @@ import com.aaa.entity.BBusinessInfo;
 import com.aaa.util.PageInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.lettuce.core.dynamic.annotation.Param;
 
 /**
@@ -17,5 +18,5 @@ import io.lettuce.core.dynamic.annotation.Param;
  */
 public interface BBusinessInfoMapper extends BaseMapper<BBusinessInfo> {
 
-    IPage findAll(IPage page, @Param("bbusinessinfo") BBusinessInfo bBusinessInfo);
+    Page findAll(IPage page, @Param("bbusinessinfo") BBusinessInfo bBusinessInfo);
 }

@@ -7,6 +7,7 @@ import com.aaa.group_three.dao.BBusinessInfoMapper;
 import com.aaa.group_three.service.IBBusinessInfoService;
 import com.aaa.util.PageInfo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +26,8 @@ public class BBusinessInfoServiceImpl extends ServiceImpl<BBusinessInfoMapper, B
     @Resource
     private BBusinessInfoMapper bBusinessInfoMapper;
     @Override
-    public IPage getPageData(PageInfo page, BBusinessInfo bBusinessInfo) {
-        IPage list=bBusinessInfoMapper.findAll(page,bBusinessInfo);
+    public Page getPageData(PageInfo page, BBusinessInfo bBusinessInfo) {
+        Page list=bBusinessInfoMapper.findAll(page,bBusinessInfo);
         return list;
     }
 }

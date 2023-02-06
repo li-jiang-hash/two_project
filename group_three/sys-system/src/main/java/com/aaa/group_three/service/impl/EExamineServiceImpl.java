@@ -1,12 +1,10 @@
 package com.aaa.group_three.service.impl;
 
-import com.aaa.entity.BAppeal;
 import com.aaa.entity.EExamine;
-import com.aaa.group_three.dao.BAppealMapper;
 import com.aaa.group_three.dao.EExamineMapper;
 import com.aaa.group_three.service.IEExamineService;
 import com.aaa.util.PageInfo;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +22,9 @@ import javax.annotation.Resource;
 public class EExamineServiceImpl extends ServiceImpl<EExamineMapper, EExamine> implements IEExamineService {
     @Resource
     private EExamineMapper eExamineMapper;
-    @Override
-    public IPage getPageData(PageInfo page, EExamine eExamine) {
-        IPage list=eExamineMapper.findAll(page,eExamine);
-        return list;
-    }
+
+//    @Override
+//    public Page getAll(Page page, EExamine eExamine) {
+//        return eExamineMapper.findAll(page,eExamine);
+//    }
 }

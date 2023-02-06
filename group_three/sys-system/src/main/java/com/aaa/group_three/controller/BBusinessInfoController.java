@@ -8,6 +8,7 @@ import com.aaa.group_three.service.impl.BBusinessInfoServiceImpl;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -30,7 +31,7 @@ public class BBusinessInfoController {
     private BBusinessInfoServiceImpl bBusinessInfoService;
     @PostMapping("ruzhu")
     public Result getAllApp(PageInfo page, BBusinessInfo bBusinessInfo){
-        IPage page1 = bBusinessInfoService.getPageData(page, bBusinessInfo);
+        Page page1 = bBusinessInfoService.getPageData(page, bBusinessInfo);
         return new Result(page1);
     }
 

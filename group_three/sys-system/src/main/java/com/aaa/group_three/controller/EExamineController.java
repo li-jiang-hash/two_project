@@ -1,17 +1,11 @@
 package com.aaa.group_three.controller;
 
 
-import com.aaa.entity.BAppeal;
 import com.aaa.entity.EExamine;
-import com.aaa.group_three.service.impl.BAppealServiceImpl;
 import com.aaa.group_three.service.impl.EExamineServiceImpl;
-import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -29,11 +23,16 @@ public class EExamineController {
     @Resource
     private EExamineServiceImpl eExamineService;
     // 查询所有的申诉信息
-    @PostMapping("examine")
-    public Result getAllApp(PageInfo page, EExamine eExamine){
-        IPage page1 = eExamineService.getPageData(page, eExamine);
-        System.out.println("page1 = " + page1);
-        return new Result(page1);
-    }
+//    @GetMapping()
+//    public Result getAllApp(Integer curr,Integer size, EExamine eExamine){
+//        Page page=new Page(curr,size);
+//        Page pageData = eExamineService.getAll(page, eExamine);
+//        return new Result(pageData);
+//    }
+//    @PostMapping()
+//    public Result add(@RequestBody EExamine eExamine){
+//        boolean b = eExamineService.saveOrUpdate(eExamine);
+//        return new Result(b);
+//    }
 }
 

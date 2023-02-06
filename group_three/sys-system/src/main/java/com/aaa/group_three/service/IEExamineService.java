@@ -4,6 +4,7 @@ import com.aaa.entity.BAppeal;
 import com.aaa.entity.EExamine;
 import com.aaa.util.PageInfo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -15,5 +16,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2023-02-01
  */
 public interface IEExamineService extends IService<EExamine> {
-    IPage getPageData(PageInfo page, EExamine eExamine);
+//
+//    Page getAll(Page page, EExamine eExamine);
 }

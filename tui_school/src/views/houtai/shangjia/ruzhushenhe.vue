@@ -177,7 +177,7 @@
         @current-change="handleCurrentChange"
         :current-page="page.currentPage"
         :page-size="page.pageSize"
-        :page-sizes="[5, 8, 10, 15, 20, 30]"
+        :page-sizes="[2, 4, 8, 15, 20, 30]"
         layout="total, sizes, prev, pager, next, jumper"
         :total="page.totalCount"
       >
@@ -254,7 +254,7 @@ export default {
       console.log(this.checkformData);
       var that = this;
       this.$http
-        .post(`/business/loadingstatus`, this.checkformData)
+        .post(`/syssystem/b-business-info/ruzhu`, this.checkformData)
         .then(function (resp) {
           if (resp.data.code === 2000) {
             that.$message.success(resp.data.msg);
@@ -292,7 +292,7 @@ export default {
         .then((res) => {
           if (res.data.code === 2000) {
             this.statusIdList = res.data.data.records;
-            this.page.totalCount = res.data.data.totel;
+            this.page.totalCount = res.data.data.total;
             console.log(this.statusIdList);
           }
         });
@@ -324,18 +324,6 @@ export default {
     handleReset() {
       this.reload();
     },
-
-    // 查询所有品牌,模糊查询
-    // searchSubject(){
-    //     var that =this
-    //     this.$http.post(`/commodity/brand/findBrandsWithCondition/${this.page.pageCurrent}/${this.page.pageSize}`,this.map).then(function (resp) {
-    //         if (resp.data.code===2000){
-    //             that.tableData = resp.data.data.records
-    //             that.page.totalCount = resp.data.data.total
-    //             that.page.pageSize = resp.data.data.size
-    //         }
-    //     })
-    // },
 
     // 关闭弹窗回调
     closeCllback() {

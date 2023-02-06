@@ -4,8 +4,8 @@
 
     <select id="findAll" resultType="com.aaa.entity.BBusinessInfo">
         select
-            sname,bname,license,telephone,state,cardfront,cardreverse,sortname
-        from b_business_info,g_brand,g_sort
-        where b_business_info.sortid=g_brand.sortid and g_brand.sortid=g_sort.id
+            sname,bname,license,telephone,cardfront,cardreverse,sortname,reason,b_business_info.status
+        from b_business_info,g_sort
+        where b_business_info.sortid=g_sort.id
     </select>
 </mapper>
