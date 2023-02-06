@@ -40,7 +40,7 @@ public class TbLink implements Serializable {
     /**
      * 0启用 1禁用
      */
-    private Integer isDisable;
+    private String isDisable;
 
     /**
      * 逻辑删除

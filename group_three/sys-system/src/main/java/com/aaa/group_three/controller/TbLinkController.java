@@ -25,7 +25,7 @@ public class TbLinkController {
     @Resource
     private ITbLinkService linkService;
 
-    // 查询所有的role
+    // 查询所有
     @PostMapping
     public Result getAllLink(PageInfo page, TbLink link){
 
@@ -49,10 +49,10 @@ public class TbLinkController {
     }
 
     /**
-     * 修改链接信息
+     * 修改状态
      */
     @PostMapping("updisable/{linkId}/{isDisable}")
-    public Result updLink(@PathVariable Integer linkId, @PathVariable Integer isDisable){
+    public Result updLink(@PathVariable Integer linkId, @PathVariable String isDisable){
         TbLink link=new TbLink();
         link.setIsDisable(isDisable);
         link.setLinkId(linkId);

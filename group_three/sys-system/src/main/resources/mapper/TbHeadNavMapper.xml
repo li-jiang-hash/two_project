@@ -2,4 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.group_three.dao.TbHeadNavMapper">
 
+
+
+    <select id="getAll" resultType="java.util.Map">
+
+<!--                select * from emp,dept where emp.depton=dept.depton-->
+<!--                <if test="emp.ename!=null and emp.ename!=''">-->
+<!--                    and ename like concat("%",#{emp.ename},"%")-->
+<!--                </if>-->
+<!--                <if test="emp.depton!=null and emp.depton !=''">-->
+<!--                    and dept.depton=#{emp.depton}-->
+<!--                </if>-->
+
+        select * from tb_head_nav where head_id=#{headId}
+        <if test="headName!=null and headName!=''">
+            and head_name like concat("%",#{head_name},"%")
+        </if>
+        <if test="isDisable!=null and isDisable !=''">
+            and is_disablen=#{isDisable}
+        </if>
+
+    </select>
 </mapper>

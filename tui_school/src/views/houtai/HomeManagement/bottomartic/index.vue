@@ -224,6 +224,7 @@ export default {
       this.currentPage = val;
       this.init();
     },
+    //初始化表格
     init() {
       var that = this;
       this.$http

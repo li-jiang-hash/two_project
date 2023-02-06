@@ -33,7 +33,7 @@ public class TbBottomArticle implements Serializable {
     /**
      * 启用状态
      */
-    private Integer isDisable;
+    private String isDisable;
 
     /**
      * 逻辑删除

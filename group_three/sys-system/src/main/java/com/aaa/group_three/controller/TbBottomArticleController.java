@@ -24,7 +24,7 @@ public class TbBottomArticleController {
     @Resource
     private ITbBottomArticleService bottomArticleService;
 
-    // 查询所有的role
+    // 查询所有
     @PostMapping
     public Result getAllBottom(PageInfo page, TbBottomArticle bottomArticle){
 
@@ -35,7 +35,7 @@ public class TbBottomArticleController {
 
 
     /**
-     * 添加链接信息
+     * 添加/修改
      * @param bottomArticle
      * @return
      */
@@ -44,14 +44,20 @@ public class TbBottomArticleController {
         //saveOrUpdate  添加或修改
         //bottom  对象有id的值的时候 修改
         //id没有值的时候 添加
+        double v = (Math.random() * 9 + 1) * 100000;
+        bottomArticle.setId("111"+String.valueOf(v));
+        System.out.println("bottomArticle = " + bottomArticle);
+        bottomArticle.setIsDisable("0");
         return new Result(bottomArticleService.saveOrUpdate(bottomArticle));
     }
 
     /**
-     * 修改链接信息
+     * 修改状态
      */
     @PostMapping("updisable/{id}/{isDisable}")
-    public Result updBottom(@PathVariable String id, @PathVariable Integer isDisable){
+    public Result updBottom(@PathVariable String id, @PathVariable String isDisable){
+        System.out.println("id111111111111111"+id);
+        System.out.println("12112313131321231"+isDisable);
         TbBottomArticle bottomArticle=new TbBottomArticle();
         bottomArticle.setIsDisable(isDisable);
         bottomArticle.setId(id);
