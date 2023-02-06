@@ -2,4 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.group_three.dao.BBusinessInfoMapper">
 
+    <select id="findAll" resultType="com.aaa.entity.BBusinessInfo">
+        select
+            sname,bname,license,telephone,state,cardfront,cardreverse,sortname
+        from b_business_info,g_brand,g_sort
+        where b_business_info.sortid=g_brand.sortid and g_brand.sortid=g_sort.id
+    </select>
 </mapper>

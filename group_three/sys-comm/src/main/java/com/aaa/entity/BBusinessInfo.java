@@ -1,16 +1,15 @@
 package com.aaa.entity;
 
+import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.io.Serializable;
 
 /**
  * <p>
  * 商家信息表
  * </p>
  *
- * @author wanglei
+ * @author wpp
  * @since 2023-01-31
  */
 @Data

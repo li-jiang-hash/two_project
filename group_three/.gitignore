@@ -3,8 +3,7 @@
 
 # Log file
 *.log
-#idea
-.idea
+
 # BlueJ files
 *.ctxt
 
@@ -23,23 +22,3 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
-
-
-
-
-#Vue
-# Recommended template: Node.gitignore
-
-node_modules/
-dist/
-npm-debug.log
-yarn-error.log
-# gitignore template for Vue.js projects
-#
-# Recommended template: Node.gitignore
-
-# TODO: where does this rule come from?
-docs/_book
-
-# TODO: where does this rule come from?
-test/

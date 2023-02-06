@@ -16,11 +16,11 @@
                         <form action="" @submit="loginSubmit" >
                             <input type="text" v-model="obj.telephone"  placeholder="请输入手机号或邮箱">
                             <div class="error_msg">{{errTip1}}</div>
-                            <input type="password" v-model="obj.password"             placeholder="6-20位密码，可用数字/字母/符号组合">
+                            <input type="password" v-model="obj.password" placeholder="6-20位密码，可用数字/字母/符号组合">
                             <div class="error_msg">{{errTip2}}</div>
                             <div id="changge">
                                 <el-radio v-model="obj.loginType" label="USER_PHONE">用户平台</el-radio>
-                                <el-radio v-model="obj.loginType" label="EMP_PHONE">商家平台</el-radio>
+                                <el-radio v-model="obj.loginType" label="BUSINESS_PHONE">商家平台</el-radio>
                             </div>
                             <input type="submit" v-if="subState" disabled="disabled" value="登录中···" class="btn" />
                             <input type="submit" v-else value="登录" class="btn" />
@@ -30,7 +30,7 @@
                         <form action="" @submit="regSubmit">
                             <input type="text" v-model="pobj.mobile" placeholder="请输入手机号">
                             <div class="phone_yzm">
-                                <input type="text" name="code" placeholder="请输入手机验证码" class="phone" v-model="pobj.code" maxlength="6">
+                                <input type="text" name="code" placeholder="请输入手机验证码" class="phone" v-model="pobj.code" maxlength="4">
                                 <button class="yzm_btn" type="button" :disabled="disabled" @click="getCode">{{txt}}</button>
                             </div>
                             <input type="password" v-model="pobj.qianPassword" placeholder="6-20位密码，可用数字/字母/符号组合">
@@ -71,14 +71,12 @@
 </template>
 <script>
     import YButton from '@/components/common/CodeButton'
-    import qs from "qs"
     export default {
         components: {
             // YHeader,
             YButton
         },
         data () {
-            
             return {
                 /*验证码的获取*/
                 txt: '获取验证码',
@@ -127,7 +125,7 @@
                 }
 
                 //通过手机号获取验证码
-                this.$http.get('/syssystem/user/noteByPhone/'+this.pobj.mobile).then(function (result) {
+                this.$http.get('/user/noteByPhone/'+this.pobj.mobile).then(function (result) {
                     if (result.data.code===2000){
                          that.shureCode=result.data.data;
                          that.timeOut();
@@ -180,7 +178,7 @@
 
                 var that=this;
                 this.subState = true;
-                this.$http.post("/syssso/login",qs.stringify(this.obj)).then(function (resp) {
+                this.$http.post("/sso/login",this.obj).then(function (resp) {
                     if (resp.data.code===2000){
                         //console.log(resp.data.result)
                         that.subState = false;
@@ -189,13 +187,7 @@
                         // sessionStorage.setItem("isTeacher", resp.data.result.isTeacher);
                         // sessionStorage.setItem("mobile", resp.data.result.mobile);
                         // sessionStorage.setItem("memberId", resp.data.result.memberId);
-                        console.log(that.obj.loginType==="USER_PHONE")
-                        if(that.obj.loginType==="USER_PHONE"){
-                            that.$router.push("/")
-                        }else if(that.obj.loginType==="EMP_PHONE"){
-                            that.$router.replace("/")
-                            // window.location.href="http:///localhost:8085/dashboard"
-                        }
+                        that.$router.push("/");
                     }else {
                         that.subState = false;
                         that.$message.error(resp.data.msg);
@@ -214,7 +206,7 @@
                     this.$message.error("请输入正确手机");
                     return false;
                 }
-                if (!this.pobj.code || this.pobj.code.length !== 6) {
+                if (!this.pobj.code || this.pobj.code.length !== 4) {
                     this.$message.error("请输入正确的手机验证码");
                     return false;
                 }
@@ -238,14 +230,14 @@
 
                 var that=this;
 
-                this.$http.post(`/syssystem/user/signInsert/${this.pobj.mobile}/${this.pobj.qianPassword}`).then(function (resp) {
+                this.$http.post(`/user/signInsert/${this.pobj.mobile}/${this.pobj.qianPassword}`).then(function (resp) {
                     if (resp.data.code===2000){
                         that.$message.success(resp.data.msg);
                         that.changetab(1);
                         that.pobj={};
 
                     }else if(resp.data.code===4000){
-                        //该手机号已注册
+                        //该手机号以注册
                         that.$message.error(resp.data.msg);
                         that.changetab(1);
                         that.pobj={};

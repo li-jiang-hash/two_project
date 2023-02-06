@@ -46,7 +46,7 @@ axios.interceptors.request.use(config => {
 })
 
 //设置路径的默认前缀
-axios.defaults.baseURL = "http://localhost:7500";
+axios.defaults.baseURL = "http://localhost:7100";
 //把axios挂载到vue对象
 Vue.prototype.$http = axios;
 

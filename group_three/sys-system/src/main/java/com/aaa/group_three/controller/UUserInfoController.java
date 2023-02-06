@@ -32,13 +32,11 @@ public class UUserInfoController {
         return userInfoService.getOne(queryWrapper);
     }
     //根据用户手机号获取信息
-    @GetMapping("getUserByPhone/{telephone}")
+    @PostMapping("getUserByPhone/{telephone}")
     public UUserInfo getUserPhone(@PathVariable String telephone){
         QueryWrapper queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("telephone",telephone);
-        UUserInfo one = userInfoService.getOne(queryWrapper);
-        System.out.println("one = " + one);
-        return one;
+        return userInfoService.getOne(queryWrapper);
     }
     //添加
     @PostMapping("/insertAddr")

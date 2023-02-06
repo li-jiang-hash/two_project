@@ -67,9 +67,5 @@ public class TbBottomArticleController {
     }
 
 
-    @GetMapping("getQianAllBottomArticle")
-    public Result getAll(){
-        return new Result<>(bottomArticleService.list());
-    }
 }
 

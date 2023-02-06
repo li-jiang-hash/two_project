@@ -11,7 +11,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -27,6 +26,7 @@ import java.util.concurrent.TimeUnit;
  */
 @RestController
 @RequestMapping({"/user"})
+@CrossOrigin
 public class RegisterController {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
@@ -38,24 +38,21 @@ public class RegisterController {
 
     @PostMapping({"/signInsert/{phone}/{password}"})
     public Result Register(@PathVariable String phone, @PathVariable String password) {
-        String pass = new BCryptPasswordEncoder().encode(password);
-//        Map<String, String> Key = PassTools.makePasswordSalt(password);
-//        String pass = Key.get("password");
-//        String salt = Key.get("salt");
+        Map<String, String> Key = PassTools.makePasswordSalt(password);
+        String pass = (String) Key.get("password");
+        String salt = (String) Key.get("salt");
         QueryWrapper<UUserInfo> queryWrapper = new QueryWrapper();
         queryWrapper.eq("telephone", phone);
         int list = iuUserInfoService.list(queryWrapper).size();
         System.out.println("list = " + list);
         if (list == 0) {
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             UUserInfo uUserInfo = new UUserInfo();
             System.out.println(LocalDateTime.now());
             uUserInfo.setCreatetime(LocalDateTime.now());
             uUserInfo.setTelephone(phone);
             uUserInfo.setStatus(0);
-            System.out.println("passwordEncoder.encode(pass):"+passwordEncoder.encode(password));
-            uUserInfo.setPassword(passwordEncoder.encode(pass));
-            uUserInfo.setSalt("123");
+            uUserInfo.setPassword(pass);
+            uUserInfo.setSalt(salt);
             boolean save = this.iuUserInfoService.save(uUserInfo);
             Result result;
             if (save) {
@@ -96,9 +93,9 @@ public class RegisterController {
             String code = Integer.toString((int) ((Math.random() * 9 + 1) * 100000));
             System.out.println("phone = " + phone);
             System.out.println("random = " + code);
-//            boolean isSend = Send.SendCode(AccessKey_ID, AccessKey_Secret, templateCode, phone, code);
-//            System.out.println("是否发送成功 : " + isSend);
-            if (true) {
+            boolean isSend = Send.SendCode(AccessKey_ID, AccessKey_Secret, templateCode, phone, code);
+            System.out.println("是否发送成功 : " + isSend);
+            if (isSend) {
                 redisTemplate.opsForValue().set(phone, code, 300L, TimeUnit.SECONDS);
                 System.out.println("发送成功：" + code);
                 return new Result(code);
