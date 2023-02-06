@@ -1,6 +1,7 @@
 package com.aaa.sso.service;
 
 import com.aaa.entity.EEmpInfo;
+import com.aaa.entity.UUserInfo;
 import com.aaa.sso.feign.UserService;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -45,9 +46,9 @@ public class MyCustomUserDetailsService implements CustomUserDetailService{
         System.out.println("var1 = " + var1);
         EEmpInfo emp = userService.getByUserName(var1);
         if(emp==null){
-            System.out.println("用户名不对");
+            System.out.println("商户不对");
             System.out.println(var1);
-            throw  new UsernameNotFoundException("用户名不对");
+            throw  new UsernameNotFoundException("商户不对");
         }
         System.out.println("emp.getId() = " + emp.getId());
         List<String> byUid = userService.getRoleList(emp.getId());
@@ -56,14 +57,15 @@ public class MyCustomUserDetailsService implements CustomUserDetailService{
         return new User(var1,emp.getPassword(), collect);
     }
 
-    private UserDetails loadUserByUsername2(String var1) {
-        if(!var1.equals("123")){
+    private UserDetails loadUserByUsername2(String telephone) {
+        System.out.println("telephone = " + telephone);
+        UUserInfo user = userService.getUserByPhone(telephone);
+        if(user==null){
             System.out.println("用户名不对");
-            System.out.println(var1);
+            System.out.println(telephone);
             throw  new UsernameNotFoundException("用户名不对");
         }
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return new User(var1,passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_user"));
+        return new User(telephone,user.getPassword(), AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_user"));
     }
 
     @Override
