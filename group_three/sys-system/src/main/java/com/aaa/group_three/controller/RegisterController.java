@@ -38,9 +38,10 @@ public class RegisterController {
 
     @PostMapping({"/signInsert/{phone}/{password}"})
     public Result Register(@PathVariable String phone, @PathVariable String password) {
-        Map<String, String> Key = PassTools.makePasswordSalt(password);
-        String pass = Key.get("password");
-        String salt = Key.get("salt");
+        String pass = new BCryptPasswordEncoder().encode(password);
+//        Map<String, String> Key = PassTools.makePasswordSalt(password);
+//        String pass = Key.get("password");
+//        String salt = Key.get("salt");
         QueryWrapper<UUserInfo> queryWrapper = new QueryWrapper();
         queryWrapper.eq("telephone", phone);
         int list = iuUserInfoService.list(queryWrapper).size();
@@ -54,7 +55,7 @@ public class RegisterController {
             uUserInfo.setStatus(0);
             System.out.println("passwordEncoder.encode(pass):"+passwordEncoder.encode(password));
             uUserInfo.setPassword(passwordEncoder.encode(pass));
-            uUserInfo.setSalt(salt);
+            uUserInfo.setSalt("123");
             boolean save = this.iuUserInfoService.save(uUserInfo);
             Result result;
             if (save) {

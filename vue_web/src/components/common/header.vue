@@ -9,8 +9,7 @@
 						<router-link :to="{path: '/geRenCenter'}" v-if="this.loginType=='USER_PHONE'">个人中心</router-link>
 					</li>
 					<li class="">
-						<router-link :to="{path: '/business'}" v-if="this.loginType=='BUSINESS_PHONE'">我的店铺
-						</router-link>
+						<router-link :to="{path: '/business'}" v-if="this.loginType=='EMP_PHONE'">我的店铺</router-link>
 					</li>
 					<li class="">
 						<router-link :to="{path: '/myorder'}" v-if="this.loginType=='USER_PHONE'">我的订单</router-link>
@@ -24,8 +23,8 @@
 					<li><a @click="tuichu" v-if="this.loginType!=null">退出</a></li>
 				</ul>
 				<ul class="top_list clearfix">
-					<li class="s_left"><a href="javascript:" @click="login" v-if="this.loginType==null">登录</a></li>
-					<li><a href="javascript:" @click="register" v-if="this.loginType==null">注册</a></li>
+					<li class="s_left"><a href="javascript:" @click="login" v-if="true">登录</a></li>
+					<li><a href="javascript:" @click="register" v-if="true">注册</a></li>
 				</ul>
 			</div>
 		</div>
@@ -95,7 +94,7 @@
 				that.navList = resp.data.data;
 				//console.log(resp.data.data)
 			})
-			this.$http.get("/sso/isLoginAndBusiness").then(resp => {
+			this.$http.get("/syssso/isLoginAndBusiness").then(resp => {
 				if (resp.data.code === 2000) {
 					this.loginType = resp.data.data;
 					console.log(this.loginType)

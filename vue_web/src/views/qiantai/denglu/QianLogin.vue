@@ -16,7 +16,7 @@
                         <form action="" @submit="loginSubmit" >
                             <input type="text" v-model="obj.telephone"  placeholder="请输入手机号或邮箱">
                             <div class="error_msg">{{errTip1}}</div>
-                            <input type="password" v-model="obj.password" placeholder="6-20位密码，可用数字/字母/符号组合">
+                            <input type="password" v-model="obj.password"             placeholder="6-20位密码，可用数字/字母/符号组合">
                             <div class="error_msg">{{errTip2}}</div>
                             <div id="changge">
                                 <el-radio v-model="obj.loginType" label="USER_PHONE">用户平台</el-radio>
@@ -130,7 +130,7 @@
                 this.$http.get('/syssystem/user/noteByPhone/'+this.pobj.mobile).then(function (result) {
                     if (result.data.code===2000){
                          that.shureCode=result.data.data;
-                        //  that.timeOut();
+                         that.timeOut();
                         console.log(result)
                     }else {
                         this.$message.error("验证码获取失败");
@@ -193,8 +193,8 @@
                         if(that.obj.loginType==="USER_PHONE"){
                             that.$router.push("/")
                         }else if(that.obj.loginType==="EMP_PHONE"){
-                            // that.$router.replace("http:///localhost:8085/")
-                            window.location.href="http:///localhost:8085/dashboard"
+                            that.$router.replace("/")
+                            // window.location.href="http:///localhost:8085/dashboard"
                         }
                     }else {
                         that.subState = false;
@@ -245,7 +245,7 @@
                         that.pobj={};
 
                     }else if(resp.data.code===4000){
-                        //该手机号以注册
+                        //该手机号已注册
                         that.$message.error(resp.data.msg);
                         that.changetab(1);
                         that.pobj={};
