@@ -122,9 +122,7 @@
 			})
 			this.$http.get("syssystem/tb-zone-business/zoneBusiness/selectZoneBusiness").then(resp => {
 				this.business = resp.data.data;
-				console.log(this.business)
-				console.log(this.business[0].bicon)
-
+				// console.log(this.business)
 			})
 
 		},
@@ -133,7 +131,7 @@
 			if (this.webInfo && this.webInfo.isEnableVip) {
 				this.openVip = true
 			}
-			this.$http.get("/home/banner/rotationalSeeding").then(function(resp) {
+			this.$http.get("syssystem/tb-banner/rotationalSeeding").then(function(resp) {
 				that.data = resp.data.data;
 				//console.log(that.data)
 			})
