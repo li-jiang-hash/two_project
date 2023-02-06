@@ -216,8 +216,6 @@ export default {
     },
     //分页查询当前的所有数据
     init() {
-      console.log(this.formData);
-
       this.$http
         .post(
           "/syssystem/b-appeal/appeal?currentPage=" +
@@ -244,7 +242,6 @@ export default {
     //确认驳回
     rejectConfirm() {
       var that = this;
-
       this.$http
         .post("/syssystem/b-appeal/tongguo?id=" + id + "&status=2")
         .then(function (result) {
@@ -258,7 +255,6 @@ export default {
     //点击驳回按钮
     bohui(row) {
       this.businessid = row.id;
-
       this.rejectDialogVisible = true;
       id = this.businessid;
     },

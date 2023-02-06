@@ -251,10 +251,9 @@ export default {
     },
     //提交审核的表单
     submitCheckForm() {
-      console.log(this.checkformData);
       var that = this;
       this.$http
-        .post(`/syssystem/b-business-info/ruzhu`, this.checkformData)
+        .post(`/syssystem/b-business-info/shenhe`, this.checkformData)
         .then(function (resp) {
           if (resp.data.code === 2000) {
             that.$message.success(resp.data.msg);
@@ -276,7 +275,6 @@ export default {
     //点击审核的弹出层
     shenhe(row) {
       this.checkformData = row;
-      console.log(this.checkformData);
       this.checkvisible = true;
     },
     //页面加载查询所有品牌
@@ -287,13 +285,12 @@ export default {
             this.page.currentPage +
             "&pageSize=" +
             this.page.pageSize,
-          this.map /*+this.currentPage+"&pageSize="+this.pageSiz*/
+          this.map
         )
         .then((res) => {
           if (res.data.code === 2000) {
             this.statusIdList = res.data.data.records;
             this.page.totalCount = res.data.data.total;
-            console.log(this.statusIdList);
           }
         });
     },

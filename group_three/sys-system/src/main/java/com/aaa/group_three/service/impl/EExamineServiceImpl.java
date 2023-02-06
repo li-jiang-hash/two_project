@@ -23,8 +23,8 @@ public class EExamineServiceImpl extends ServiceImpl<EExamineMapper, EExamine> i
     @Resource
     private EExamineMapper eExamineMapper;
 
-//    @Override
-//    public Page getAll(Page page, EExamine eExamine) {
-//        return eExamineMapper.findAll(page,eExamine);
-//    }
+    @Override
+    public Page getAll(PageInfo pageInfo, EExamine eExamine) {
+         return (eExamineMapper.getAll(pageInfo,eExamine));
+    }
 }

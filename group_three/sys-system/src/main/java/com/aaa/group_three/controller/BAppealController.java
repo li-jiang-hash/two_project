@@ -44,6 +44,5 @@ public class BAppealController {
         boolean byId = bAppealService.update(bAppeal,queryWrapper);
         return new Result(byId);
     }
-
 }
 

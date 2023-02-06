@@ -51,11 +51,6 @@
         row-key="id"
         :default-expand-all="false"
       >
-        <!--                <el-table-column-->
-        <!--                        prop="id"-->
-        <!--                        label="编号"-->
-        <!--                        >-->
-        <!--                </el-table-column>-->
         <el-table-column align="center" prop="ename" label="审查人"> </el-table-column>
         <el-table-column align="center" prop="sname" label="审查店铺"> </el-table-column>
         <el-table-column align="center" prop="gmtCreate" label="审查时间">
@@ -253,8 +248,7 @@ export default {
     //获取所有店铺
     getBusiness() {
       const that = this;
-      that.$http.post("/syssystem/e-examine/examine").then(function (response) {
-        console.log(response.data);
+      that.$http.get("/syssystem/e-examine").then(function (response) {
         if (response.data.code === 2000) {
           that.business = response.data.data;
         }
@@ -305,7 +299,7 @@ export default {
       const that = this;
       that.$http
         .post(
-          "/syssystem/e-examine/examine?currentPage=" +
+          "/syssystem/e-examine?currentPage=" +
             this.currentPage +
             "&pageSize=" +
             this.pageSize +
@@ -315,7 +309,6 @@ export default {
             this.endTime
         )
         .then(function (response) {
-          console.log(response.data);
           if (response.data.code === 2000) {
             that.tableData = response.data.data.records;
             that.total = response.data.data.total;

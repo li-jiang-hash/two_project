@@ -12,14 +12,7 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * <p>
- * 管理员信息表 前端控制器
- * </p>
- *
- * @author yuyongli
- * @since 2023-01-10
- */
+
 @RestController
 @RequestMapping("/e-emp-info")
 public class EEmpInfoController {

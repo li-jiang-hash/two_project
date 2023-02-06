@@ -1,6 +1,8 @@
 package com.aaa.entity;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -119,6 +121,7 @@ public class BBusinessInfo implements Serializable {
      * 店铺地址
      */
     private String address;
-
+    @TableField(exist = false)
+    private GSort gSort;
 
 }

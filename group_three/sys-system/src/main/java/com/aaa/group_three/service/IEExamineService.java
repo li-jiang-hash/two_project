@@ -16,6 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2023-02-01
  */
 public interface IEExamineService extends IService<EExamine> {
-//
-//    Page getAll(Page page, EExamine eExamine);
+    Page getAll(PageInfo pageInfo, EExamine eExamine);
 }

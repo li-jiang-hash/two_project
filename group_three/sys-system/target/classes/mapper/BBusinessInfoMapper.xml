@@ -2,10 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.group_three.dao.BBusinessInfoMapper">
 
-    <select id="findAll" resultType="com.aaa.entity.BBusinessInfo">
-        select
-            sname,bname,license,telephone,cardfront,cardreverse,sortname,reason,b_business_info.status
+    <select id="findAll" resultType="map">
+        select *,sortname
         from b_business_info,g_sort
         where b_business_info.sortid=g_sort.id
+        <if test="bBusinessInfo.status!=null">
+            and b_business_info.status = #{bBusinessInfo.status}
+        </if>
     </select>
 </mapper>

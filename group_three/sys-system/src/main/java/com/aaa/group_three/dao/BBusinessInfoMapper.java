@@ -18,5 +18,5 @@ import io.lettuce.core.dynamic.annotation.Param;
  */
 public interface BBusinessInfoMapper extends BaseMapper<BBusinessInfo> {
 
-    Page findAll(IPage page, @Param("bbusinessinfo") BBusinessInfo bBusinessInfo);
+    Page findAll(IPage page, @Param("bBusinessInfo") BBusinessInfo bBusinessInfo);
 }
