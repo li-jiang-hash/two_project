@@ -32,7 +32,6 @@ public class TbZoneBusinessController {
     @GetMapping("zoneBusiness/selectZoneBusiness")
     public Result getZoneBusiness(){
         List<Map<String, Object>> business = zoneBusinessService.findBusiness();
-        System.out.println(business);
         return new Result<>(business);
     }
 }

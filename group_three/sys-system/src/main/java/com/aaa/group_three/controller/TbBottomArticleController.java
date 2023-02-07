@@ -5,17 +5,20 @@ import com.aaa.entity.TbBottomArticle;
 import com.aaa.group_three.service.ITbBottomArticleService;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
  *  前端控制器
  * </p>
  *
- * @author yuyongli
+ * @author wanglei
  * @since 2023-01-19
  */
 @RestController
@@ -67,5 +70,39 @@ public class TbBottomArticleController {
     }
 
 
+    /**
+     * 首页底部文章
+     * @return
+     */
+    @GetMapping("/getQianAllBottomArticle")
+    public Result getQianAllBottomArticle(){
+        List<TbBottomArticle> articleList=new ArrayList<>();
+
+        QueryWrapper<TbBottomArticle> wrapper = new QueryWrapper<>();
+        wrapper.select("id","name");
+        wrapper.eq("is_disable","0");
+        wrapper.eq("parent_id","0");
+        List<TbBottomArticle> parentList = bottomArticleService.list(wrapper);  //查询父节点
+
+        wrapper.clear();
+        wrapper.select("id","name","parent_id");
+        wrapper.eq("is_disable","0");
+        wrapper.ne("parent_id","0");
+        List<TbBottomArticle> childList = bottomArticleService.list(wrapper); //查询字节点
+
+        int i = 0;
+        for (TbBottomArticle parent : parentList){
+            for (TbBottomArticle child : childList){
+                if (parent.getId().equals(child.getParentId())){
+                    articleList.add(parent);
+                    //将字节点放入 children
+                    articleList.get(i).getChildren().add(child);
+                    i++;
+                }
+            }
+        }
+
+        return new Result<>(articleList);
+    }
 }
 

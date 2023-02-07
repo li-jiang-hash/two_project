@@ -2,4 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.group_three.dao.TbBottomArticleMapper">
 
+    <select id="getArticle" resultType="java.util.Map">
+        select b1.name,b2.id,b2.name children
+        from tb_bottom_article b1,tb_bottom_article b2
+        where b1.id = b2.parent_id and b1.is_disable = 0 and b2.is_disable = 0
+    </select>
 </mapper>
