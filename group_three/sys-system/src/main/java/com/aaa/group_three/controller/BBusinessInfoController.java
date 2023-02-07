@@ -40,5 +40,13 @@ public class BBusinessInfoController {
         return new Result(byId);
     }
 
+    //    查询店铺
+    @GetMapping("getsname")
+    public Result getBid(){
+        QueryWrapper queryWrapper=new QueryWrapper<>();
+        queryWrapper.select("sname","id");
+        return new Result<>(bBusinessInfoService.list(queryWrapper));
+    }
+
 }
 

@@ -8,5 +8,6 @@ public class MyController {
     @GetMapping("test")
     public Result test(){
         return new Result("测试一次sso");
+
     }
 }

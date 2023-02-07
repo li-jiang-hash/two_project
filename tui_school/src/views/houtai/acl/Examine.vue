@@ -53,7 +53,7 @@
       >
         <el-table-column align="center" prop="ename" label="审查人"> </el-table-column>
         <el-table-column align="center" prop="sname" label="审查店铺"> </el-table-column>
-        <el-table-column align="center" prop="gmtCreate" label="审查时间">
+        <el-table-column align="center" prop="gmt_create" label="审查时间">
         </el-table-column>
 
         <el-table-column header-align="center" align="center" prop="state" label="状态">
@@ -77,7 +77,7 @@
             >
             <el-button
               plain
-              @click="open(scope.row.sname, scope.row.msg)"
+              @click="open(scope.row.bid, scope.row.msg)"
               v-if="scope.row.state == 0"
               disabled
             >
@@ -85,7 +85,7 @@
             </el-button>
             <el-button
               plain
-              @click="open(scope.row.sname, scope.row.msg)"
+              @click="open(scope.row.bid, scope.row.msg)"
               v-if="scope.row.state == 1"
             >
               停业原因
@@ -94,13 +94,14 @@
         </el-table-column>
       </el-table>
       <el-divider><i class="el-icon-moon-night"></i></el-divider>
+
       <!--分页栏-->
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         style="float: right; margin-top: 20px; margin-bottom: 22px"
         :current-page="currentPage"
-        :page-sizes="[5, 10, 15]"
+        :page-sizes="[2, 5, 10, 20]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
@@ -124,6 +125,7 @@
             <el-select v-model="insertFormDate.bid">
               <el-option
                 v-for="item in business"
+                :key="item.id"
                 :label="item.sname"
                 :value="item.id"
               ></el-option>
@@ -162,26 +164,6 @@
           >
         </el-row>
       </el-dialog>
-
-      <!--            &lt;!&ndash;修改通知&ndash;&gt;-->
-      <!--            <el-dialog-->
-      <!--                    title="修改"-->
-      <!--                    :visible.sync="displayUpdateForm"-->
-      <!--                    width="28%"-->
-      <!--                    :closed="handleUpdateClose">-->
-      <!--                <el-form ref="updateForm" :model="updateFormDate" :rules="formRules" label-width="80px" @submit.native.prevent>-->
-      <!--                    <el-form-item  label="公告类型" prop="insertFormDate.stype">-->
-      <!--                        <el-input v-model="updateFormDate.stype" ></el-input>-->
-      <!--                    </el-form-item>-->
-      <!--                    <el-form-item  label="公告内容" prop="insertFormDate.scontend">-->
-      <!--                        <el-input type="textarea" v-model="updateFormDate.scontend"></el-input>-->
-      <!--                    </el-form-item>-->
-      <!--                </el-form>-->
-      <!--                <el-row style="margin-top:17px;">-->
-      <!--                    <el-button style="float:right;margin-left:6px;" size="mini" type="danger" plain @click="handleUpdateClose()">取 消</el-button>-->
-      <!--                    <el-button style="float:right" size="mini" type="primary"   @click="updateFormSubmit()">确 定</el-button>-->
-      <!--                </el-row>-->
-      <!--            </el-dialog>-->
     </el-card>
   </div>
 </template>
@@ -248,7 +230,7 @@ export default {
     //获取所有店铺
     getBusiness() {
       const that = this;
-      that.$http.get("/syssystem/e-examine").then(function (response) {
+      that.$http.get("/syssystem/b-business-info/getsname").then(function (response) {
         if (response.data.code === 2000) {
           that.business = response.data.data;
         }
@@ -265,14 +247,6 @@ export default {
           h("div", { style: "color: teal" }, msg),
         ]),
       });
-
-      // this.$message({
-      //     message: msg,
-      //     center: true,
-      //     type:"info",
-      //     offset:10,
-      //
-      // });
     },
 
     //模糊查询
@@ -286,9 +260,9 @@ export default {
       }
       this.startTime = this.valueTime[0];
       this.endTime = this.valueTime[1];
-      console.log(this.startTime + "......" + this.endTime);
       this.initTable();
     },
+
     //页头的点击条状
     goBack() {
       this.$router.push("/houHome");
@@ -298,8 +272,8 @@ export default {
     initTable() {
       const that = this;
       that.$http
-        .post(
-          "/syssystem/e-examine?currentPage=" +
+        .get(
+          "/syssystem/e-examine/examine?currentPage=" +
             this.currentPage +
             "&pageSize=" +
             this.pageSize +
@@ -316,6 +290,7 @@ export default {
           }
         });
     },
+
     //页数改变时
     handleCurrentChange(val) {
       this.currentPage = val;
@@ -334,7 +309,7 @@ export default {
       this.initTable();
     },
 
-    //删除按钮事件，执行删除
+    // //删除按钮事件，执行删除
     del(row, id) {
       this.$confirm(`确定删除该条记录吗？, 是否继续?`, "提示", {
         cancelButtonText: "取消",
@@ -342,11 +317,11 @@ export default {
         type: "warning",
       })
         .then(() => {
-          this.$http.post(`/emp/examine/deleteExamine/${id}`).then((resp) => {
-            if (resp.data.code === 2000) {
+          this.$http.post(`/syssystem/e-examine/${id}`).then((resp) => {
+            if (resp.data.data) {
               this.$message.success(resp.data.msg);
               this.initTable();
-            } else this.$message.error(resp.data.msg);
+            } else this.$message.error("删除失败！！");
             this.initTable();
           });
         })
@@ -363,31 +338,31 @@ export default {
       this.insertFormDate = {};
       this.$refs.insertForm.resetFields();
     },
+
     //新增表单提交
     insertFormSubmit() {
       const that = this;
       this.$refs.insertForm.validate((valid) => {
         if (valid) {
           that.$http
-            .post(`/emp/examine/insertExamine`, this.insertFormDate)
+            .post(`/syssystem/e-examine/insert`, this.insertFormDate)
             .then(function (resp) {
-              if (resp.data.code === 2000) {
+              if (resp.data.data) {
                 that.initTable();
                 that.$message.success(resp.data.msg);
                 that.handleInsertClose();
               } else {
-                that.$message.error(resp.data.msg);
+                that.$message.error("添加失败！！");
               }
             });
         }
       });
     },
     // //修改按钮
-    // update(row) {
-    //     this.updateFormDate = row;
-    //     this.displayUpdateForm = true;
-    //
-    // },
+    update(row) {
+      this.updateFormDate = row;
+      this.displayUpdateForm = true;
+    },
     //主目录或菜单修改表单关闭回调
     handleUpdateClose() {
       this.displayUpdateForm = false;
