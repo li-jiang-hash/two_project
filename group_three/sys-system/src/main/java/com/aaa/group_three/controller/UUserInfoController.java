@@ -3,7 +3,6 @@ package com.aaa.group_three.controller;
 
 import com.aaa.entity.UUserInfo;
 import com.aaa.group_three.service.IUUserInfoService;
-import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.web.bind.annotation.*;
 

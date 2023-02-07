@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.group_three.dao.EExamineMapper">
+    <select id="findAll" resultType="com.aaa.entity.EExamine">
+        select ename,sname,e_examine.gmt_create,e_examine.state
+        from e_examine,e_emp_info,b_business_info
+        where bid=b_business_info.id and e_examine.id=e_emp_info.id
+        <if test="eExamine.bid!=null and eEmpInfo.id!=''">
+            and bid like concat('%',#{bBusinessInfo.id},'%')
+
+        </if>
+    </select>
+</mapper>
