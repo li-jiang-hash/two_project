@@ -73,7 +73,7 @@
                 console.log(this.formData)
                 this.$refs[formData].validate((valid) => {
                     if (valid) {
-                        this.$http.post("/syssystem/article1/updateArticleByNavId", this.formData).then(function (resp) {
+                        this.$http.post("/syssystem/tb-article/updateArticleByNavId", this.formData).then(function (resp) {
                             if (resp.data.code === 2000) {
                                 that.$message({
                                     message: resp.data.msg,

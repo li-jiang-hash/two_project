@@ -2,10 +2,9 @@ package com.aaa.group_three.controller;
 
 
 import com.aaa.entity.TbArticle;
+import com.aaa.entity.TbBottomArticle;
 import com.aaa.group_three.service.ITbArticleService;
-import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +30,17 @@ public class TbArticleController {
     public Result getAllArticle(String id){
 
         return new Result(articleService.getById(id));
+    }
+
+    /**
+     * 添加/修改
+     * @param article
+     * @return
+     */
+    @PostMapping("updateArticleByNavId")
+    public Result addBottom(TbArticle article){
+
+        return new Result(articleService.saveOrUpdate(article));
     }
 
 }

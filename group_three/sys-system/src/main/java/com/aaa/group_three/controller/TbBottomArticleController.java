@@ -56,8 +56,6 @@ public class TbBottomArticleController {
      */
     @PostMapping("updisable/{id}/{isDisable}")
     public Result updBottom(@PathVariable String id, @PathVariable String isDisable){
-        System.out.println("id111111111111111"+id);
-        System.out.println("12112313131321231"+isDisable);
         TbBottomArticle bottomArticle=new TbBottomArticle();
         bottomArticle.setIsDisable(isDisable);
         bottomArticle.setId(id);

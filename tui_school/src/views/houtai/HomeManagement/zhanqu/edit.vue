@@ -79,7 +79,7 @@
                             });
                             return false
                         }
-                       this.$http.post("/home/zone/insertPrefecture",this.formData).then( resp => {
+                       this.$http.post("/syssystem/tb-zone/updatePrefecture",this.formData).then( resp => {
                            if (resp.data.code===2000){
                                this.$message({
                                    message:resp.data.msg,
@@ -111,7 +111,7 @@
                             });
                             return false
                         }
-                        this.$http.post("/home/zone/updatePrefecture",this.formData).then( resp => {
+                        this.$http.post("/syssystem/tb-zone/updatePrefecture",this.formData).then( resp => {
                             if (resp.data.code===2000){
                                 this.$message({
                                     message:resp.data.msg,
