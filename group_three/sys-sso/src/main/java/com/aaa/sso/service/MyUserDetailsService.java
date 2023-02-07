@@ -1,7 +1,6 @@
 package com.aaa.sso.service;
 
-import com.aaa.entity.TRole;
-import com.aaa.entity.TUser;
+import com.aaa.entity.EEmpInfo;
 import com.aaa.sso.feign.UserService;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -24,15 +23,15 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 
         // 用户名
-        TUser one = userService.getByUserName(s);
+        EEmpInfo one = userService.getByUserName(s);
         if(one==null){
             System.out.println("用户名不对");
             throw  new UsernameNotFoundException("用户名不对");
         }
         // 根据用户的id 查询用户的角色
 
-        List<TRole> roles = userService.findByUid(one.getId());
-        List<SimpleGrantedAuthority> roleList = roles.stream().map(tRole -> new SimpleGrantedAuthority("ROLE_"+tRole.getRname())).collect(Collectors.toList());
+        List<String> roles = userService.getRoleList(one.getId());
+        List<SimpleGrantedAuthority> roleList = roles.stream().map(tRole -> new SimpleGrantedAuthority("ROLE_"+tRole)).collect(Collectors.toList());
 
         // 查询资源
 //        List<SimpleGrantedAuthority> authorities = new ArrayList<>();

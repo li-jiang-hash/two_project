@@ -5,6 +5,7 @@ import com.aaa.entity.TbBanner;
 import com.aaa.group_three.service.ITbBannerService;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ import javax.annotation.Resource;
  * 首页banner表 前端控制器
  * </p>
  *
- * @author yuyongli
+ * @author wanglei
  * @since 2023-01-17
  */
 @RestController
@@ -66,6 +67,18 @@ public class TbBannerController {
         //banner  对象有id的值的时候 修改
         //id没有值的时候 添加
         return new Result(bannerService.saveOrUpdate(banner));
+    }
+
+    /**
+     * 首页轮播图
+     * @return
+     */
+    @GetMapping("/rotationalSeeding")
+    public Result getRotationalSeeding(){
+        QueryWrapper<TbBanner> wrapper = new QueryWrapper<>();
+        wrapper.eq("is_disable","0");
+        wrapper.select("id","title","image_url","link_url");
+        return new Result<>(bannerService.list(wrapper));
     }
 }
 

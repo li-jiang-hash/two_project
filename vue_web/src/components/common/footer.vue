@@ -83,9 +83,10 @@
 			var that = this;
 			this.$http.get("syssystem/tb-bottom-article/getQianAllBottomArticle").then(function(resp) {
 				that.list = resp.data.data;
+				console.log(list)
 
 			})
-			this.$http.get("home/link/getQianLink").then(function(resp) {
+			this.$http.get("syssystem/tb-link/getQianLink").then(function(resp) {
 				that.friendList = resp.data.data;
 			})
 		},
