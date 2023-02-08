@@ -18,7 +18,7 @@ import javax.annotation.Resource;
  * 商家信息表 服务实现类
  * </p>
  *
- * @author wpp
+ * @author wanglei
  * @since 2023-01-31
  */
 @Service

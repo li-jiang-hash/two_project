@@ -2,8 +2,12 @@ package com.aaa.entity;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * <p>
@@ -37,6 +41,8 @@ public class EExamine implements Serializable {
     /**
      * 审查时间
      */
+//    @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
+//   @DateTimeFormat(pattern = "YYYY-MM-dd HH:mm:ss")
     private LocalDateTime gmtCreate;
 
     /**
@@ -53,6 +59,5 @@ public class EExamine implements Serializable {
      * 0通过 1审查不合格
      */
     private String state;
-
 
 }

@@ -48,7 +48,6 @@ public class LoginController {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("emp_id", eid);
         List<REmpRole> list = empRoleService.list(queryWrapper);
-
         List<String> roleList = new ArrayList<>();
 
         // 2. 根据角色的id查询角色的信息

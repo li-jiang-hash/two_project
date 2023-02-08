@@ -23,9 +23,7 @@ public class TbBannerServiceImpl extends ServiceImpl<TbBannerMapper, TbBanner> i
 
     @Override
     public Page getPageData(PageInfo page, TbBanner banner) {
-        System.out.println("banner的值："+banner);
-        System.out.println("page的值："+page);
-//        Page page = new Page(currentPage,pageSize);
+
         QueryWrapper queryWrapper = new QueryWrapper();
         // "" null
         if(StringUtils.isNotBlank(banner.getTitle())){

@@ -279,9 +279,10 @@ export default {
     //开启dialog层
     open() {
       this.dialogFormVisible = true;
-      this.$http.get("/home/headNav/navigationSearch").then((resp) => {
+      this.$http.get("/syssystem/tb-head-nav/navigationSearch").then((resp) => {
         if (resp.data.code === 2000) {
           this.addTableData = resp.data.data;
+
         }
       });
     },
@@ -333,20 +334,42 @@ export default {
     },
     //删除选中的头部导航
     handleDelete(headId) {
-      this.$http.delete("/syssystem/tb-head-nav?headId=" + headId).then((resp) => {
-        if (resp.data.code === 2000) {
-          this.$message({
-            message: resp.data.msg,
-            type: "success",
+      // this.$http.delete("/syssystem/tb-head-nav?headId=" + headId).then((resp) => {
+      //   if (resp.data.code === 2000) {
+      //     this.$message({
+      //       message: resp.data.msg,
+      //       type: "success",
+      //     });
+      //   } else {
+      //     this.$message({
+      //       message: resp.data.msg,
+      //       type: "error",
+      //     });
+      //   }
+      //   this.init();
+      // });
+      this.$confirm(`确定要删除吗?`, {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+      })
+      .then(() => {
+          var that = this;
+          this.$http.delete(`/syssystem/tb-head-nav/${headId}`).then(function (resp) {
+            if (resp.data.code === 2000) {
+              that.$message.success(resp.data.msg);
+              that.init();
+            } else {
+              that.$message.error(resp.data.msg);
+            }
           });
-        } else {
+          this.reload();
+        })
+        .catch(() => {
           this.$message({
-            message: resp.data.msg,
-            type: "error",
+            type: "info",
+            message: "删除已取消",
           });
-        }
-        this.init();
-      });
+        });
     },
     //添加导航标题
     addHeadNav() {
@@ -381,7 +404,7 @@ export default {
     changeStatus(headId, isDisable) {
       var that = this;
       this.$http
-        .post(`/home/headNav/updateDisable/${headId}/${isDisable}`)
+        .post(`/syssystem/tb-head-nav/updateDisable/${headId}/${isDisable}`)
         .then(function (resp) {
           if (resp.data.code === 2000) {
             that.$message({
@@ -397,6 +420,8 @@ export default {
           that.init();
         });
     },
+
+    //编辑
     editHeadNav() {
       this.$refs.editruleForms.validate((valid) => {
         if (valid) {

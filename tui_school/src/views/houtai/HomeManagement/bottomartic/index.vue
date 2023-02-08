@@ -210,6 +210,8 @@ export default {
           }
         });
     },
+
+    //文章管理按钮
     handleArticala(id) {
       this.$router.push({ path: "/home/foottext/detail", query: { id: id } });
     },
@@ -224,6 +226,32 @@ export default {
       this.currentPage = val;
       this.init();
     },
+
+    // 1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+           //角色权限分配
+    // fenpeiPermissionDialog(roleId) {
+    //   this.roleId = roleId;
+    //   this.fenDialogVisible = true;
+    //   //查询后台接口  所有的权限 以及当前用户具有的权限id
+    //   this.$http.post("/syssystem/e-role/selectPermission/" + roleId).then((result) => {
+    //     console.log(result);
+    //     this.data = result.data.data.firstMenus;
+    //     //默认选中的树的数据
+    //     // setTimeout(() =>{
+    //     //     result.data.result..forEach(item => {
+    //     //         this.$refs.tree.setChecked(item, true, false);
+    //     //     })}, 100)
+    //     setTimeout(() => {
+    //       result.data.data.permission.forEach((item) => {
+    //         this.$refs.tree.setChecked(item, true, false);
+    //       });
+    //     }, 100);
+
+    //     // this.checkItems=result.data.permission;
+    //   });
+    // },
+// 1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+    //初始化表格
     init() {
       var that = this;
       this.$http

@@ -3,6 +3,7 @@ package com.aaa.group_three.service.impl;
 import com.aaa.entity.TbZoneBusiness;
 import com.aaa.group_three.dao.TbZoneBusinessMapper;
 import com.aaa.group_three.service.ITbZoneBusinessService;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -28,4 +29,10 @@ public class TbZoneBusinessServiceImpl extends ServiceImpl<TbZoneBusinessMapper,
 
         return tbZoneBusinessMapper.findBusiness();
         }
+
+    @Override
+    public Page getAll(Page page, TbZoneBusiness zoneBusiness) {
+
+        return tbZoneBusinessMapper.getAll(page,zoneBusiness);
     }
+}

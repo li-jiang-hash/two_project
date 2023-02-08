@@ -17,7 +17,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-button icon='el-icon-search'size="mini" type="primary" @click="handleCheck">查询</el-button>
+                    <el-button icon='el-icon-search' size="mini" type="primary" @click="handleCheck">查询</el-button>
                     <el-button icon='el-icon-refresh' size="mini" @click="handleReset" >重置</el-button>
                     <el-button type="primary" icon="el-icon-circle-plus-outline" size="mini" @click="handleAddRow()">添加</el-button>
                 </el-form-item>
@@ -86,7 +86,7 @@
 </template>
 <script>
 
-
+    import qs from "qs";
     import Edit from "./edit";
     export default {
         components: {Edit},
@@ -103,11 +103,11 @@
                 //下拉选项框的数据
                 options:[
                     {
-                    value: '0',
+                    value: "0",
                     label: '正常'
                     },
                     {
-                        value: '1',
+                        value: "1",
                         label: '禁用'
                     },
                 ],
@@ -131,19 +131,21 @@
         methods: {
             //改变状态
             changeStatus(id,isDisable){
-                this.$http.post(`/home/zone/updateDisable/${id}/${isDisable}`).then( resp => {
+                this.$http.post(`/syssystem/tb-zone/updateDisable/${id}/${isDisable}`).then( resp => {
+                    console.log(resp.data.msg);
+                    console.log("12123mmm"+resp.data)
                     if (resp.data.code===2000){
                         this.$message({
-                            message:resp.data.msg,
+                            message: resp.data.msg,
                             type:"success"
-                        })
+                        });
                     }else{
                         this.$message({
-                            message:resp.data.msg,
+                            message: resp.data.msg,
                             type:"error"
-                        })
+                        });
                     }
-                    this.init()
+                    this.init();
                 })
             },
             //新增
@@ -159,7 +161,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$http.get(`/home/zone/removePrefecture/${id}`).then(resp => {
+                    this.$http.delete(`/syssystem/tb-zone/removePrefecture/${id}`).then(resp => {
                         if (resp.data.code===2000){
                             this.$message({
                                 message:resp.data.msg,
@@ -216,12 +218,31 @@
                 this.init();
             },
             /*页面加载时获取所有的链接信息*/
+            // init(){
+            //     this.$http.post(`/syssystem/tb-zone/fuzzySearch/${this.currentPage}/${this.pageSize}`,this.searchformData)).then(resp => {
+            //         if (resp.data.code===2000){
+            //             console.log(resp.data.data)
+            //             this.tableData=resp.data.data.records;
+            //             this.total=resp.data.data.total;
+            //         }
+            //         if (resp.data.code===5000){
+            //             this.$message({
+            //                 message:resp.data.msg,
+            //                 type:"error",
+            //             })
+            //             this.tableData=[];
+            //         }
+            //     })
+            // },
             init(){
-                this.$http.post(`/home/zone/fuzzySearch/${this.currentPage}/${this.pageSize}`,this.searchformData).then(resp => {
+                // syssystem/tb-zone/fuzzySearch?currentPage=1&pageSize=5&id=ttt
+                this.$http.post("/syssystem/tb-zone/fuzzySearch?currentPage=" +this.currentPage +"&pageSize=" + this.pageSize,
+                    qs.stringify(this.searchformData)).then(resp => {
                     if (resp.data.code===2000){
-                        //console.log(resp.data.data)
+                        console.log(resp.data.data)
                         this.tableData=resp.data.data.records;
                         this.total=resp.data.data.total;
+            
                     }
                     if (resp.data.code===5000){
                         this.$message({

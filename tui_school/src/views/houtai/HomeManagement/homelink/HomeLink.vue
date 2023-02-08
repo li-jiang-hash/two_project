@@ -271,7 +271,7 @@ export default {
           } else {
             that.$message({
               message: resp.data.msg,
-              type: "error",
+              type: "error",                         
             });
           }
           that.init();

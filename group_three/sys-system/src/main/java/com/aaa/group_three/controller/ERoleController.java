@@ -24,8 +24,6 @@ public class ERoleController {
     // 查询所有的role
     @PostMapping
     public Result getAllRole(PageInfo page, ERole role){
-
-
         Page page1 = roleService.getPageData(page, role);
         return new Result(page1);
     }

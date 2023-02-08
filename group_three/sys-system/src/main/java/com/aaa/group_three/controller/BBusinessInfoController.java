@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
+import javax.annotation.Resource;
+
 /**
  * <p>
  * 商家信息表 前端控制器
  * </p>
  *
- * @author wpp
+ * @author wanglei
  * @since 2023-01-31
  */
 @RestController
@@ -38,6 +40,14 @@ public class BBusinessInfoController {
         queryWrapper.eq("status",bBusinessInfo.getStatus());
         boolean byId = bBusinessInfoService.update(bBusinessInfo,queryWrapper);
         return new Result(byId);
+    }
+
+    //    查询店铺
+    @GetMapping("getsname")
+    public Result getBid(){
+        QueryWrapper queryWrapper=new QueryWrapper<>();
+        queryWrapper.select("sname","id");
+        return new Result<>(bBusinessInfoService.list(queryWrapper));
     }
 
 }

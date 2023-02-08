@@ -180,12 +180,13 @@
 
                 var that=this;
                 this.subState = true;
-                this.$http.post("/syssso/login",qs.stringify(this.obj)).then(function (resp) {
+                this.$http.post("/syssso/login",qs.stringify(this.obj)).then(resp => {
                     if (resp.data.code===2000){
                         //console.log(resp.data.result)
                         that.subState = false;
                         that.$message.success(resp.data.msg);
                         sessionStorage.setItem("token", resp.data.data);
+                        sessionStorage.setItem("loginType",this.obj.loginType);
                         // sessionStorage.setItem("isTeacher", resp.data.result.isTeacher);
                         // sessionStorage.setItem("mobile", resp.data.result.mobile);
                         // sessionStorage.setItem("memberId", resp.data.result.memberId);

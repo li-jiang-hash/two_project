@@ -52,7 +52,7 @@
             },
             getArticala(navId) {
                 var that = this;
-                this.$http.post(`/home/article/getArticleByNavId/${navId}`).then(function (resp) {
+                this.$http.post(`/syssystem/tb-article/getArticleByNavId/${navId}`).then(function (resp) {
                     if (resp.data.data != null) {
                         that.formData = resp.data.data;
                     } else {
@@ -73,7 +73,7 @@
                 console.log(this.formData)
                 this.$refs[formData].validate((valid) => {
                     if (valid) {
-                        this.$http.post("/home/article/updateArticleByNavId", this.formData).then(function (resp) {
+                        this.$http.post("/syssystem/tb-article/updateArticleByNavId", this.formData).then(function (resp) {
                             if (resp.data.code === 2000) {
                                 that.$message({
                                     message: resp.data.msg,

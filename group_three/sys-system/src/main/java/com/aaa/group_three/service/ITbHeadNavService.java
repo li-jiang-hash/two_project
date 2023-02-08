@@ -16,4 +16,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface ITbHeadNavService extends IService<TbHeadNav> {
 
     Page getPageData(PageInfo page, TbHeadNav headNav);
+
+    Page getAll(Page page, TbHeadNav headNav);
 }

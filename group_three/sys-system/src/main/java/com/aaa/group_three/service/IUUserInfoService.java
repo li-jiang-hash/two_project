@@ -1,6 +1,8 @@
 package com.aaa.group_three.service;
 
 import com.aaa.entity.UUserInfo;
+import com.aaa.util.PageInfo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUUserInfoService extends IService<UUserInfo> {
 
+    Page getAll(PageInfo pageInfo, String startTime, String endTime);
 }

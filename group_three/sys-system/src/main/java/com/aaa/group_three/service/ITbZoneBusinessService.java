@@ -1,6 +1,7 @@
 package com.aaa.group_three.service;
 
 import com.aaa.entity.TbZoneBusiness;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -17,4 +18,6 @@ import java.util.Map;
 public interface ITbZoneBusinessService extends IService<TbZoneBusiness> {
 
     List<Map<String, Object>> findBusiness();
+
+    Page getAll(Page page, TbZoneBusiness zoneBusiness);
 }

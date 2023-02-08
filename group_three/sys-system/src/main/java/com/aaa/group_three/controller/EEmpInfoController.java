@@ -29,7 +29,6 @@ public class EEmpInfoController {
     // 根据员工的id 查询员工的角色
     @GetMapping("{id}")
     public List<EEmpInfo> findByUid(@PathVariable Integer id){
-
         return empInfoService.getById(id);
     }
 
@@ -42,7 +41,6 @@ public class EEmpInfoController {
     public Result addEmp(EEmpInfo empInfo){
         //创建/修改时间
         LocalDateTime dt = LocalDateTime.now ();
-//        empInfo.setGmtCreate(dt);
         empInfo.setGmtModified(dt);
         //saveOrUpdate  添加或修改
         //role  对象有id的值的时候 修改

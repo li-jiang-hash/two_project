@@ -13,7 +13,7 @@ import io.lettuce.core.dynamic.annotation.Param;
  * 商家信息表 Mapper 接口
  * </p>
  *
- * @author wpp
+ * @author wanglei
  * @since 2023-01-31
  */
 public interface BBusinessInfoMapper extends BaseMapper<BBusinessInfo> {

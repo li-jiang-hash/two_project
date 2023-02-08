@@ -207,7 +207,7 @@
 
             //改变状态
             changeStatus(id, isDisable) {
-                this.$http.get(`/home/zoneBusiness/changeStatus/${id}/${isDisable}`).then(resp => {
+                this.$http.get(`/syssystem/tb-zone-business/changeStatus/${id}/${isDisable}`).then(resp => {
                     if (resp.data.code === 2000) {
                         this.$message({
                             message: resp.data.msg,
@@ -235,7 +235,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$http.get(`/home/zoneBusiness/deleteZoneBusiness/${id}`).then(resp => {
+                    this.$http.get(`/syssystem/tb-zone-business/deleteZoneBusiness/${id}`).then(resp => {
                         if (resp.data.code === 2000) {
                             this.$message({
                                 message: resp.data.msg,
@@ -279,7 +279,7 @@
 
             init() {
                 // this.searchformData.zoneId = this.$route.query.zoneId
-                this.$http.post(`/home/zoneBusiness/managementZone/${this.currentPage}/${this.pageSize}`, this.searchformData).then(resp => {
+                this.$http.post("/syssystem/b-business-info/managementZone?currentPage=" +this.currentPage +"&pageSize=" + this.pageSize, qs.stringify(this.searchformData)).then(resp => {
                     if (resp.data.code === 2000) {
                         //console.log(resp.data.data)
                         this.tableData = resp.data.data.records;

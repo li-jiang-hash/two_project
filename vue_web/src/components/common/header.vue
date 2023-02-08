@@ -94,24 +94,29 @@
 				that.navList = resp.data.data;
 				//console.log(resp.data.data)
 			})
-			this.$http.get("/syssso/isLoginAndBusiness").then(resp => {
-				if (resp.data.code === 2000) {
-					this.loginType = resp.data.data;
-					console.log(this.loginType)
-				} else {
-					this.loginType = resp.data.data
-				}
-			});
+			// this.$http.get("/syssso/isLoginAndBusiness").then(resp => {
+			// 	if (resp.data.code === 2000) {
+			// 		this.loginType = resp.data.data;
+			// 		console.log(this.loginType)
+			// 	} else {
+			// 		this.loginType = resp.data.data
+			// 	}
+			// });
 			this.$http.get("/business/tokenphone").then(function(resp) {
 				that.flag = resp.data.data;
 				console.log(resp.data.data)
 			})
+			this.getLogin()
 		},
 		mounted() {
 			//this.isTeacher=window.sessionStorage.getItem("isTeacher");
 
 		},
 		methods: {
+			getLogin(){
+				this.loginType = sessionStorage.getItem("loginType")
+				console.log("LoginType"+this.loginType);
+			},
 			searchJIangshi() {
 				this.$emit("getCourseByCourseName", this.name)
 				if (!this.name) {
@@ -153,8 +158,8 @@
 			},
 			tuichu() {
 				var that = this;
-				this.$http.get("/sso/loginOut").then(function(resp) {
-					if (resp.data.code === 2000) {
+				this.$http.get("/syssso/logout").then(function(resp) {
+					if (resp.data.code === 200) {
 						sessionStorage.clear(); //清空sessionStorage中的请求头
 						that.$router.push("/qianLogin");
 					}
