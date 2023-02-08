@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.group_three.dao.GGoodsMapper">
+
+    <select id="getGoodsAll" resultType="map">
+        select g.id,g.img,g.gname,g.remark,g.price from b_business_info b,g_goods g
+        where b.id = g.bid and b.id = #{id} and g.status = 0
+    </select>
+
+</mapper>
