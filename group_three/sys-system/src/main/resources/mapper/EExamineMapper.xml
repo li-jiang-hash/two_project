@@ -5,7 +5,6 @@
         select *
         from   e_examine,e_emp_info,b_business_info
         where  bid=b_business_info.id and checkman=e_emp_info.id and e_examine.is_deleted = 0
-
       <if test="startTime!=null and startTime!=''">
             <![CDATA[and e_examine.gmt_create>=#{startTime}]]>
       </if>

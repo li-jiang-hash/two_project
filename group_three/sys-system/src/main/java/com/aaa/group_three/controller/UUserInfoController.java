@@ -3,7 +3,11 @@ package com.aaa.group_three.controller;
 
 import com.aaa.entity.UUserInfo;
 import com.aaa.group_three.service.IUUserInfoService;
+import com.aaa.util.PageInfo;
+import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -58,6 +62,22 @@ public class UUserInfoController {
     @PostMapping("updateMessage")
     public boolean updateMessage(@RequestBody UUserInfo uUserInfo){
         return userInfoService.updateById(uUserInfo);
+    }
+
+
+//    查询会员列表信息
+    @GetMapping("getAll")
+    public Result getAll(PageInfo pageInfo, String startTime, String endTime){
+        Page page=userInfoService.getAll(pageInfo,startTime,endTime);
+        return new Result(page);
+    }
+//    改变状态
+    @PostMapping("update")
+    public Result update(@RequestParam String id,@RequestParam Integer status){
+        UpdateWrapper updateWrapper=new UpdateWrapper<>();
+        updateWrapper.set("status",status);
+        updateWrapper.eq("id",id);
+        return new Result(userInfoService.update(updateWrapper));
     }
 }
 

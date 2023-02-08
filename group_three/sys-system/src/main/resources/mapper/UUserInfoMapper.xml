@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.group_three.dao.UUserInfoMapper">
+    <select id="getAll" resultType="java.util.Map">
+        select *
+        from   u_user_info
+        <where>
+            <if test="startTime!=null and startTime!=''">
+                <![CDATA[createtime>=#{startTime}]]>
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                <![CDATA[and createtime<=#{endTime}]]>
+            </if>
+        </where>
 
+    </select>
 </mapper>
