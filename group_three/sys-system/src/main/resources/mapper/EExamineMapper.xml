@@ -7,12 +7,10 @@
         where  bid=b_business_info.id and checkman=e_emp_info.id and e_examine.is_deleted = 0
 
       <if test="startTime!=null and startTime!=''">
-            <![CDATA[and gmt_create>=#{startTime}]]>
+            <![CDATA[and e_examine.gmt_create>=#{startTime}]]>
       </if>
       <if test="endTime!=null and endTime!=''">
-
-            <![CDATA[and gmt_create<=#{endTime}]]>
+            <![CDATA[and e_examine.gmt_create<=#{endTime}]]>
       </if>
-
     </select>
 </mapper>

@@ -34,7 +34,6 @@ public class EExamineController {
     @GetMapping("examine")
     public Result getAllApp(PageInfo pageInfo,String startTime, String endTime){
        Page page=eExamineService.getAll(pageInfo,startTime,endTime);
-
         return new Result(page);
     }
 //
