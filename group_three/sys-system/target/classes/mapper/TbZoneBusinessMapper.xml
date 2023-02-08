@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.aaa.group_three.dao.TbZoneBusinessMapper">
-    <select id="findBusiness" resultType="java.util.Map">
-        select z.bid,z.zone_id,b.bicon,b.sname from b_business_info b join tb_zone_business z on b.id = z.bid
-    </select>
-</mapper>

@@ -5,6 +5,7 @@ import com.aaa.entity.TbLink;
 import com.aaa.group_three.service.ITbLinkService;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ import javax.annotation.Resource;
  *  前端控制器
  * </p>
  *
- * @author yuyongli
+ * @author wanglie
  * @since 2023-01-18
  */
 @RestController
@@ -69,5 +70,12 @@ public class TbLinkController {
     }
 
 
+    @GetMapping("/getQianLink")
+    public Result getQianLink(){
+        QueryWrapper<TbLink> wrapper = new QueryWrapper<>();
+        wrapper.eq("is_disable","0");
+        wrapper.select("link_url","link_name");
+        return new Result<>(linkService.list(wrapper));
+    }
 }
 

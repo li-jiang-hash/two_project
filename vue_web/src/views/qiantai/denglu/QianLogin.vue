@@ -78,7 +78,7 @@
             YButton
         },
         data () {
-            
+
             return {
                 /*验证码的获取*/
                 txt: '获取验证码',
@@ -245,7 +245,7 @@
                         that.pobj={};
 
                     }else if(resp.data.code===4000){
-                        //该手机号已注册
+                        //该手机号以注册
                         that.$message.error(resp.data.msg);
                         that.changetab(1);
                         that.pobj={};

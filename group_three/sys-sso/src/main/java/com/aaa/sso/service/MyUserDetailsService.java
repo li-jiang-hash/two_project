@@ -1,8 +1,6 @@
 package com.aaa.sso.service;
 
 import com.aaa.entity.EEmpInfo;
-import com.aaa.entity.TRole;
-import com.aaa.entity.TUser;
 import com.aaa.sso.feign.UserService;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.group_three.dao.EExamineMapper">
+    <select id="findAll" resultType="java.util.Map">
+        select *
+        from   e_examine,e_emp_info,b_business_info
+        where  bid=b_business_info.id and checkman=e_emp_info.id and e_examine.is_deleted = 0
+
+      <if test="startTime!=null and startTime!=''">
+            <![CDATA[and gmt_create>=#{startTime}]]>
+      </if>
+      <if test="endTime!=null and endTime!=''">
+
+            <![CDATA[and gmt_create<=#{endTime}]]>
+      </if>
+
+    </select>
+</mapper>

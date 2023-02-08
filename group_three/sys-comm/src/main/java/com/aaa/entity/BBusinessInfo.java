@@ -1,5 +1,6 @@
 package com.aaa.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -10,7 +11,7 @@ import java.io.Serializable;
  * 商家信息表
  * </p>
  *
- * @author wanglei
+ * @author wpp
  * @since 2023-01-31
  */
 @Data
@@ -120,6 +121,7 @@ public class BBusinessInfo implements Serializable {
      * 店铺地址
      */
     private String address;
-
+    @TableField(exist = false)
+    private GSort gSort;
 
 }

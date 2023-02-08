@@ -1,10 +1,13 @@
 package com.aaa.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -54,6 +57,9 @@ public class TbBottomArticle implements Serializable {
      * 更新时间
      */
     private LocalDateTime gmtModified;
+
+    @TableField(exist = false)
+    private List<TbBottomArticle> children = new ArrayList<>();
 
 
 }

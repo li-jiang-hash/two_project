@@ -1,15 +1,10 @@
 package com.aaa.sso.feign;
 
 import com.aaa.entity.EEmpInfo;
-import com.aaa.entity.TRole;
-import com.aaa.entity.TUser;
 import com.aaa.entity.UUserInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 

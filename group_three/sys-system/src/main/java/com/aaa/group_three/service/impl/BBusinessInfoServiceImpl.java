@@ -1,13 +1,14 @@
 package com.aaa.group_three.service.impl;
 
+import com.aaa.entity.BAppeal;
 import com.aaa.entity.BBusinessInfo;
+import com.aaa.group_three.dao.BAppealMapper;
 import com.aaa.group_three.dao.BBusinessInfoMapper;
 import com.aaa.group_three.service.IBBusinessInfoService;
 import com.aaa.util.PageInfo;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -22,6 +23,11 @@ import javax.annotation.Resource;
  */
 @Service
 public class BBusinessInfoServiceImpl extends ServiceImpl<BBusinessInfoMapper, BBusinessInfo> implements IBBusinessInfoService {
-
-
+    @Resource
+    private BBusinessInfoMapper bBusinessInfoMapper;
+    @Override
+    public Page getPageData(PageInfo page, BBusinessInfo bBusinessInfo) {
+        Page list=bBusinessInfoMapper.findAll(page,bBusinessInfo);
+        return list;
+    }
 }

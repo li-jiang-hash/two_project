@@ -88,4 +88,6 @@ public class EEmpInfo implements Serializable {
      */
     private Integer isDeleted;
 
+
+
 }
