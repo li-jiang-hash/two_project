@@ -50,7 +50,7 @@
             <div class="xieyi_content">
                 <div class="xieyi_title">用户协议</div>
                 <div class="xieyi_body">
-                    <span style="color: red;text-align:center;font-size: 30px" >同意就行！！！</span>
+                    <span style="color: red;text-align:center;font-size: 30px" >此处保留解释权！！！</span>
                 </div>
                 <input type="button" class="xieyi_btn" value="确定" @click="xieyi = false">
             </div>
@@ -157,9 +157,8 @@
 
             changetab (int) {
                 this.tab = int;
-                let _that = this;
-                setTimeout(function(){
-                    _that.tabp = int
+                setTimeout(()=>{
+                    this.tabp = int
                 },200)
             },
             loginSubmit (e) {
@@ -187,10 +186,10 @@
                         that.$message.success(resp.data.msg);
                         sessionStorage.setItem("token", resp.data.data);
                         sessionStorage.setItem("loginType",this.obj.loginType);
+                        sessionStorage.setItem("telephone",this.obj.telephone);
                         // sessionStorage.setItem("isTeacher", resp.data.result.isTeacher);
                         // sessionStorage.setItem("mobile", resp.data.result.mobile);
                         // sessionStorage.setItem("memberId", resp.data.result.memberId);
-                        console.log(that.obj.loginType==="USER_PHONE")
                         if(that.obj.loginType==="USER_PHONE"){
                             that.$router.push("/")
                         }else if(that.obj.loginType==="EMP_PHONE"){

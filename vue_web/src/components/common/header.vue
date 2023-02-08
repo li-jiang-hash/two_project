@@ -4,7 +4,7 @@
 		<div class="h_top">
 			<div class="h_top_body">
 				<ul class="top_list clearfix">
-					<li><a href="/recruit" v-if="this.loginType=='USER_PHONE' && flag===false">入驻商家</a></li>
+					<li><a href="/recruit" v-if="this.loginType=='USER_PHONE' && flag">入驻商家</a></li>
 					<li class="">
 						<router-link :to="{path: '/geRenCenter'}" v-if="this.loginType=='USER_PHONE'">个人中心</router-link>
 					</li>
@@ -23,8 +23,8 @@
 					<li><a @click="tuichu" v-if="this.loginType!=null">退出</a></li>
 				</ul>
 				<ul class="top_list clearfix">
-					<li class="s_left"><a href="javascript:" @click="login" v-if="true">登录</a></li>
-					<li><a href="javascript:" @click="register" v-if="true">注册</a></li>
+					<li class="s_left"><a href="javascript:" @click="login" v-if="this.loginType==null">登录</a></li>
+					<li><a href="javascript:" @click="register" v-if="this.loginType==null">注册</a></li>
 				</ul>
 			</div>
 		</div>
@@ -83,7 +83,8 @@
 				prefecture: [],
 				loginType: "",
 				token: "",
-				flag: ""
+				flag: "",
+				phone: ""
 			}
 		},
 		created() {
@@ -102,9 +103,11 @@
 			// 		this.loginType = resp.data.data
 			// 	}
 			// });
-			this.$http.get("/business/tokenphone").then(function(resp) {
+			this.getphone()
+			this.$http.get("/syssystem/b-business-info/tokenphone?phone="+this.phone).then(resp  =>{
 				that.flag = resp.data.data;
-				console.log(resp.data.data)
+				console.log("-----------------------"+this.phone);
+				console.log("====================================:"+resp.data.data)
 			})
 			this.getLogin()
 		},
@@ -116,6 +119,10 @@
 			getLogin(){
 				this.loginType = sessionStorage.getItem("loginType")
 				console.log("LoginType"+this.loginType);
+			},
+			
+			getphone(){
+				this.phone = sessionStorage.getItem("telephone")
 			},
 			searchJIangshi() {
 				this.$emit("getCourseByCourseName", this.name)
