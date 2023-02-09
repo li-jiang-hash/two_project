@@ -11,7 +11,7 @@
         <div>
           <el-upload
             class="avatar-uploader"
-            action="http://192.168.1.23:7000/syssystem/tb-banner/upload"
+            action="http://192.168.1.23:7000/syssystem/file/upload"
             :show-file-list="false"
             :headers="token"
             :on-success="handleAvatarSuccess"
