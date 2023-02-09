@@ -19,4 +19,9 @@
         </if>
     </select>
 
+    <select id="getGoodsAll" resultType="map">
+        select g.id,g.img,g.gname,g.remark,g.price from b_business_info b,g_goods g
+        where b.id = g.bid and b.id = #{id} and g.status = 0
+    </select>
+
 </mapper>

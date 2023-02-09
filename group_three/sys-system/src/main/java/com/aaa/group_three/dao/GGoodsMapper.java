@@ -16,6 +16,7 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface GGoodsMapper extends BaseMapper<GGoods> {
 
+    Page getGoodsAll(PageInfo pageInfo, String id);
 
     Page findAllGoods(PageInfo pageInfo,@Param("goods") GGoods goods);
 }

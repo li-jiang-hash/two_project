@@ -4,7 +4,7 @@
 		<div class="h_top">
 			<div class="h_top_body">
 				<ul class="top_list clearfix">
-					<li><a href="/recruit" v-if="this.loginType=='USER_PHONE' && flag===false">入驻商家</a></li>
+					<li><a href="/recruit" v-if="this.loginType=='USER_PHONE' && flag">入驻商家</a></li>
 					<li class="">
 						<router-link :to="{path: '/geRenCenter'}" v-if="this.loginType=='USER_PHONE'">个人中心</router-link>
 					</li>
@@ -23,8 +23,8 @@
 					<li><a @click="tuichu" v-if="this.loginType!=null">退出</a></li>
 				</ul>
 				<ul class="top_list clearfix">
-					<li class="s_left"><a href="javascript:" @click="login" v-if="true">登录</a></li>
-					<li><a href="javascript:" @click="register" v-if="true">注册</a></li>
+					<li class="s_left"><a href="javascript:" @click="login" v-if="this.loginType==null">登录</a></li>
+					<li><a href="javascript:" @click="register" v-if="this.loginType==null">注册</a></li>
 				</ul>
 			</div>
 		</div>
@@ -83,7 +83,8 @@
 				prefecture: [],
 				loginType: "",
 				token: "",
-				flag: ""
+				flag: "",
+				phone: ""
 			}
 		},
 		created() {
@@ -94,24 +95,32 @@
 				that.navList = resp.data.data;
 				//console.log(resp.data.data)
 			})
-			this.$http.get("/syssso/isLoginAndBusiness").then(resp => {
-				if (resp.data.code === 2000) {
-					this.loginType = resp.data.data;
-					console.log(this.loginType)
-				} else {
-					this.loginType = resp.data.data
-				}
-			});
-			this.$http.get("/business/tokenphone").then(function(resp) {
+			// this.$http.get("/syssso/isLoginAndBusiness").then(resp => {
+			// 	if (resp.data.code === 2000) {
+			// 		this.loginType = resp.data.data;
+			// 		console.log(this.loginType)
+			// 	} else {
+			// 		this.loginType = resp.data.data
+			// 	}
+			// });
+			this.getphone()
+			this.$http.get("/syssystem/b-business-info/tokenphone?phone="+this.phone).then(resp  =>{
 				that.flag = resp.data.data;
-				console.log(resp.data.data)
 			})
+			this.getLogin()
 		},
 		mounted() {
 			//this.isTeacher=window.sessionStorage.getItem("isTeacher");
 
 		},
 		methods: {
+			getLogin(){
+				this.loginType = sessionStorage.getItem("loginType")
+			},
+			
+			getphone(){
+				this.phone = sessionStorage.getItem("telephone")
+			},
 			searchJIangshi() {
 				this.$emit("getCourseByCourseName", this.name)
 				if (!this.name) {
@@ -153,8 +162,8 @@
 			},
 			tuichu() {
 				var that = this;
-				this.$http.get("/sso/loginOut").then(function(resp) {
-					if (resp.data.code === 2000) {
+				this.$http.get("/syssso/logout").then(function(resp) {
+					if (resp.data.code === 200) {
 						sessionStorage.clear(); //清空sessionStorage中的请求头
 						that.$router.push("/qianLogin");
 					}

@@ -77,7 +77,7 @@ public class TbBannerController {
     public Result getRotationalSeeding(){
         QueryWrapper<TbBanner> wrapper = new QueryWrapper<>();
         wrapper.eq("is_disable","0");
-        wrapper.select("id","title","image_url","link_url");
+        wrapper.select("id","title","image_url","link_url","sort");
         return new Result<>(bannerService.list(wrapper));
     }
 }
