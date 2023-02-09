@@ -1,19 +1,16 @@
 package com.aaa.group_three.controller;
 
 
-import com.aaa.entity.TbZone;
-import com.aaa.entity.TbZoneBusiness;
 import com.aaa.group_three.service.ITbZoneBusinessService;
-import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
-import static org.assertj.core.util.Lists.list;
 
 /**
  * <p>
