@@ -9,10 +9,11 @@
 			<!--讲师信息展示-->
 			<div class="login_Avatar" style="float: left">
 				<!--商家头像-->
-				<img :src="business.bicon" height="434" width="434" />
+				<img :src="business[0].bicon" height="434" width="434" />
 			</div>
 			<div style="font-size: 20px;margin-left: 120px;margin-top: -50px;display: block;color: red">
-				{{business.sname}}</div>
+				{{business[0].sname}}
+			</div>
 		</div>
 		<!-- 右边通过v-for循环展示出的内容 -->
 		<div style="margin:25px 120px;">
@@ -27,7 +28,7 @@
 						<!-- 名字 -->
 						<div class="phone_title">{{good.gname}}</div>
 						<!-- 备注 -->
-						<p class="desc">{{good.desc}}</p>
+						<p class="remark">{{good.remark}}</p>
 						<!-- 价格 -->
 						<p class="price">
 							<span>{{good.price}}</span>
@@ -93,6 +94,10 @@
 				this.shenfen = resp.data.data;
 				console.log(this.shenfen)
 			})
+			//商家头像及名字
+			this.$http.get("syssystem/b-business-info/getsname?id=" + this.bid).then(res => {
+				this.business = res.data.data
+			})
 
 		},
 		methods: {
@@ -115,18 +120,17 @@
 					this.$message.warning("登录后才能访问")
 				}
 			},
-			//获取讲师课程信息
+
 			inintCourse() {
 				var that = this
 				this.$http.get(
 					`/syssystem/g-goods/findGoodsByBid/${this.pageObj.pageCurrent}/${this.pageObj.pageSize}/${this.bid}`
-					).then(function(resp) {
+				).then(function(resp) {
 					if (resp.data.code === 2000) {
-						that.business = resp.data.data.business;
 						console.log(that.business)
-						that.goods = resp.data.data.goods.records;
+						that.goods = resp.data.data.records;
 						console.log(that.goods)
-						that.pageObj.totalCount = resp.data.data.goods.total;
+						that.pageObj.totalCount = resp.data.data.total;
 					} else {
 						that.pageObj.totalCount = 0;
 					}

@@ -1,18 +1,13 @@
 package com.aaa.group_three.controller;
 
 
-import com.aaa.entity.BAppeal;
 import com.aaa.entity.BBusinessInfo;
-import com.aaa.group_three.service.impl.BAppealServiceImpl;
 import com.aaa.group_three.service.impl.BBusinessInfoServiceImpl;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 
 import javax.annotation.Resource;
 
@@ -44,9 +39,12 @@ public class BBusinessInfoController {
 
     //    查询店铺
     @GetMapping("getsname")
-    public Result getBid(){
+    public Result getBid(String id){
         QueryWrapper queryWrapper=new QueryWrapper<>();
-        queryWrapper.select("sname","id");
+        if (id != null){
+            queryWrapper.eq("id",id);
+        }
+        queryWrapper.select("sname","id","bicon");
         return new Result<>(bBusinessInfoService.list(queryWrapper));
     }
 
