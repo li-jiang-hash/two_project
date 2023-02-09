@@ -47,6 +47,15 @@ public class BBusinessInfoController {
         queryWrapper.select("sname","id","bicon");
         return new Result<>(bBusinessInfoService.list(queryWrapper));
     }
+    @GetMapping("tokenphone")
+    public Result getPhone(String phone){
+        QueryWrapper queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("telephone",phone);
+        boolean one = bBusinessInfoService.getOne(queryWrapper) ==null;
+        System.out.println("llllllllllllllllllllllllllllllllllllllllllllllllllll:++++++"+phone);
+        System.out.println("llllllllllllllllllllllllllllllllllllllllllllllllllll:"+bBusinessInfoService.getOne(queryWrapper));
+        return new Result(one);
+    }
 
 }
 
