@@ -27,12 +27,14 @@ public class GGoodsController {
     @Resource
     private IGGoodsService goodsService;
 
+    /**
+     *店铺商品
+     * @return
+     */
     @GetMapping("findGoodsByBid/{pageCurrent}/{pageSize}/{id}")
     public Result findAll(@PathVariable Integer pageCurrent,@PathVariable Integer pageSize,@PathVariable String id){
         PageInfo pageInfo = new PageInfo(pageCurrent, pageSize);
-        
         Page page = goodsService.getGoodsAll(pageInfo,id);
-
         return new Result(page);
     }
 

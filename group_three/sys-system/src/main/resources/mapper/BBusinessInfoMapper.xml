@@ -10,4 +10,6 @@
             and b_business_info.status = #{bBusinessInfo.status}
         </if>
     </select>
+
+
 </mapper>

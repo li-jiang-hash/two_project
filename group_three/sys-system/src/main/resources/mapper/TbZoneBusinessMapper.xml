@@ -9,4 +9,13 @@
              left join o_stock s on s.goods_id = g.id
         group by z.bid, z.zone_id, b.bicon, b.sname
     </select>
+
+    <select id="findBusinessByName" resultType="java.util.Map">
+        select b.bicon, b.sname, min(g.price) minprice, sum(s.sell_num) sales
+        from b_business_info b
+            inner join g_goods g on g.bid = b.id
+            left join o_stock s on s.goods_id = g.id
+        where sname like CONCAT('%',#{chandVal},'%')
+        group by b.id
+    </select>
 </mapper>

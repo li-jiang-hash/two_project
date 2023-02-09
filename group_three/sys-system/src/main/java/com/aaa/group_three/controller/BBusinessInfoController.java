@@ -37,12 +37,13 @@ public class BBusinessInfoController {
         return new Result(byId);
     }
 
-    //    查询店铺
+    //查询店铺
+    //首页店铺与名字
     @GetMapping("getsname")
-    public Result getBid(String id){
+    public Result getBid(BBusinessInfo bBusinessInfo){
         QueryWrapper queryWrapper=new QueryWrapper<>();
-        if (id != null){
-            queryWrapper.eq("id",id);
+        if (bBusinessInfo.getId() != null){
+            queryWrapper.eq("id",bBusinessInfo.getId());
         }
         queryWrapper.select("sname","id","bicon");
         return new Result<>(bBusinessInfoService.list(queryWrapper));
@@ -52,8 +53,6 @@ public class BBusinessInfoController {
         QueryWrapper queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("telephone",phone);
         boolean one = bBusinessInfoService.getOne(queryWrapper) ==null;
-        System.out.println("llllllllllllllllllllllllllllllllllllllllllllllllllll:++++++"+phone);
-        System.out.println("llllllllllllllllllllllllllllllllllllllllllllllllllll:"+bBusinessInfoService.getOne(queryWrapper));
         return new Result(one);
     }
 
