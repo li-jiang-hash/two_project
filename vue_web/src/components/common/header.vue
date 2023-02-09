@@ -106,8 +106,6 @@
 			this.getphone()
 			this.$http.get("/syssystem/b-business-info/tokenphone?phone="+this.phone).then(resp  =>{
 				that.flag = resp.data.data;
-				console.log("-----------------------"+this.phone);
-				console.log("====================================:"+resp.data.data)
 			})
 			this.getLogin()
 		},
@@ -118,7 +116,6 @@
 		methods: {
 			getLogin(){
 				this.loginType = sessionStorage.getItem("loginType")
-				console.log("LoginType"+this.loginType);
 			},
 			
 			getphone(){
