@@ -39,13 +39,8 @@ public class BBusinessInfoController {
 
     //    查询店铺
     @GetMapping("getsname")
-    public Result getBid(String id){
-        QueryWrapper queryWrapper=new QueryWrapper<>();
-        if (id != null){
-            queryWrapper.eq("id",id);
-        }
-        queryWrapper.select("sname","id","bicon");
-        return new Result<>(bBusinessInfoService.list(queryWrapper));
+    public Result getSname(){
+        return new Result(bBusinessInfoService.list());
     }
     @GetMapping("tokenphone")
     public Result getPhone(String phone){

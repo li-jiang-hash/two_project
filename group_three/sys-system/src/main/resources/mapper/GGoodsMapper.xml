@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.group_three.dao.GGoodsMapper">
+    <select id="findAllGoods" resultType="java.util.Map">
+        select g_goods.id,img,gname,sname,remark,price,brandname,sortname,depositname,unitname,addtime,expirationtime,g_goods.check_content,g_goods.state
+        from g_goods,b_business_info,g_brand,g_deposit,g_sort,g_unit
+        where bid=b_business_info.id and brandid=g_brand.id and g_goods.sortid=g_sort.id and depositid=g_deposit.id and unitid=g_unit.id and isdeleted=0
+        <if test="goods.gname != null">
+            and g_goods.gname like concat('%',#{goods.gname},'%')
+        </if>
+        <if test="goods.sortid != null">
+            and g_goods.sortid=#{goods.sortid}
+        </if>
+        <if test="goods.state != null">
+            and g_goods.state=#{goods.state}
+        </if>
+        <if test="goods.bid!=null">
+            and g_goods.bid=#{goods.bid}
+        </if>
+    </select>
 
     <select id="getGoodsAll" resultType="map">
         select g.id,g.img,g.gname,g.remark,g.price from b_business_info b,g_goods g
