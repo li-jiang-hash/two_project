@@ -8,6 +8,7 @@ import com.aaa.group_three.service.impl.BBusinessInfoServiceImpl;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
@@ -34,20 +35,17 @@ public class BBusinessInfoController {
         Page page1 = bBusinessInfoService.getPageData(page, bBusinessInfo);
         return new Result(page1);
     }
+//    商家入住审核
     @PostMapping("shenhe")
     public Result getById(@RequestBody BBusinessInfo bBusinessInfo){
-        QueryWrapper<BBusinessInfo> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("status",bBusinessInfo.getStatus());
-        boolean byId = bBusinessInfoService.update(bBusinessInfo,queryWrapper);
+        boolean byId = bBusinessInfoService.updateById(bBusinessInfo);
         return new Result(byId);
     }
 
-    //    查询店铺
+    //    查询店铺名称
     @GetMapping("getsname")
-    public Result getBid(){
-        QueryWrapper queryWrapper=new QueryWrapper<>();
-        queryWrapper.select("sname","id");
-        return new Result<>(bBusinessInfoService.list(queryWrapper));
+    public Result getSname(){
+      return new Result(bBusinessInfoService.list());
     }
 
 }
