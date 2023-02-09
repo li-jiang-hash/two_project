@@ -21,7 +21,7 @@ import java.util.List;
  */
 //@CrossOrigin
 @RestController
-@RequestMapping("/sys-sso")
+@RequestMapping("/user")
 public class UUserInfoController {
 
     @Resource

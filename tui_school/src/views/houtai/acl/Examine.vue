@@ -71,7 +71,6 @@
         </el-table-column>
         <el-table-column align="center" fixed="right" label="操作" width="350">
           <template slot-scope="scope">
-            <!--                        <el-button type="success"  size="medium " @click="update(scope.row)">修改</el-button>-->
             <el-button type="danger" size="medium" @click="del(scope.row, scope.row.id)"
               >删除</el-button
             >
@@ -368,22 +367,6 @@ export default {
       this.displayUpdateForm = false;
       this.$refs.updateForm.resetFields();
     },
-    // //修改表单提交事件
-    // updateFormSubmit() {
-    //     this.$refs.updateForm.validate(valid => {
-    //         if (valid) {
-    //             this.$http.post(`emp/message/updateMessage/`, this.updateFormDate).then((resp) => {
-    //                 if (resp.data.code === 2000) {
-    //                     this.$message.success(resp.data.msg);
-    //                     this.initTable();
-    //                     this.handleUpdateClose();
-    //                 } else {
-    //                     this.$message.error(resp.data.msg);
-    //                 }
-    //             })
-    //         }
-    //     })
-    // }
   },
 };
 </script>

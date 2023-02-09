@@ -30,4 +30,5 @@ public class BBusinessInfoServiceImpl extends ServiceImpl<BBusinessInfoMapper, B
         Page list=bBusinessInfoMapper.findAll(page,bBusinessInfo);
         return list;
     }
+
 }
