@@ -1,11 +1,10 @@
 package com.aaa.group_three.controller;
 
+
 import com.aaa.entity.GGoods;
 import com.aaa.group_three.service.IGGoodsService;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +23,13 @@ import javax.annotation.Resource;
 public class GGoodsController {
     @Resource
     private IGGoodsService goodsService;
+
+    @GetMapping("findGoodsByBid/{pageCurrent}/{pageSize}/{id}")
+    public Result findAll(@PathVariable Integer pageCurrent, @PathVariable Integer pageSize, @PathVariable String id) {
+        PageInfo pageInfo = new PageInfo(pageCurrent, pageSize);
+        Page page = goodsService.getGoodsAll(pageInfo, id);
+        return new Result(page);
+    }
 
 //    查询goods表中数据
     @PostMapping("findAllGoods")

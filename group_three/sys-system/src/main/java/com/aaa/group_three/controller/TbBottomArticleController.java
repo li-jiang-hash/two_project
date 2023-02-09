@@ -96,14 +96,15 @@ public class TbBottomArticleController {
 
         int i = 0;
         for (TbBottomArticle parent : parentList){
+            //添加父节点
+            articleList.add(parent);
             for (TbBottomArticle child : childList){
                 if (parent.getId().equals(child.getParentId())){
-                    articleList.add(parent);
-                    //将字节点放入 children
+                    //将子节点放入 children
                     articleList.get(i).getChildren().add(child);
-                    i++;
                 }
             }
+            i++;
         }
 
         return new Result<>(articleList);

@@ -17,4 +17,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IGGoodsService extends IService<GGoods> {
 
     Page getAllGoods(PageInfo pageInfo, GGoods goods);
+    Page getGoodsAll(PageInfo pageInfo, String id);
 }
