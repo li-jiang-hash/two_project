@@ -74,6 +74,13 @@
                     callback()
                 }
             }
+            var authenticationPass = (rule, value, callback) => {
+                if (value !== sessionStorage.getItem("password")) {
+                    callback(new Error("密码输入错误，请重新输入"))
+                } else {
+                    callback()
+                }
+            }
             var validatePass2 = (rule, value, callback) => {
                 if (value === "") {
                     callback(new Error("请再次输入密码"))
@@ -94,6 +101,7 @@
                 dialogPassVisible: false,
                 title: "",
                 userId: "",
+                phone: '',
 
                 //修改密码的数据
                 updatePasswordDate: {
@@ -104,7 +112,8 @@
                 //修改密码的规则
                 passwordRules: {
                     oldPassword: [
-                        {required: true, validator: validatePass, trigger: "blur"}
+                        {required: true, validator: validatePass, trigger: "blur"},
+                        {required: true, validator: authenticationPass, trigger: "blur"}
                     ],
                     newPassword: [
                         {required: true, validator: validatePass, trigger: "blur"}
@@ -114,6 +123,9 @@
                     ]
                 }
             }
+        },
+        created(){
+            console.log(this.phone = sessionStorage.getItem("houtelephone"));
         },
         methods: {
             collapse() {
@@ -180,10 +192,12 @@
 
             //修改密码方法
             readyUpdate(){
+                console.log("mia");
                 var that=this;
                 this.$refs.updatePassword.validate((valid) => {//判断表单内是否有标红的地方
+                console.log(valid);
                     if (valid) {
-                        this.$http.post(`/emp/updatePassword/${this.updatePasswordDate.oldPassword}/${this.updatePasswordDate.newPassword}`).then(function (resp) {
+                        this.$http.post(`/syssystem/e-emp-info/updatePassword/${this.phone}/${this.updatePasswordDate.oldPassword}/${this.updatePasswordDate.newPassword}`).then(function (resp) {
                             if (resp.data.code === 2000) {//修改成功
                                 that.$message.success(resp.data.msg);
                                 that.tuichu();
