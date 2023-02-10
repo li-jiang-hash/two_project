@@ -24,6 +24,7 @@ import javax.annotation.Resource;
 public class BBusinessInfoController {
     @Resource
     private BBusinessInfoServiceImpl bBusinessInfoService;
+
     @PostMapping("ruzhu")
     public Result getAllApp(PageInfo page, @RequestBody BBusinessInfo bBusinessInfo){
         Page page1 = bBusinessInfoService.getPageData(page, bBusinessInfo);
@@ -37,11 +38,12 @@ public class BBusinessInfoController {
         return new Result(byId);
     }
 
-    //    查询店铺
+    //    查询店铺名称
     @GetMapping("getsname")
     public Result getSname(){
         return new Result(bBusinessInfoService.list());
     }
+
     @GetMapping("tokenphone")
     public Result getPhone(String phone){
         QueryWrapper queryWrapper=new QueryWrapper<>();

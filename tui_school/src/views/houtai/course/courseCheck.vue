@@ -4,10 +4,10 @@
             <!--查询的表单数据-->
             <el-form :inline="true" :model="map" size="mini">
                 <el-form-item label="商品名称:">
-                    <el-input v-model.trim="map.goodsname"></el-input>
+                    <el-input v-model.trim="map.gname"></el-input>
                 </el-form-item>
                 <el-form-item label="店铺名称:">
-                    <el-select v-model="map.businessid" filterable placeholder="请选择店铺名称">
+                    <el-select v-model="map.bid" filterable placeholder="请选择店铺名称">
                         <el-option
                                 v-for="item in shops"
                                 :label="item.sname"
@@ -48,7 +48,7 @@
         </div>
         <!--审核的弹出框-->
         <el-dialog
-                title="课程审核"
+                title="商品审核"
                 :visible.sync="checkvisible"
                 :before-close="closeCllback1"
                 width="30%">
@@ -72,7 +72,7 @@
         <el-table  size="medium" :data="list" stripe border>
             <el-table-column prop="id" label="商品编号" width="100" align="center" fixed>
             </el-table-column>
-            <el-table-column prop="businessInfo.sname" label="所属店铺" width="100" align="center" >
+            <el-table-column prop="sname" label="所属店铺" width="100" align="center" >
             </el-table-column>
             <el-table-column prop="img" label="商品图片" width="122" fixed header-align="center" align="center">
                 <template slot-scope="scope">
@@ -102,7 +102,7 @@
             </el-table-column>
             <el-table-column prop="expirationtime" label="保质期" width="180">
             </el-table-column>
-            <el-table-column prop="checkContent" label="审查备注" width="180">
+            <el-table-column prop="check_content" label="审查备注" width="180">
             </el-table-column>
             <el-table-column
                     label="审核状态"
@@ -137,18 +137,16 @@
 </template>
 
 <script>
+
+import qs  from 'qs'
     export default {
-        name: "courseCheck",
         data() {
             return {
                 //所有商品类型信息
                 sorts:{},
                 //所有店铺信息
                 shops:{},
-                editorOption:{},
-                editor: {},
                 dialogVisible: false,
-                editVisible: false,
                 visible: false,
                 checkvisible:false,
                 map: {},
@@ -157,9 +155,8 @@
                 list: [],
                 page: {
                     beginPageIndex: 1,
-                    currentPage: 1,
                     endPageIndex: 8,
-                    pageCurrent: 1,
+                    currentPage: 1,
                     pageSize: 5,
                     totalCount: 0,
                     totalPage: 0
@@ -173,7 +170,7 @@
         },
         methods: {
             goodsSort(){
-               this.$http.get("syssystem/g-sort/sort").then(res=>{
+               this.$http.get("/syssystem/g-sort/sort").then(res=>{
                    if (res.data.code===2000){
                        this.sorts = res.data.data;
                    }
@@ -182,7 +179,6 @@
             initShops(){
               this.$http.get("/syssystem/b-business-info/getsname").then(res=>{
                   if (res.data.code===2000){
-                      console.log(res.data.data)
                       this.shops = res.data.data;
                   }
               })
@@ -190,7 +186,7 @@
             // 商品分类分页列表接口
             searchCourse(){
                 var that =this
-                this.$http.post(`/syssystem/g-goods/findAllGoods/${this.page.pageCurrent}/${this.page.pageSize}`,this.map).then(function (resp) {
+                this.$http.post(`/syssystem/g-goods/findAllGoods?currentPage=${this.page.currentPage}&pageSize=${this.page.pageSize}`,qs.stringify(this.map)).then(function (resp) {
                     if (resp.data.code===2000){
                         that.list = resp.data.data.records
                         that.page.totalCount = resp.data.data.total
@@ -204,8 +200,7 @@
                 this.$http.post(`/syssystem/g-goods/shenhe`,this.checkformData).then(function (resp) {
                     if (resp.data.code===2000){
                         that.$message.success(resp.data.msg);
-                        that.checkvisible = false
-                        that.searchCourse()
+                        that.resetCheck()
                     }else {
                         that.$message.error(resp.data.msg);
                         that.checkvisible = false
@@ -232,7 +227,7 @@
                 this.searchCourse()
             },
             handleCurrentChange(val) {
-                this.page.pageCurrent = val
+                this.page.currentPage = val
                 this.searchCourse()
             },
             // 刷新当前页面
@@ -240,12 +235,6 @@
                 this.map = {}
                 this.formData = {}
                 this.searchCourse()
-            },
-            // 关闭编辑弹窗回调
-            closeCllback() {
-                this.visible = false;
-                this.$refs.formDataRef.resetFields();
-                this.$router.go(0)
             },
             //关闭审核弹框回调
             closeCllback1(){
@@ -261,7 +250,3 @@
 
     }
 </script>
-
-<style scoped>
-
-</style>

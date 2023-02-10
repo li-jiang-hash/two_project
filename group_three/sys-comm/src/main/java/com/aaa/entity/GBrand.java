@@ -1,6 +1,8 @@
 package com.aaa.entity;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -42,6 +44,11 @@ public class GBrand implements Serializable {
      * 备注
      */
     private String checkContent;
+    /**
+     * 品牌所属类别名称
+     */
+    @TableField(exist = false)
+    private GSort sortname;
 
     /**
      * 品牌所属类别

@@ -268,6 +268,7 @@ export default {
       var that=this;
       this.$http.get(`/business/showshop`).then(function (result) {
         that.obj=result.data.data;
+        console.log(that.obj);
         //console.log(result)
       })
     }

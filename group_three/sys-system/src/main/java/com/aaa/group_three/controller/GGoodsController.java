@@ -33,7 +33,7 @@ public class GGoodsController {
 
 //    查询goods表中数据
     @PostMapping("findAllGoods")
-    public Result getAllApp(PageInfo pageInfo,@RequestBody GGoods goods){
+    public Result getAllApp(PageInfo pageInfo, GGoods goods){
         Page allGoods = goodsService.getAllGoods(pageInfo, goods);
         return new Result(allGoods);
     }

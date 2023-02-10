@@ -177,29 +177,26 @@
                 //     return false;
                 // }
 
-                var that=this;
                 this.subState = true;
                 this.$http.post("/syssso/login",qs.stringify(this.obj)).then(resp => {
                     if (resp.data.code===2000){
-                        //console.log(resp.data.result)
-                        that.subState = false;
-                        that.$message.success(resp.data.msg);
+                        this.subState = false;
+                        this.$message.success(resp.data.msg);
                         sessionStorage.setItem("token", resp.data.data);
                         sessionStorage.setItem("loginType",this.obj.loginType);
                         sessionStorage.setItem("telephone",this.obj.telephone);
-                        // sessionStorage.setItem("isTeacher", resp.data.result.isTeacher);
-                        // sessionStorage.setItem("mobile", resp.data.result.mobile);
-                        // sessionStorage.setItem("memberId", resp.data.result.memberId);
-                        if(that.obj.loginType==="USER_PHONE"){
-                            that.$router.push("/")
-                        }else if(that.obj.loginType==="EMP_PHONE"){
-                            that.$router.replace("/")
+                        if(this.obj.loginType==="USER_PHONE"){
+                            this.$router.push("/")
+                        }else if(this.obj.loginType==="EMP_PHONE"){
+                            this.$router.replace("/")
                             // window.location.href="http:///localhost:8085/dashboard"
                         }
                     }else {
-                        that.subState = false;
-                        that.$message.error(resp.data.msg);
+                        this.subState = false;
+                        this.$message.error(resp.data.msg);
                     }
+                }).then(re={
+                    
                 })
                 return false;
             },
