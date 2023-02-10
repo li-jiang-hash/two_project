@@ -11,7 +11,7 @@
         <div>
           <el-upload
             class="avatar-uploader"
-            action="http://192.168.1.23:7000/syssystem/file/upload"
+            action="http://localhost:7500/syssystem/file/upload"
             :show-file-list="false"
             :headers="token"
             :on-success="handleAvatarSuccess"
@@ -101,8 +101,8 @@ export default {
         title: "",
         linkUrl: "",
         sort: "",
-        gmtCreate: "",
-        gmtModified: "",
+        // gmtCreate: "",
+        // gmtModified: "",
       },
       gmtCreate: {
         disabledDate(time) {
@@ -174,6 +174,7 @@ export default {
     },
     submitForm() {
       var that = this;
+      console.log(this.formData);
       this.$refs.formData.validate((valid) => {
         if (valid) {
           this.$http
