@@ -34,6 +34,7 @@ public class BBusinessInfoController {
     }
     @PostMapping("shenhe")
     public Result getById(@RequestBody BBusinessInfo bBusinessInfo){
+        System.out.println("111111111111111111111111111111111 = " + bBusinessInfo);
         UpdateWrapper<BBusinessInfo> wrapper=new UpdateWrapper<>();
         wrapper.set("status",bBusinessInfo.getStatus());
         wrapper.set("reason",bBusinessInfo.getReason());
@@ -42,10 +43,16 @@ public class BBusinessInfoController {
         return new Result(byId);
     }
 
-    //    查询店铺名称
+    //查询店铺
+    //首页店铺与名字
     @GetMapping("getsname")
-    public Result getSname(){
-        return new Result(bBusinessInfoService.list());
+    public Result getBid(BBusinessInfo bBusinessInfo){
+        QueryWrapper queryWrapper=new QueryWrapper<>();
+        if (bBusinessInfo.getId() != null){
+            queryWrapper.eq("id",bBusinessInfo.getId());
+        }
+        queryWrapper.select("sname","id","bicon");
+        return new Result<>(bBusinessInfoService.list(queryWrapper));
     }
     //根据手机号查询该用户是否为商家
     @GetMapping("tokenphone")

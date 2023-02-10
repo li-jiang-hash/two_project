@@ -104,7 +104,7 @@
 			// 	}
 			// });
 			this.getphone()
-			this.$http.get("/syssystem/b-business-info/tokenphone?phone="+this.phone).then(resp  =>{
+			this.$http.get("/syssystem/b-business-info/tokenphone?phone=" + this.phone).then(resp => {
 				that.flag = resp.data.data;
 			})
 			this.getLogin()
@@ -114,11 +114,11 @@
 
 		},
 		methods: {
-			getLogin(){
+			getLogin() {
 				this.loginType = sessionStorage.getItem("loginType")
 			},
-			
-			getphone(){
+
+			getphone() {
 				this.phone = sessionStorage.getItem("telephone")
 			},
 			searchJIangshi() {

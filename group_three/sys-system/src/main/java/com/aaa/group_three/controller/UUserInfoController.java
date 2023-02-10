@@ -11,9 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 /*
@@ -69,14 +67,13 @@ public class UUserInfoController {
         return userInfoService.updateById(uUserInfo);
     }
 
-
 //    查询会员列表信息
     @GetMapping("getAll")
     public Result getAll(PageInfo pageInfo, String startTime, String endTime){
         Page page=userInfoService.getAll(pageInfo,startTime,endTime);
         return new Result(page);
     }
-//    改变状态
+    //改变状态
     @PostMapping("update")
     public Result update(@RequestParam String id,@RequestParam Integer status){
         UpdateWrapper updateWrapper=new UpdateWrapper<>();
@@ -91,6 +88,18 @@ public class UUserInfoController {
         queryWrapper.eq("telephone",phone);
         UUserInfo one = userInfoService.getOne(queryWrapper);
         return new Result(one);
+    }
+
+    /**
+     * 获取userid
+     * @return
+     */
+    @GetMapping("getUserid/{telephone}")
+    public Result getUserid(@PathVariable String telephone){
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("telephone",telephone);
+        queryWrapper.select("id");
+        return new Result<>(userInfoService.list(queryWrapper).get(0));
     }
 
 }

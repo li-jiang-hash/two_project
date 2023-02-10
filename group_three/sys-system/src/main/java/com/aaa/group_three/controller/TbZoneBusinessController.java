@@ -8,6 +8,10 @@ import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -36,6 +40,18 @@ public class TbZoneBusinessController {
     public Result getZoneBusiness(){
         List<Map<String, Object>> business = zoneBusinessService.findBusiness();
         return new Result<>(business);
+    }
+
+    /**
+     * 首页搜索
+     * @param chandVal 搜索内容
+     * @return
+     */
+    @GetMapping("findBusinessByName")
+    public Result findBusinessByName(String chandVal, Integer pageCurrent, Integer pageSize){
+        PageInfo pageInfo = new PageInfo(pageCurrent, pageSize);
+        Page page = zoneBusinessService.findBusinessByName(pageInfo,chandVal);
+        return new Result<>(page);
     }
 
 
