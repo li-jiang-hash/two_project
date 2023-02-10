@@ -2,9 +2,10 @@ package com.aaa.group_three.service;
 
 import com.aaa.entity.GGoods;
 import com.aaa.util.PageInfo;
-import com.aaa.util.Result;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -18,4 +19,7 @@ public interface IGGoodsService extends IService<GGoods> {
 
     Page getAllGoods(PageInfo pageInfo, GGoods goods);
     Page getGoodsAll(PageInfo pageInfo, String id);
+
+    Map<String, Object> getGoodsByGoodsid(Integer id);
+
 }

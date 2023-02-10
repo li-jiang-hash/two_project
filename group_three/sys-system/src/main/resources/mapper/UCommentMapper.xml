@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.group_three.dao.UCommentMapper">
+    <resultMap id="find" type="com.aaa.entity.UComment" autoMapping="true">
+        <id column="id" property="id"/>
+        <association property="userInfo" javaType="com.aaa.entity.UUserInfo" autoMapping="true">
+            <id column="id" property="id"/>
+        </association>
+    </resultMap>
+
+    <select id="findComment" resultMap="find">
+        select u.uicon, u.uname, c.updatetime, c.level, c.info, c.img
+        from u_comment c,u_user_info u
+        where u.id = c.userid and c.is_deleted = 0 and c.goodsid = #{id}
+        <if test="userId!=null and userId!=''">
+            and userid = #{userId}
+        </if>
+    </select>
+</mapper>

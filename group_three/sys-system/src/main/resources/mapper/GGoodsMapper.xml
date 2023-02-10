@@ -24,4 +24,12 @@
         where b.id = g.bid and b.id = #{id} and g.status = 0
     </select>
 
+    <select id="getGoodsByGoodsid" resultType="java.util.Map">
+        select g.img, g.price, g.gname, g.remark, u.unitname, b.id busid, b.sname, b.bicon, g.bid
+        from g_goods g
+            inner join b_business_info b on b.id = g.bid
+            left join g_unit u on u.id = g.unitid
+        where g.id = #{id}
+    </select>
+
 </mapper>

@@ -39,6 +39,11 @@ public class TbZoneBusinessServiceImpl extends ServiceImpl<TbZoneBusinessMapper,
         return tbZoneBusinessMapper.getAll(page,zoneBusiness);
     }
 
+    @Override
+    public Page findBusinessByName(PageInfo pageInfo, String chandVal) {
+        return tbZoneBusinessMapper.findBusinessByName(pageInfo,chandVal);
+    }
+
 
     /**
      * 商户端-首页管理-专区管理—专区店铺-查询所有

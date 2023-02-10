@@ -22,9 +22,10 @@ public interface ITbZoneBusinessService extends IService<TbZoneBusiness> {
 
     Page getAll(Page page, TbZoneBusiness zoneBusiness);
 
-
     /**
      * 商户端-首页管理-专区管理—专区店铺-查询所有
      */
     Page getPageData(PageInfo page, TbZoneBusiness zoneBusiness);
+
+    Page findBusinessByName(PageInfo pageInfo, String chandVal);
 }
