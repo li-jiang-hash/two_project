@@ -58,17 +58,16 @@ public class TbBannerController {
 
     /**
      * 添加banner信息
-     * @param banner
+     * @param tbBanner
      * @return
      */
-    @PostMapping("addBanner")
-    public Result addBanner(TbBanner banner){
-        //saveOrUpdate  添加或修改
-        //banner  对象有id的值的时候 修改
-        //id没有值的时候 添加
-        return new Result(bannerService.saveOrUpdate(banner));
-    }
 
+    @PostMapping("/addBanner")
+    public Result AddBanner(TbBanner tbBanner){
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaS = " + tbBanner);
+//        return new Result(bannerService.saveOrUpdate(tbBanner));
+        return new Result();
+    }
     /**
      * 首页轮播图
      * @return

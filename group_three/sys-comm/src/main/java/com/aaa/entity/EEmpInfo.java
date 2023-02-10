@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * 管理员信息表
  * </p>
  *
- * @author zhangxuhui
+ * @author 时光
  * @since 2023-01-03
  */
 @Data

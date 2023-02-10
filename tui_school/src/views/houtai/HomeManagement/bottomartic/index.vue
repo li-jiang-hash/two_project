@@ -195,6 +195,7 @@ export default {
             "&pageSize=" +
             this.pageSize,
           qs.stringify(this.formData)
+          // "/syssystem/tb-bottom-article/getQianAllBottomArticle"
         )
         .then(function (resp) {
           if (resp.data.code === 2000) {

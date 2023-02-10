@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * 系统通知表
  * </p>
  *
- * @author yuyongli
+ * @author 时光
  * @since 2023-01-12
  */
 @Data
