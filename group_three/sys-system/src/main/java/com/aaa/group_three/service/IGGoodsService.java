@@ -5,6 +5,8 @@ import com.aaa.util.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Map;
+
 /**
  * <p>
  * 商品表 服务类
@@ -16,4 +18,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IGGoodsService extends IService<GGoods> {
 
     Page getGoodsAll(PageInfo pageInfo, String id);
+
+    Map<String, Object> getGoodsByGoodsid(Integer id);
+
+    String getGoodsSellNum(Integer id);
 }

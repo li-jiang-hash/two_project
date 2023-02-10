@@ -1,9 +1,6 @@
 <template>
 	<div class="course_detail">
-		<!--        <y-watch-video  v-if="courseInfo.isPay" :courseInfo="courseInfo" @playfunc="videoPlay" :nowNo="nowPeriodNo" ref="watchVideo"></y-watch-video>-->
-		<!--        <y-watch-video  :classData="classData" @playfunc="videoPlay" :nowNo="nowPeriodNo" ref="watchVideo" ></y-watch-video>-->
-		<!--        <y-display v-else :courseInfo="courseInfo" ref="watchVideo"></y-display>-->
-		<!--        中间-->
+
 		<y-display :classData="classData" :ChildId="ChildId" :isTitileUpdate="isTitileUpdate" :isFree="isFree"
 			:videoId="videoId" @TeacherVideoStatus="TeacherVideoStatus"></y-display>
 
@@ -21,9 +18,9 @@
 				<!--商品评论-->
 				<div class="content_info" v-if="tab === 'info'">
 					<div v-for="item in comments">
-						<el-avatar style="float: left" :size="47" :src="item.userimg"></el-avatar>
+						<el-avatar style="float: left" :size="47" :src="item.userInfo.uicon"></el-avatar>
 						<div style="float: left;font-size: 15px;margin-left: 25px;margin-top: 3px">
-							{{item.username}}<br>
+							{{item.userInfo.uname}}<br>
 							<span style="font-size: 10px">
 								{{item.updatetime}}
 							</span>
@@ -54,9 +51,9 @@
 				<!--我的评论-->
 				<div class="content_info" v-if="tab === 'big'">
 					<div v-for="item in mycomments">
-						<el-avatar style="float: left" :size="47" :src="item.userimg"></el-avatar>
+						<el-avatar style="float: left" :size="47" :src="item.uicon"></el-avatar>
 						<div style="float: left;font-size: 15px;margin-left: 25px;margin-top: 3px">
-							{{item.username}}<br>
+							{{item.uname}}<br>
 							<span style="font-size: 10px">
 								{{item.updatetime}}
 							</span>
@@ -102,7 +99,7 @@
 			<div class="layout_right">
 				<div class="teacher_info clearfix" style="width: 300px;">
 					<span class="head">
-						所属店铺:{{classData.businessInfo.sname}}
+						所属店铺:{{classData.sname}}
 						<a href="javascript:" class="atten_btn" style="margin-right: 10px" @click="gunazhudianpu"
 							v-if="guanZhuStatus===1">
 							<span class="iconfont"></span>&nbsp;未关注
@@ -122,7 +119,7 @@
 							<!--                            <img class="teacher_phone" v-else src="./src/assets/image/da1.png" alt="">-->
 							<div class="teacher_name">
 								<router-link :to="{name: 'BusinessXinX', params: {id:classData.bid}}">
-									<img :src="classData.businessInfo.bicon" style="width: 300px;margin-left: -17px">
+									<img :src="classData.bicon" style="width: 300px;margin-left: -17px">
 								</router-link>
 							</div>
 							<div v-html="classData.intro" class="info_box"></div>
@@ -253,10 +250,7 @@
 				tab: 'info',
 				//当前播放章节
 				nowPeriodNo: '',
-				classData: {
-					businessInfo: {},
-					unit: {},
-				},
+				classData: {},
 				// 传过来的goodsid
 				id: this.$route.params.id,
 				ChapterData: {},
@@ -316,7 +310,7 @@
 			//确认添加评论
 			addCommentConfirm() {
 				this.addCommentData.goodsid = this.id;
-				this.addCommentData.bid = this.classData.businessInfo.id;
+				this.addCommentData.bid = this.classData.busid;
 				this.$http.post("user/comment/addComment", this.addCommentData).then(res => {
 					if (res.data.code === 2000) {
 						this.$message.success(res.data.msg);
@@ -438,8 +432,10 @@
 				}
 
 			},
+			//我的评论
 			getMyComments() {
-				this.$http.get("user/comment/findMyComment/" + this.$route.params.id + "/" + this.pageCurrent + "/" + this
+				this.$http.get("syssystem/u-comment/findComment/" + this.$route.params.id + "/" + this.pageCurrent + "/" +
+					this
 					.pageSize).then(res => {
 					if (res.data.code === 2000) {
 						this.mycomments = res.data.data.records;
@@ -447,11 +443,14 @@
 					}
 				})
 			},
+			//评论
 			getComments() {
-				this.$http.get("user/comment/findComment/" + this.$route.params.id + "/" + this.pageCurrent + "/" + this
+				this.$http.get("syssystem/u-comment/findComment/" + this.$route.params.id + "/" + this.pageCurrent + "/" +
+					this
 					.pageSize).then(res => {
 					if (res.data.code === 2000) {
 						this.comments = res.data.data.records;
+						// console.log(res.data.data.records.imgs)
 						this.total = res.data.data.total
 					}
 				})
@@ -509,29 +508,17 @@
 			queryClassAndTeacher() {
 
 				var that = this;
-				this.$http.post("commodity/goods/findGoodsByGoodsid/" + this.id).then(function(resp) {
+				this.$http.get("syssystem/g-goods/findGoodsByGoodsid/" + this.id).then(function(resp) {
 					if (resp.data.code === 2000) {
 						that.classData = resp.data.data;
 						console.log(that.classData)
 						that.isCollectionBusiness();
-						// that.guanZhuData.teacherid=resp.data.result.teacherId;
-						// // that.teacherVideoID=that.guanZhuData.teacherid;
-						// that.queryGuanZhuById();
 					}
 
 					// console.log(that.guanZhuData.teacherid)
 				})
 			},
-			//根据课程id查询章节和课时信息
-			// findChapterById(){
-			//     var that=this;
-			//     this.$http.post("/order/chapter/findChapterById/"+this.id).then(function (resp) {
-			//         if (resp.data.code===2000){
-			//             // console.log(resp)
-			//             that.ChapterData=resp.data.result;
-			//         }
-			//     })
-			// }
+
 		}
 	}
 </script>

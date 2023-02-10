@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * <p>
@@ -36,6 +37,21 @@ public class GGoodsController {
         PageInfo pageInfo = new PageInfo(pageCurrent, pageSize);
         Page page = goodsService.getGoodsAll(pageInfo,id);
         return new Result(page);
+    }
+
+    /**
+     * 商品购买显示
+     * @return
+     */
+    @GetMapping("findGoodsByGoodsid/{id}")
+    public Result findGoodsByGoodsid(@PathVariable Integer id){
+        Map<String,Object> map = goodsService.getGoodsByGoodsid(id);
+        return new Result<>(map);
+    }
+
+    @GetMapping("getGoodsSellNum/{id")
+    public Result getGoodsSellNum(@PathVariable Integer id){
+        String sellNum = goodsService.getGoodsSellNum(id);
     }
 
 }

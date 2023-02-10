@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * <p>
@@ -27,5 +28,15 @@ public class GGoodsServiceImpl extends ServiceImpl<GGoodsMapper, GGoods> impleme
     public Page getGoodsAll(PageInfo pageInfo, String id) {
 
         return gGoodsMapper.getGoodsAll(pageInfo, id);
+    }
+
+    @Override
+    public Map<String, Object> getGoodsByGoodsid(Integer id) {
+        return gGoodsMapper.getGoodsByGoodsid(id);
+    }
+
+    @Override
+    public String getGoodsSellNum(Integer id) {
+        return gGoodsMapper.getGoodsSellNum(id);
     }
 }
