@@ -26,10 +26,10 @@ public class TbArticleController {
     private ITbArticleService articleService;
 
     // 查询所有
-    @PostMapping("getArticleByNavId/{id}")
-    public Result getAllArticle(String id){
+    @PostMapping("getArticleByNavId/{navId}")
+    public Result getAllArticle(String navId){
 
-        return new Result(articleService.getById(id));
+        return new Result(articleService.getById(navId));
     }
 
     /**

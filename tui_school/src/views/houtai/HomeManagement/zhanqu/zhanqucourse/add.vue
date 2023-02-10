@@ -31,14 +31,14 @@
         <el-table  size="medium" :data="list" stripe border>
             <el-table-column type="index" label="序号" width="50">
             </el-table-column>
-            <el-table-column prop="id" v-if="false"label="店铺id" width="50">
+            <el-table-column prop="id" v-if="false" label="店铺id" width="50">
             </el-table-column>
             <!--<el-table-column prop="cover" label="店铺名称" width="122">
                 &lt;!&ndash;<template slot-scope="scope">
                     <img :src="scope.row.cover" :alt="scope.row.title" height="48.75" width="100">
                 </template>&ndash;&gt;
             </el-table-column>-->
-            <el-table-column prop="businessInfo.sname" label="店铺名称" width="180">
+            <el-table-column prop="sname" label="店铺名称" width="180">
             </el-table-column>>
             <el-table-column label="店铺分类" align="center" prop="sortname" width="150">
             </el-table-column>
@@ -101,6 +101,7 @@
 </template>
 
 <script>
+import qs from "qs";
     export default {
         name: "add",
         data() {
@@ -162,7 +163,7 @@
             // 商店分类分页列表接口
             searchBusiness(){
                 this.map.id=this.id;
-                this.$http.post(`/home/zoneBusiness/manageUnstockedStores/${this.currentPage}/${this.pageSize}`,this.map).then(resp => {
+                this.$http.post("/syssystem/tb-zone-business/managementZone?currentPage="+this.currentPage +"&pageSize=" + this.pageSize,qs.stringify(this.map)).then(resp => {
                     if (resp.data.code===2000){
                         //console.log(resp.data)
                         this.list = resp.data.data.records

@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +29,8 @@ public class TbBottomArticleController {
     private ITbBottomArticleService bottomArticleService;
 
     // 查询所有
-    @PostMapping
+    @PostMapping("getAllBottomArticle")
     public Result getAllBottom(PageInfo page, TbBottomArticle bottomArticle){
-
-
         Page page1 = bottomArticleService.getPageData(page, bottomArticle);
         return new Result(page1);
     }
@@ -44,14 +43,18 @@ public class TbBottomArticleController {
      */
     @PostMapping("addBottom")
     public Result addBottom(TbBottomArticle bottomArticle){
-        //saveOrUpdate  添加或修改
-        //bottom  对象有id的值的时候 修改
-        //id没有值的时候 添加
-        double v = (Math.random() * 9 + 1) * 100000;
-        bottomArticle.setId("111"+String.valueOf(v));
-        System.out.println("bottomArticle = " + bottomArticle);
+        LocalDateTime time =LocalDateTime.now();
+        bottomArticle.setGmtCreate(time);
+        bottomArticle.setGmtModified(time);
+        bottomArticle.setIsDeleted(0);
         bottomArticle.setIsDisable("0");
-        return new Result(bottomArticleService.saveOrUpdate(bottomArticle));
+        return new Result(bottomArticleService.save(bottomArticle));
+    }
+    @PostMapping("updBottom")
+    public Result updBottom(TbBottomArticle bottomArticle){
+        LocalDateTime time =LocalDateTime.now();
+        bottomArticle.setGmtModified(time);
+        return new Result(bottomArticleService.updateById(bottomArticle));
     }
 
     /**
@@ -68,8 +71,8 @@ public class TbBottomArticleController {
     /**
      * 删除链接信息
      */
-    @DeleteMapping("{id}")
-    public Result delBottom(@PathVariable Integer id){
+    @DeleteMapping("delisable/{id}")
+    public Result delBottom(@PathVariable String id){
         return new Result(bottomArticleService.removeById(id));
     }
 

@@ -1,7 +1,10 @@
 package com.aaa.group_three.dao;
 
 import com.aaa.entity.EEmpInfo;
+import com.aaa.util.PageInfo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.util.List;
 
@@ -15,4 +18,6 @@ import java.util.List;
  */
 public interface EEmpInfoMapper extends BaseMapper<EEmpInfo> {
     List<EEmpInfo> getRoleById(Integer id);
+
+    Page getRole(PageInfo page, QueryWrapper queryWrapper);
 }

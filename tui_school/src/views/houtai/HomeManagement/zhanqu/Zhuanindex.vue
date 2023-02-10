@@ -127,6 +127,7 @@
         },
         mounted() {
             this.init()
+            this.reload()
         },
         methods: {
             //改变状态

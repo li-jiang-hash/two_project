@@ -8,7 +8,6 @@ import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -40,7 +39,7 @@ public class TbZoneController {
 
 
     /**
-     * 查询专区所有信息
+     * 商户端查询专区所有信息
      * @param
      * @param zone
      * @return

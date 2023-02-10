@@ -48,15 +48,4 @@ public class TbBottomArticleServiceImpl extends ServiceImpl<TbBottomArticleMappe
         return bottomArticleMapper.getArticle();
     }
 
-    //@Override
-    //public TbBottomArticle getChildrenList(TbBottomArticle article, List<TbBottomArticle> sonList) {
-    //    for (TbBottomArticle article1 : sonList){
-    //        if (article.getId().equals(article1.getParentId())){
-    //            List<TbBottomArticle> children = article.getChildren();
-    //            children.add(getChildrenList(article1,sonList));
-    //        }
-    //    }
-    //
-    //    return article;
-    //}
 }

@@ -9,4 +9,20 @@
              left join o_stock s on s.goods_id = g.id
         group by z.bid, z.zone_id, b.bicon, b.sname
     </select>
+
+        <!--商户端-首页管理-专区管理—专区店铺-查询所有-->
+    <select id="getAllZone" resultType="java.util.Map">
+        select zb.id,zb.gmt_create,zb.gmt_modified,zb.is_disable,zb.is_deleted,zb.zone_id,zb.bid,zb.sort,zb.putaway,s.sortname,bb.sname,min(g.price) gprice,bb.bicon, sum(o.sell_num)sales
+        from tb_zone_business zb
+            inner join g_sort s
+                        on zb.zone_id=s.id
+            inner join b_business_info bb
+                       on zb.bid=bb.id
+            inner join g_goods g
+                       on g.bid=bb.id
+            inner join o_stock o
+                       on g.id=o.goods_id
+            ${ew.customSqlSegment} and zb.is_deleted = 0
+            group by zb.id,zb.gmt_create,zb.gmt_modified,zb.is_disable,zb.is_deleted,zb.zone_id,zb.bid,zb.sort,zb.putaway,s.sortname,bb.sname,bb.bicon
+    </select>
 </mapper>

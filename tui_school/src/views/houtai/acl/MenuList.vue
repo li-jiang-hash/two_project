@@ -56,11 +56,11 @@
         <!--                        label="编号"-->
         <!--                        >-->
         <!--                </el-table-column>-->
-        <el-table-column align="center" prop="gmtDate" label="发送日期">
+        <el-table-column align="center" prop="gmt_date" label="发送日期">
         </el-table-column>
-        <el-table-column align="center" prop="roleName" label="发送人"> </el-table-column>
+        <el-table-column align="center" prop="role_name" label="发送人"> </el-table-column>
         <el-table-column align="center" prop="stype" label="发送类型"> </el-table-column>
-        <el-table-column align="center" fixed="right" label="操作" width="350">
+        <el-table-column align="center" fixed="right" label="操作">
           <template slot-scope="scope">
             <el-button type="success" size="medium " @click="update(scope.row)"
               >修改</el-button
