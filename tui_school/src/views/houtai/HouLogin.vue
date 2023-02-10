@@ -104,12 +104,11 @@ export default {
           this.$http
             .post("/syssso/login", qs.stringify(this.loginFormData))
             .then(function (resp) {
-              
-                console.log("rsp"+resp);
               if (resp.data.code === 2000) {
                 that.$message.success(resp.data.msg);
                 sessionStorage.setItem("token", resp.data.data);
-                sessionStorage.setItem("token", resp.data.data);
+                sessionStorage.setItem("houtelephone", that.loginFormData.telephone);
+                sessionStorage.setItem("password", that.loginFormData.password);
                 that.$router.push("/dashboard");
               } else {
                 that.$message.error(resp.data.msg);
