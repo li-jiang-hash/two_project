@@ -110,7 +110,7 @@ export default {
                 that.$message.success(resp.data.msg);
                 sessionStorage.setItem("token", resp.data.data);
                 sessionStorage.setItem("token", resp.data.data);
-                // that.$router.push("/dashboard");
+                that.$router.push("/dashboard");
               } else {
                 that.$message.error(resp.data.msg);
               }

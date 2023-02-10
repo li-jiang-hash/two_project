@@ -1,6 +1,8 @@
 package com.aaa.entity;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -42,6 +44,7 @@ public class GSort implements Serializable {
      * 审核备注
      */
     private String checkContent;
+
 
 
 }
