@@ -51,15 +51,11 @@ public class BBusinessInfoController {
         boolean one = bBusinessInfoService.getOne(queryWrapper) ==null;
         return new Result(one);
     }
-<<<<<<< HEAD
     @PostMapping("/storeinsert")
     public Result storeinsert(@RequestBody BBusinessInfo bBusinessInfo){
-        System.out.println("1212122121111111111111111111111111111111111111111111111 = " + bBusinessInfo);
         boolean save = bBusinessInfoService.save(bBusinessInfo);
         return new Result(save);
     }
 
 
-=======
->>>>>>> e50bef7b2b604e67cb3e44fd0051c0b5508b8892
 }

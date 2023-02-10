@@ -25,7 +25,7 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button icon="el-icon-search" size="mini" type="primary" @click="handleCheck"
+          <el-button icon="el-icon-search" size="mini" type="primary" @click="init()"
             >查询</el-button
           >
           <el-button icon="el-icon-refresh" size="mini" @click="handleReset"
@@ -185,32 +185,6 @@ export default {
     this.init();
   },
   methods: {
-    handleCheck() {
-      var that = this;
-      this.$http
-        .post(
-          // `/home/bottomArticle/getAllfurryBottomArticle/${this.currentPage}/${this.pageSize}`,
-          "/syssystem/tb-bottom-article/getAllBottomArticle?currentPage=" +
-            this.currentPage +
-            "&pageSize=" +
-            this.pageSize,
-          qs.stringify(this.formData)
-        )
-        .then(function (resp) {
-          if (resp.data.code === 2000) {
-            that.tableData = resp.data.data.records;
-            that.total = resp.data.data.total;
-          }
-          if (resp.data.code === 5000) {
-            that.$message({
-              message: resp.data.msg,
-              type: "error",
-            });
-            that.tableData = [];
-          }
-        });
-    },
-
     //文章管理按钮
     handleArticala(id) {
       this.$router.push({ path: "/home/foottext/detail", query: { id: id } });
