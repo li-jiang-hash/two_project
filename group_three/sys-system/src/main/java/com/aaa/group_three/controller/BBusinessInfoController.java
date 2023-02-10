@@ -49,5 +49,4 @@ public class BBusinessInfoController {
         boolean one = bBusinessInfoService.getOne(queryWrapper) ==null;
         return new Result(one);
     }
-
 }

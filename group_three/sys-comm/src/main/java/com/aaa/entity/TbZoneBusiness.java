@@ -1,5 +1,8 @@
 package com.aaa.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -23,6 +26,7 @@ public class TbZoneBusiness implements Serializable {
     /**
      * 主键
      */
+    @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
     /**
@@ -38,7 +42,7 @@ public class TbZoneBusiness implements Serializable {
     /**
      * 状态(1:正常;0:禁用)
      */
-    private Integer isDisable;
+    private String isDisable;
 
     /**
      * 逻辑删除  0正常  1已删除
@@ -65,4 +69,15 @@ public class TbZoneBusiness implements Serializable {
      */
     private Integer putaway;
 
+    //b_business_info表字段
+    private String Sname;
+
+    @TableField(exist = false)
+    private BBusinessInfo bBusinessInfo;
+    @TableField(exist = false)
+    private GSort gSort;
+    @TableField(exist = false)
+    private OStock oStock;
+    @TableField(exist = false)
+    private GGoods goods;
 }

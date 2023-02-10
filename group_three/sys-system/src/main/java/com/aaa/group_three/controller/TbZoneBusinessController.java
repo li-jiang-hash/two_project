@@ -1,11 +1,13 @@
 package com.aaa.group_three.controller;
 
 
+import com.aaa.entity.TbZone;
+import com.aaa.entity.TbZoneBusiness;
 import com.aaa.group_three.service.ITbZoneBusinessService;
+import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -36,5 +38,31 @@ public class TbZoneBusinessController {
         return new Result<>(business);
     }
 
+
+    /**
+     * 商户端-首页管理-专区管理—专区店铺-查询所有
+     */
+    @PostMapping("managementZone")
+    public Result getAllZone(PageInfo page, TbZoneBusiness zoneBusiness){
+        Page page1 = zoneBusinessService.getPageData(page, zoneBusiness);
+        return new Result(page1);
+    }
+    /**
+     * 商户端-首页管理-专区管理—专区店铺-修改状态
+     */
+    @PostMapping("changeStatus/{id}/{isDisable}")
+    public Result updLink(@PathVariable String id, @PathVariable String isDisable){
+        TbZoneBusiness zoneBusiness=new TbZoneBusiness();
+        zoneBusiness.setIsDisable(isDisable);
+        zoneBusiness.setId(id);
+        return new Result(zoneBusinessService.updateById(zoneBusiness));
+    }
+    /**
+     * 商户端-首页管理-专区管理—专区店铺-删除数据
+     */
+    @DeleteMapping("deleteZoneBusiness/{id}")
+    public Result delLink(@PathVariable String id){
+        return new Result(zoneBusinessService.removeById(id));
+    }
 }
 

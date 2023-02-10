@@ -25,7 +25,7 @@
     </el-dialog>
 </template>
 <script>
-
+    import qs from "qs";
     export default {
         name: 'Edit',
         data() {
@@ -79,7 +79,7 @@
                             });
                             return false
                         }
-                       this.$http.post("/syssystem/tb-zone/updatePrefecture",this.formData).then( resp => {
+                       this.$http.post("/syssystem/tb-zone/updatePrefecture",qs.stringify(this.formData)).then( resp => {
                            if (resp.data.code===2000){
                                this.$message({
                                    message:resp.data.msg,
@@ -111,7 +111,7 @@
                             });
                             return false
                         }
-                        this.$http.post("/syssystem/tb-zone/updatePrefecture",this.formData).then( resp => {
+                        this.$http.post("/syssystem/tb-zone/updatePrefecture",qs.stringify(this.formData)).then( resp => {
                             if (resp.data.code===2000){
                                 this.$message({
                                     message:resp.data.msg,

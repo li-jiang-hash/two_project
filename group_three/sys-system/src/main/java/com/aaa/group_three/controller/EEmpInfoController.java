@@ -41,18 +41,16 @@ public class EEmpInfoController {
     public Result addEmp(EEmpInfo empInfo){
         //创建/修改时间
         LocalDateTime dt = LocalDateTime.now ();
-        empInfo.setGmtModified(dt);
-        //saveOrUpdate  添加或修改
-        //role  对象有id的值的时候 修改
-        //id没有值的时候 添加
+        empInfo.setGmtCreate(dt);
         return new Result(empInfoService.saveOrUpdate(empInfo));
     }
+
 
 
     /**
      * 删除角色信息
      */
-    @DeleteMapping("{id}")
+    @DeleteMapping("delEmp/{id}")
     public Result delEmp(@PathVariable Integer id){
         return new Result(empInfoService.removeById(id));
     }
