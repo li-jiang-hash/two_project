@@ -3,9 +3,9 @@
         <div>
             <el-form :inline="true" :model="map" size="mini">
                 <el-form-item label="品牌名称：" >
-                    <el-select v-model="map.brandid" class="auto-width" clearable filterable placeholder="请选择商品名称" style="width: 130px">
+                    <el-select v-model="map.id" class="auto-width" clearable filterable placeholder="请选择品牌名称" style="width: 130px">
                         <el-option
-                                v-for="item in statusIdList"
+                                v-for="item in brandList"
                                 :label="item.brandname"
                                 :value="item.id">
                         </el-option>
@@ -43,6 +43,7 @@
             </el-form>
         </div>
         <div>
+        <!-- 表数据 -->
             <el-table
                     :data="tableData"
                     style="width: 100%"
@@ -104,7 +105,7 @@
                     width="30%">
                 <el-form ref="checkformDataRef" :model="checkformData" label-width="100px">
                     <el-form-item label="审核状态：" >
-                        <el-radio-group v-model="checkformData.state">
+                        <el-radio-group v-model="checkformData.status">
                             <el-radio :label="0">通过</el-radio>
                             <el-radio :label="1">不通过</el-radio>
                         </el-radio-group>
@@ -132,6 +133,7 @@
     </div>
 </template>
 <script>
+import qs from 'qs'
     export default {
         data() {
             return {
@@ -141,13 +143,6 @@
                 map: {},
                 formData: {},
                 tableData: [],
-                expands: [],
-                addSubjectFormData: {
-                    remark:""
-                },
-                editSubjectFormData:{},
-                addDialogVisible: false,
-                editDialogVisible:false,
                 page: {
                     beginPageIndex: 1,
                     currentPage: 1,
@@ -155,7 +150,7 @@
                     pageSize: 5,
                     totalCount: 0,
                     totalPage: 0
-                },statusIdList: {}
+                },brandList: {}
             }
         },
         created() {
@@ -164,6 +159,16 @@
             this.goodsSort();
         },
         methods: {
+            //查询品牌名称
+            findAllBrands(){
+                this.$http.post(`/syssystem/g-brand/brand`).then(res=>{
+                    if (res.data.code===2000){
+                        console.log("456")
+                        this.brandList = res.data.data;
+                    }
+                })
+            },
+            // 查询商品类型
             goodsSort(){
                 this.$http.get("/syssystem/g-sort/sort").then(res=>{
                     if (res.data.code===2000){
@@ -171,10 +176,22 @@
                     }
                 })
             },
+            // 查询品牌表数据
+            searchSubject(){
+                var that =this
+                this.$http.post(`/syssystem/g-brand/findAllBrands?currentPage=${this.page.currentPage}&pageSize=${this.page.pageSize}`,qs.stringify(this.map)).then(function (resp) {
+                    if (resp.data.code===2000){
+                        console.log("123")
+                        that.tableData = resp.data.data.records
+                        that.page.totalCount = resp.data.data.total
+                        that.page.pageSize = resp.data.data.size
+                    }
+                })
+            },
             //提交审核的表单
             submitCheckForm(){
                 var that = this
-                this.$http.post(`/commodity/brand/updateState`,this.checkformData).then(function (resp) {
+                this.$http.post(`/syssystem/g-brand/shenhe`,this.checkformData).then(function (resp) {
                     if (resp.data.code===2000){
                         that.$message.success(resp.data.msg);
                         that.checkvisible = false
@@ -186,35 +203,31 @@
                     }
                 })
             },
+            //点击审核的弹出层
+            shenhe(id){
+                this.checkformData.id = id
+                this.checkvisible = true
+            },
             //审核取消后清空
             resetCheck(){
                 this.checkvisible = false
                 this.checkformData.checkContent = ""
                 this.reload()
             },
-            //点击审核的弹出层
-            shenhe(id){
-                this.checkformData.id = id
-                this.checkvisible = true
-            },
-            //页面加载查询所有品牌
-            findAllBrands(){
-                this.$http.post("/syssystem/g-sort/sort").then(res=>{
-                    if (res.data.code===2000){
-                        this.statusIdList = res.data.data;
+            // 删除
+            handleDelete(id) {
+                var that = this
+                this.$confirm(`确定要删除吗?`, {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(()=>{
+                    this.$http.post(`syssystem/g-brand/${id}`).then(function (resp) {
+                    if (resp.data.code===2000){
+                        that.$message.success(resp.data.msg);
                     }
-                })
-            },
-            //编辑分类框
-            editSubject(row){
-                this.editDialogVisible = true
-                this.editSubjectFormData = row
-            },
-            //添加分类框
-            addSubject(parentId,id){
-                this.addDialogVisible = true
-                this.addSubjectFormData.parentId = parentId
-                this.addSubjectFormData.id = id
+                    that.searchSubject()
+                })})
             },
             handleSizeChange(val) {
                 this.page.pageSize = val
@@ -232,105 +245,18 @@
             handleReset() {
                 this.reload()
             },
-            // 修改状态
-            handleChangeStatusId(id, statusId,parentId) {
-                const title = { 1: '正常', 0: '禁用' }
-                this.$confirm(`确定要${title[statusId]}吗?`, {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.changeStatusId(id, statusId,parentId)
-                    this.reload()
-                }).catch(() => {
-                    this.reload()
-                })
-            },
-            // 请求更新状态方法
-            changeStatusId(id, statusId,parentId) {
-                //alert(statusId)
-                var that =this
-                this.$http.post(`/core/subject/changeStatusId`, {"id":id,"statusId":statusId,"parentId":parentId}).then(function (resp) {
-                    console.log(resp)
-                    if (resp.data.code==2000){
-                        that.$message.success(resp.data.msg);
-                        that.reload()
-                    }
-                })
-            },
-            // 查询所有品牌
-            searchSubject(){
-                var that =this
-                this.$http.post(`/syssystem/g-brand/findAllBrands?currentPage=${this.page.currentPage}&pageSize=${this.page.pageSize}`,this.map).then(function (resp) {
-                    if (resp.data.code===2000){
-                        that.tableData = resp.data.data.records
-                        that.page.totalCount = resp.data.data.total
-                        that.page.pageSize = resp.data.data.size
-                    }
-                })
-            },
-            //添加分类方法
-            insertUser(){
-                var that = this
-                this.$http.post(`/core/subject/insertsubject`,this.addSubjectFormData).then(function (resp) {
-                    //console.log(resp)
-                    if (resp.data.code==200){
-                        that.$message.success(resp.data.msg);
-                        that.addDialogVisible = false
-                    }
-                })
-            },
-            //修改分类的方法
-            updateSubject(){
-                var that = this
-                this.$http.post(`/core/subject/updatesubject`,this.editSubjectFormData).then(function (resp) {
-                    //console.log(resp)
-                    if (resp.data.code==200){
-                        that.$message.success(resp.data.msg);
-                        that.editDialogVisible = false
-                    }
-                })
-            },
             // 关闭弹窗回调
-            closeCllback() {
-                this.addDialogVisible = false
-                this.$refs.addSubjectFormRef.resetFields();
-                this.reload()
-            },
             closeCllback1(){
                 this.checkvisible = false
                 this.$refs.editSubjectFormRef.resetFields();
                 this.reload()
             },
-            // 删除
-            handleDelete(id) {
-                var that = this
-                this.$confirm(`确定要删除吗?`, {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(()=>{
-                    this.$http.post("/commodity/brand/deleteBrand?id="+id).then(function (resp) {
-                    console.log(resp)
-                    if (resp.data.code===2000){
-                        that.$message.success(resp.data.msg);
-                    }
-                    that.searchSubject()
-
-                })})
-            },
             // 刷新当前页面
             reload() {
                 this.map = {}
-                this.editSubjectFormData = {}
+                this.formData = {}
                 this.searchSubject()
             },
-            textClass(userType) {
-                return {
-                    c_red: userType === 0,
-                    c_blue: userType === 2
-                }
-            }
         }
     }
 </script>
