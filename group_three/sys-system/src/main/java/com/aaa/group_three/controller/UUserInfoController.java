@@ -11,6 +11,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /*
@@ -21,7 +24,7 @@ import java.util.List;
  */
 //@CrossOrigin
 @RestController
-@RequestMapping("/sys-sso")
+@RequestMapping("/user")
 public class UUserInfoController {
 
     @Resource
@@ -61,6 +64,8 @@ public class UUserInfoController {
     //修改
     @PostMapping("updateMessage")
     public boolean updateMessage(@RequestBody UUserInfo uUserInfo){
+        uUserInfo.setUpdatetime(LocalDateTime.now());
+        uUserInfo.setUpdateman(uUserInfo.getUname());
         return userInfoService.updateById(uUserInfo);
     }
 
@@ -79,5 +84,14 @@ public class UUserInfoController {
         updateWrapper.eq("id",id);
         return new Result(userInfoService.update(updateWrapper));
     }
+    //个人信息
+    @GetMapping("/findUserByPhone")
+    public Result getUserByPhone(String phone){
+        QueryWrapper queryWrapper =new QueryWrapper();
+        queryWrapper.eq("telephone",phone);
+        UUserInfo one = userInfoService.getOne(queryWrapper);
+        return new Result(one);
+    }
+
 }
 

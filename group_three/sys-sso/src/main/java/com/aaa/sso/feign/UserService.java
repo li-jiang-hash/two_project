@@ -21,7 +21,7 @@ public interface UserService {
 
 
     //根据用户手机号获取信息
-    @GetMapping("/sys-sso/getUserByPhone/{telephone}")
+    @GetMapping("/user/getUserByPhone/{telephone}")
     UUserInfo getUserByPhone(@PathVariable String telephone);
 
 //    @PostMapping("/user/signInsert")

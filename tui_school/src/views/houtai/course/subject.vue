@@ -39,7 +39,6 @@
                 <el-form-item>
                     <el-button icon='el-icon-search' type="primary" @click="handleCheck">查询</el-button>
                     <el-button icon='el-icon-refresh' class="filter-item" @click="handleReset">重置</el-button>
-<!--                    <el-button type="primary" size="mini" icon="el-icon-circle-plus-outline" @click="addSubject(0,0)">添加</el-button>-->
                 </el-form-item>
             </el-form>
         </div>
@@ -66,13 +65,13 @@
                 <el-table-column
                         header-align="center"
                         align="center"
-                        prop="sort.sortname"
+                        prop="sortname"
                         label="品牌所属类别">
                 </el-table-column>
                 <el-table-column
                         header-align="center"
                         align="center"
-                        prop="checkContent"
+                        prop="check_content"
                         label="审核备注">
                 </el-table-column>
                 <el-table-column
@@ -90,10 +89,8 @@
                                  header-align="center"
                                  align="center">
                     <template slot-scope="scope">
-<!--                        <el-button  type="primary" size="mini" icon="el-icon-circle-plus-outline" @click="addSubject(scope.row.parentId,scope.row.id)">添加</el-button>-->
                         <el-button v-if="scope.row.status===2"  type="primary" @click="shenhe(scope.row.id)" size="mini">去审核</el-button>
                         <el-button v-if="scope.row.status!==2"  type="info"  size="mini">已审核</el-button>
-<!--                        <el-button  type="success" @click="editSubject(scope.row)" size="mini">编辑</el-button>-->
                         <el-button  type="danger" @click="handleDelete(scope.row.id)" size="mini">删除</el-button>
                     </template>
                 </el-table-column>
@@ -101,7 +98,7 @@
 
             <!--审核的弹出层-->
             <el-dialog
-                    title="课程审核"
+                    title="品牌审核"
                     :visible.sync="checkvisible"
                     :before-close="closeCllback1"
                     width="30%">
@@ -121,53 +118,6 @@
                     <el-button style="float:right" size="mini" type="primary" @click="submitCheckForm">确定</el-button>
                 </el-row>
             </el-dialog>
-
-<!--            &lt;!&ndash;添加分类的对话框&ndash;&gt;-->
-<!--            <el-dialog-->
-<!--                    title="添加分类"-->
-<!--                    :visible.sync="addDialogVisible"-->
-<!--                    width="30%"-->
-<!--                    @closed="closeCllback"-->
-<!--            >-->
-<!--                &lt;!&ndash;添加的表单的数据绑定&ndash;&gt;-->
-<!--                <el-form :model="addSubjectFormData" :rules="addSubjectFormRule" ref="addSubjectFormRef"  label-width="100px" class="demo-ruleForm">-->
-<!--                    <el-form-item label="分类名称:" prop="title">-->
-<!--                        <el-input type="text" v-model="addSubjectFormData.title" autocomplete="off"></el-input>-->
-<!--                    </el-form-item>-->
-<!--                    <el-form-item label="备注:" prop="remark">-->
-<!--                        <el-input type="text" v-model="addSubjectFormData.remark" autocomplete="off"></el-input>-->
-<!--                    </el-form-item>-->
-<!--                </el-form>-->
-<!--                <span slot="footer" class="dialog-footer">-->
-<!--                    <el-button @click="addDialogVisible = false">取 消</el-button>-->
-<!--                    <el-button type="primary" @click="insertUser">确 定</el-button>-->
-<!--                </span>-->
-<!--            </el-dialog>-->
-
-            <!--编辑分类的对话框-->
-<!--            <el-dialog-->
-<!--                    title="编辑品牌信息"-->
-<!--                    :visible.sync="editDialogVisible"-->
-<!--                    width="30%"-->
-<!--                    @closed="closeCllback1"-->
-<!--            >-->
-<!--                &lt;!&ndash;编辑的表单的数据绑定&ndash;&gt;-->
-<!--                <el-form :model="editSubjectFormData" :rules="editSubjectFormRule" ref="editSubjectFormRef"  label-width="100px" class="demo-ruleForm">-->
-<!--                    <el-form-item label="品牌名称:" prop="brandname">-->
-<!--                        <el-input type="text" v-model="editSubjectFormData.brandname" autocomplete="off"></el-input>-->
-<!--                    </el-form-item>-->
-<!--                    <el-form-item label="备注:" prop="remark">-->
-<!--                        <el-input type="text" v-model="editSubjectFormData.remark" autocomplete="off"></el-input>-->
-<!--                    </el-form-item>-->
-<!--                </el-form>-->
-<!--                <span slot="footer" class="dialog-footer">-->
-<!--                <el-button @click="editDialogVisible = false">取 消</el-button>-->
-<!--                <el-button type="primary" @click="updateSubject()">确 定</el-button>-->
-<!--            </span>-->
-<!--            </el-dialog>-->
-
-           <!-- <add :visible="ctrl.addDialogVisible" :formData="formData" :title="ctrl.dialogTitle" @close-callback="closeCllback"></add>
-            <edit :visible="ctrl.editDialogVisible" :formData="formData" :title="ctrl.dialogTitle" @close-callback="closeCllback"></edit>-->
             <el-pagination
                     background
                     style="float: right;margin-top: 20px; margin-bottom: 22px"
@@ -182,16 +132,11 @@
     </div>
 </template>
 <script>
-    //import * as api from '@/api/course'
-/*    import Add from './add'
-    import Edit from './edit'*/
     export default {
-        // components: { Add, Edit },
         data() {
             return {
                 sorts:{},
                 checkformData:{},
-                //审核的弹出层
                 checkvisible:false,
                 map: {},
                 formData: {},
@@ -205,25 +150,12 @@
                 editDialogVisible:false,
                 page: {
                     beginPageIndex: 1,
-                    pageCurrent: 1,
+                    currentPage: 1,
                     endPageIndex: 8,
                     pageSize: 5,
                     totalCount: 0,
                     totalPage: 0
-                },
-                    statusIdList: {}
-                ,
-                //添加框的表单验证
-                addSubjectFormRule:{
-                    title:[
-                        {required:true,message:"分类名称不能为空",trigger:"blur"}
-                    ]
-                },
-                editSubjectFormRule:{
-                    title:[
-                        {required:true,message:"分类名称不能为空",trigger:"blur"}
-                    ]
-                }
+                },statusIdList: {}
             }
         },
         created() {
@@ -233,7 +165,7 @@
         },
         methods: {
             goodsSort(){
-                this.$http.get("commodity/sort/findAllSort").then(res=>{
+                this.$http.get("/syssystem/g-sort/sort").then(res=>{
                     if (res.data.code===2000){
                         this.sorts = res.data.data;
                     }
@@ -267,7 +199,7 @@
             },
             //页面加载查询所有品牌
             findAllBrands(){
-                this.$http.post("commodity/brand/findAllBrands").then(res=>{
+                this.$http.post("/syssystem/g-sort/sort").then(res=>{
                     if (res.data.code===2000){
                         this.statusIdList = res.data.data;
                     }
@@ -277,7 +209,6 @@
             editSubject(row){
                 this.editDialogVisible = true
                 this.editSubjectFormData = row
-                //alert(this.editSubjectFormData.id)
             },
             //添加分类框
             addSubject(parentId,id){
@@ -290,7 +221,7 @@
                 this.searchSubject()
             },
             handleCurrentChange(val) {
-                this.page.pageCurrent = val
+                this.page.currentPage = val
                 this.searchSubject()
             },
             // 查询条件
@@ -330,7 +261,7 @@
             // 查询所有品牌
             searchSubject(){
                 var that =this
-                this.$http.post(`/commodity/brand/findBrandsWithCondition/${this.page.pageCurrent}/${this.page.pageSize}`,this.map).then(function (resp) {
+                this.$http.post(`/syssystem/g-brand/findAllBrands?currentPage=${this.page.currentPage}&pageSize=${this.page.pageSize}`,this.map).then(function (resp) {
                     if (resp.data.code===2000){
                         that.tableData = resp.data.data.records
                         that.page.totalCount = resp.data.data.total
@@ -351,8 +282,6 @@
             },
             //修改分类的方法
             updateSubject(){
-                //alert(this.editSubjectFormData.id)
-                //alert(this.editSubjectFormData.title)
                 var that = this
                 this.$http.post(`/core/subject/updatesubject`,this.editSubjectFormData).then(function (resp) {
                     //console.log(resp)
@@ -375,7 +304,6 @@
             },
             // 删除
             handleDelete(id) {
-                //alert(id)
                 var that = this
                 this.$confirm(`确定要删除吗?`, {
                     confirmButtonText: '确定',
@@ -390,7 +318,6 @@
                     that.searchSubject()
 
                 })})
-                //this.reload()
             },
             // 刷新当前页面
             reload() {

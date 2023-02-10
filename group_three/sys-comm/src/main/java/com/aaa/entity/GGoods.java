@@ -1,9 +1,13 @@
 package com.aaa.entity;
 
+import cn.hutool.core.date.DateTime;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -65,11 +69,13 @@ public class GGoods implements Serializable {
     /**
      * 上架时间
      */
-    private LocalDateTime addtime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private DateTime addtime;
 
     /**
      * 保质期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime expirationtime;
 
     /**
@@ -102,5 +108,15 @@ public class GGoods implements Serializable {
      */
     private String checkContent;
 
+    /**
+     * 店铺名称
+     */
+    @TableField(exist = false)
+    private  BBusinessInfo  sname;
+    /**
+     * 商品类型
+     */
+    @TableField(exist = false)
+    private GSort sortname;
 
 }

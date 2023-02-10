@@ -4,6 +4,7 @@ import com.aaa.entity.GGoods;
 import com.aaa.util.PageInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Map;
 
@@ -22,4 +23,6 @@ public interface GGoodsMapper extends BaseMapper<GGoods> {
     Map<String, Object> getGoodsByGoodsid(Integer id);
 
     String getGoodsSellNum(Integer id);
+
+    Page findAllGoods(PageInfo pageInfo,@Param("goods") GGoods goods);
 }

@@ -17,4 +17,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IBBusinessInfoService extends IService<BBusinessInfo> {
     Page getPageData(PageInfo page, BBusinessInfo bBusinessInfo);
+
 }

@@ -1,6 +1,6 @@
 <template>
   <header class="side_box">
-    <div class="menu_panel" v-if="shenfen==='true'">
+    <div class="menu_panel" v-if="shenfen==='EMP_PHONE'">
       <h3 class="title"><i class="iconfont">&#xe640;</i>商家中心</h3>
       <ul class="menus">
         <li :class="{on: type === 'jsxx'}" @click="changeColor('jsxx')"><router-link :to="{path: '/business'}">商铺管理</router-link></li>
@@ -16,7 +16,7 @@
 
       </ul>
     </div>
-    <div class="menu_panel" v-if="shenfen==='true'">
+    <div class="menu_panel" v-if="shenfen==='USER_PHONE'">
       <h3 class="title"><i class="iconfont">&#xe60a;</i>个人资料</h3>
       <ul class="menus">
         <li :class="{on: type === 'grxx'}" @click="changeColor('grxx')"><router-link :to="{path: '/geRenCenter'}">个人信息</router-link></li>
@@ -47,11 +47,7 @@ export default {
   },
   methods: {
     init(){
-      this.$http.post("user/getShenfen").then(res=>{
-        if (res.data.code===2000){
-          this.shenfen = res.data.data;
-        }
-      })
+          this.shenfen = sessionStorage.getItem("loginType");
     },
     changeColor(obj){
       this.type=obj;

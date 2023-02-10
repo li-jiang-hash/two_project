@@ -64,8 +64,9 @@
                 disabled: false,
             }
         },
-        mounted() {
-            this.pobj.mobile=window.sessionStorage.getItem("mobile")
+        created() {
+            console.log("lllllllllllllllllllllllllll:"+sessionStorage.getItem("telephone"));
+            this.pobj.mobile = sessionStorage.getItem("telephone")
             },
         methods: {
             //返回修改结果信息
@@ -98,7 +99,7 @@
 
                 var that=this;
 
-                this.$http.post(`/user/updatePassword/${this.pobj.mobile}/${this.pobj.newPassword}`).then(function (resp) {
+                this.$http.post(`/syssystem/user/signInsert/${this.pobj.mobile}/${this.pobj.newPassword}`).then(function (resp) {
                     if (resp.data.code===2000){
                         that.$message.success(resp.data.msg);
                         that.$router.push("/qianLogin")
@@ -119,7 +120,7 @@
                 }
 
                 //通过手机号获取验证码
-                this.$http.get(`/user/noteByPhone/${this.pobj.mobile}`).then(function (resp) {
+                this.$http.get(`/syssystem/user/noteByPhone/${this.pobj.mobile}`).then(function (resp) {
                     if (resp.data.code===2000){
                         that.shureCode=resp.data.data;
                         that.timeOut();

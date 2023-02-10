@@ -3,11 +3,11 @@
 <mapper namespace="com.aaa.group_three.dao.BBusinessInfoMapper">
 
     <select id="findAll" resultType="map">
-        select *,sortname
-        from b_business_info,g_sort
-        where b_business_info.sortid=g_sort.id
+        select b.*,s.sortname
+        from b_business_info b,g_sort s
+        where b.sortid=s.id
         <if test="bBusinessInfo.status!=null">
-            and b_business_info.status = #{bBusinessInfo.status}
+            and b.status = #{bBusinessInfo.status}
         </if>
     </select>
 

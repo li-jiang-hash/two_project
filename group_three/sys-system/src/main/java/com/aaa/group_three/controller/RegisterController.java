@@ -35,7 +35,6 @@ public class RegisterController {
 
     @PostMapping({"/signInsert/{phone}/{password}"})
     public Result Register(@PathVariable String phone, @PathVariable String password) {
-        String pass = new BCryptPasswordEncoder().encode(password);
 //        Map<String, String> Key = PassTools.makePasswordSalt(password);
 //        String pass = Key.get("password");
 //        String salt = Key.get("salt");
@@ -44,16 +43,13 @@ public class RegisterController {
         int list = iuUserInfoService.list(queryWrapper).size();
         System.out.println("list = " + list);
         if (list == 0) {
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             UUserInfo uUserInfo = new UUserInfo();
             System.out.println(LocalDateTime.now());
             uUserInfo.setCreatetime(LocalDateTime.now());
             uUserInfo.setTelephone(phone);
-            uUserInfo.setStatus(0);
-            System.out.println("passwordEncoder.encode(pass):"+passwordEncoder.encode(password));
-            uUserInfo.setPassword(pass);
+            uUserInfo.setStatus(0);uUserInfo.setPassword(new BCryptPasswordEncoder().encode(password));
             uUserInfo.setSalt("123");
-            boolean save = iuUserInfoService.save(uUserInfo);
+            boolean save = iuUserInfoService.saveOrUpdate(uUserInfo);
             Result result;
             if (save) {
                 result = new Result("创建用户成功！");
