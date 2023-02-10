@@ -45,7 +45,7 @@
                                     <input type="hidden" v-model="obj.uicon">
                                     <el-upload
                                             class="avatar-uploader"
-                                            action="http://192.168.1.23:8000/user/upload01"
+                                            action="http://localhost:7500/syssystem/file/upload"
                                             :show-file-list="false"
                                             :on-success="handleAvatarSuccess"
                                             :before-upload="beforeAvatarUpload"
@@ -213,7 +213,7 @@
                 this.$refs['updateForm'].validate((valid) =>{
                     var that = this;
                     if (valid) {//表示通过
-                        this.$http.post("user/addr/updateById", this.updateform).then(function (result) {
+                        this.$http.post("syssystem/addr/updateById", this.updateform).then(function (result) {
                             if (result.data.code==2000){
                                 that.$message.success(result.data.msg);//弹出成功
                                 that.updateAddr=false;//隐藏弹出框
@@ -240,7 +240,8 @@
                 this.$refs['insertForm'].validate((valid) =>{
                     var that = this;
                     if (valid) {//表示通过
-                        this.$http.post("user/addr/insertAddr", this.insertform).then(function (result) {
+                        this.insertform.uid = this.uid
+                        this.$http.post("/syssystem/addr/updateById", this.insertform).then(function (result) {
                             that.$message.success(result.data.msg);//弹出成功
                             that.insertAddr=false;//弹出框隐藏
                             that.addressTable();//重新加载数据
@@ -260,7 +261,7 @@
             //删除地址
             deleteAddr(id){
                 var that=this;
-                this.$http.get('user/addr/deleteById?id='+id).then(function (result) {
+                this.$http.get('/syssystem/addr/deleteById?id='+id).then(function (result) {
                     that.$message.success(result.data.msg);
                     that.addressTable();
                 })
@@ -272,8 +273,8 @@
                     console.log(this.obj);
                     this.uid = this.obj.id
                 }).then(re=>{
-            //查询所有地址
-                    this.$http.get(`/syssystem/addr/findAll?id=${this.uid}`).then(result=> {
+            //初始化显示所有地址
+                    this.$http.get(`/syssystem/addr/findById?id=${this.uid}`).then(result=> {
                     console.log(result.data.data);
                     this.tableData=result.data.data;
                 })
@@ -281,7 +282,7 @@
             },
             //查询所有地址
             addressTable(){
-                    this.$http.get(`/syssystem/addr/findAll?id=${this.uid}`).then(result=> {
+                    this.$http.get(`/syssystem/addr/findById?id=${this.uid}`).then(result=> {
                     console.log(result.data.data);
                     this.tableData=result.data.data;
                 })
@@ -297,6 +298,7 @@
                 this.$http.post('/syssystem/user/updateMessage',this.obj).then(function (resp) {
                     that.$message.success(resp.data.msg);
                     that.isLogin=false
+                    that.$message.success("用户信息修改成功");
                     //重新加载页面
                     that.initMember();
                 })
@@ -311,7 +313,6 @@
             beforeAvatarUpload(file) {
                 const isJPG = file.type === 'image/jpeg';
                 const isLt2M = file.size / 1024 / 1024 < 2;
-
                 if (!isJPG) {
                     this.$message.error('上传头像图片只能是 JPG 格式!');
                 }

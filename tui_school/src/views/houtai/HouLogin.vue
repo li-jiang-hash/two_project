@@ -4,7 +4,7 @@
       <div class="header"></div>
       <div class="loginBox">
         <div class="loginCon">
-          <p class="title"><a href="http://localhost:8080/">☆</a>CAI先生后台登录系统</p>
+          <p class="title"><a href="http://localhost:8085/">☆</a>CAI先生后台登录系统</p>
           <el-card shadow="always" class="login-module" v-if="smdl">
             <div slot="header" class="clearfix formTitlt">
               <span>密码登录</span>
@@ -104,10 +104,13 @@ export default {
           this.$http
             .post("/syssso/login", qs.stringify(this.loginFormData))
             .then(function (resp) {
+              
+                console.log("rsp"+resp);
               if (resp.data.code === 2000) {
                 that.$message.success(resp.data.msg);
                 sessionStorage.setItem("token", resp.data.data);
-                that.$router.push("/dashboard");
+                sessionStorage.setItem("token", resp.data.data);
+                // that.$router.push("/dashboard");
               } else {
                 that.$message.error(resp.data.msg);
               }
