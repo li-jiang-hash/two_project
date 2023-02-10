@@ -15,5 +15,5 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
  */
 public interface UCommentMapper extends BaseMapper<UComment> {
 
-    Page<UComment> findComment(String id, PageInfo pageInfo);
+    Page<UComment> findComment(String id, String userId, PageInfo pageInfo);
 }

@@ -26,18 +26,22 @@ public class UCollectionController {
     private IUCollectionService collectionService;
 
     /**
-     * 查询商品收藏状态
+     * 查询商品\店铺收藏状态
      * @param id goods_id
      * @param userId user_id
      * @return
      */
-    @GetMapping("isGoodsCollection/{id}/{userId}")
-    public Result isGoodsCollection(@PathVariable String id, @PathVariable String userId) {
+    @GetMapping("isGoodsCollection")
+    public Result isGoodsCollection(String bid, String id, String userId) {
         QueryWrapper<UCollection> wrapper = new QueryWrapper<>();
         wrapper.select("status");
         wrapper.eq("uid", userId);
-        wrapper.eq("goodsid",id);
-        return new Result<>(collectionService.list(wrapper).get(0).getStatus());
+        if (id != null) {
+            wrapper.eq("goodsid",id);
+        } else {
+            wrapper.eq("bid",bid);
+        }
+        return new Result<>(collectionService.list(wrapper));
     }
 
     /**
@@ -46,12 +50,16 @@ public class UCollectionController {
      * @param status 收藏状态
      * @return
      */
-    @PostMapping("changeCollectionStatus/{id}/{status}/{userId}")
-    public Result changeCollection(@PathVariable String id, @PathVariable Integer status, @PathVariable String userId){
+    @PostMapping("changeCollectionStatus")
+    public Result changeCollection(String bid, String id, Integer status, String userId){
         UpdateWrapper<UCollection> wrapper = new UpdateWrapper<>();
         wrapper.set("status",status);
         wrapper.eq("uid", userId);
-        wrapper.eq("goodsid",id);
+        if (id != null) {
+            wrapper.eq("goodsid",id);
+        } else {
+            wrapper.eq("bid",bid);
+        }
         return new Result<>(collectionService.update(wrapper));
     }
 

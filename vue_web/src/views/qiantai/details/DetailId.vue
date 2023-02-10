@@ -10,8 +10,9 @@
 				<ul class="course_tab clearfix">
 					<li :class="{on: tab === 'info'}"><a href="javascript:" @click="changeComments('info')">商品评论</a>
 					</li>
-					<li v-if="hasBuy===true" :class="{on: tab === 'big'}"><a href="javascript:"
-							@click="changeComments('big')">我的评论</a></li>
+					<li v-if="hasBuy===true" :class="{on: tab === 'big'}">
+						<a href="javascript:" @click="changeComments('big')">我的评论</a>
+					</li>
 					<el-button v-if="hasBuy===true" type="primary"
 						style="float: right;margin-right: 20px;margin-top: 15px" @click="addComment">添加评论</el-button>
 				</ul>
@@ -51,9 +52,9 @@
 				<!--我的评论-->
 				<div class="content_info" v-if="tab === 'big'">
 					<div v-for="item in mycomments">
-						<el-avatar style="float: left" :size="47" :src="item.uicon"></el-avatar>
+						<el-avatar style="float: left" :size="47" :src="item.userInfo.uicon"></el-avatar>
 						<div style="float: left;font-size: 15px;margin-left: 25px;margin-top: 3px">
-							{{item.uname}}<br>
+							{{item.userInfo.uname}}<br>
 							<span style="font-size: 10px">
 								{{item.updatetime}}
 							</span>
@@ -288,6 +289,7 @@
 			//页面加载获取我的评论
 			this.getMyComments();
 			this.hasByThisGoods();
+			this.isCollectionBusiness();
 
 		},
 
@@ -322,11 +324,12 @@
 			},
 			//页面加载判断该用户是否买过该商品
 			hasByThisGoods() {
-				this.$http.post("order/order/hasBuyThisGoods/" + this.id).then(res => {
-					if (res.data.code === 2000) {
-						this.hasBuy = true;
-					}
-				})
+				this.$http.get("syssystem/o-order/hasBuyThisGoods/" + this.id + "/" + sessionStorage.getItem("userId"))
+					.then(res => {
+						if (res.data.data) {
+							this.hasBuy = true;
+						}
+					})
 			},
 			//添加评论
 			addComment() {
@@ -434,8 +437,9 @@
 			},
 			//我的评论
 			getMyComments() {
-				this.$http.get("user/comment/findMyComment/" + this.$route.params.id + "/" + this.pageCurrent + "/" + this
-					.pageSize).then(res => {
+				this.$http.get("syssystem/u-comment/findComment?id=" + this.$route.params.id +
+					"&pageCurrent=" + this.pageCurrent + "&pageSize=" + this.pageSize +
+					"&userId=" + sessionStorage.getItem("userId")).then(res => {
 					if (res.data.code === 2000) {
 						this.mycomments = res.data.data.records;
 						this.total = res.data.data.total
@@ -444,9 +448,8 @@
 			},
 			//评论
 			getComments() {
-				this.$http.get("syssystem/u-comment/findComment/" + this.$route.params.id + "/" + this.pageCurrent + "/" +
-					this
-					.pageSize).then(res => {
+				this.$http.get("syssystem/u-comment/findComment?id=" + this.$route.params.id +
+					"&pageCurrent=" + this.pageCurrent + "&pageSize=" + this.pageSize).then(res => {
 					if (res.data.code === 2000) {
 						this.comments = res.data.data.records;
 						// console.log(res.data.data.records.imgs)
@@ -456,11 +459,12 @@
 			},
 			//关注/取关店铺
 			gunazhudianpu() {
-				var status = 1;
+				var status = 0;
 				if (this.guanZhuStatus === 0) {
-					status = 0;
+					status = 1;
 				}
-				this.$http.post("/commodity/goods/changeGuanzhu/" + this.classData.bid + "/" + status).then(res => {
+				this.$http.post("syssystem/u-collection/changeCollectionStatus?bid=" + this.classData.bid +
+					"&status=" + status + "&userId=" + sessionStorage.getItem("userId")).then(res => {
 					if (res.data.code === 2000) {
 						this.guanZhuStatus = res.data.data;
 						this.$message.success(res.data.msg);
@@ -471,9 +475,11 @@
 			},
 			//是否关注店铺
 			isCollectionBusiness() {
-				this.$http.post("/commodity/goods/isCollectionBusiness/" + this.classData.bid).then(res => {
+				this.$http.get("syssystem/u-collection/isGoodsCollection?bid=" + this.classData.bid + "&userId=" +
+					sessionStorage.getItem("userId")).then(res => {
 					if (res.data.code === 2000) {
-						this.guanZhuStatus = res.data.data;
+						this.guanZhuStatus = res.data.data[0].status;
+						console.log(this.guanZhuStatus)
 					}
 				})
 			},

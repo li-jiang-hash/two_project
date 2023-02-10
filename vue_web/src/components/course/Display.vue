@@ -463,8 +463,9 @@
 				if (this.shouChangStatus === 0) {
 					status = 1;
 				}
-				this.$http.post("syssystem/u-collection/changeCollectionStatus/" + this.$route.params.id + "/" + status +
-					"/" + sessionStorage.getItem("userId")).then(
+				this.$http.post("syssystem/u-collection/changeCollectionStatus?id=" + this.$route.params.id + "&status=" +
+					status +
+					"&userId=" + sessionStorage.getItem("userId")).then(
 					res => {
 						if (res.data.code === 2000) {
 							this.shouChangStatus = res.data.data;
@@ -486,10 +487,10 @@
 			//渲染页面是否已经收藏
 			IsShouChang() {
 				var that = this;
-				this.$http.get("/syssystem/u-collection/isGoodsCollection/" + this.$route.params.id + "/" +
+				this.$http.get("/syssystem/u-collection/isGoodsCollection?id=" + this.$route.params.id + "&userId=" +
 					sessionStorage.getItem("userId")).then(function(resp) {
 					if (resp.data.code === 2000) {
-						that.shouChangStatus = resp.data.data;
+						that.shouChangStatus = resp.data.data[0].status;
 					}
 
 				})

@@ -15,5 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUCommentService extends IService<UComment> {
 
-    Page<UComment> findComment(String id, PageInfo pageInfo);
+    Page<UComment> findComment(String id, String userId, PageInfo pageInfo);
 }

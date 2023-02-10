@@ -7,7 +7,6 @@ import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,10 +32,10 @@ public class UCommentController {
      * 用户评论
      * @return
      */
-    @GetMapping("findComment/{id}/{pageCurrent}/{pageSize}")
-    public Result findComment(@PathVariable String id, @PathVariable Integer pageCurrent, @PathVariable Integer pageSize){
+    @GetMapping("findComment")
+    public Result findComment(String id, Integer pageCurrent, Integer pageSize, String userId){
         PageInfo pageInfo = new PageInfo(pageCurrent,pageSize);
-        Page<UComment> page = commentService.findComment(id, pageInfo);
+        Page<UComment> page = commentService.findComment(id, userId, pageInfo);
         //将 img 转成 list
         for (int i = 0; i < page.getRecords().size(); i++) {
             String[] split = page.getRecords().get(i).getImg().split(",");

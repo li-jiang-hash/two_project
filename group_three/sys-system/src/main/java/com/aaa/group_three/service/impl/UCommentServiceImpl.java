@@ -25,7 +25,7 @@ public class UCommentServiceImpl extends ServiceImpl<UCommentMapper, UComment> i
     private UCommentMapper commentMapper;
 
     @Override
-    public Page<UComment> findComment(String id, PageInfo pageInfo) {
-        return commentMapper.findComment(id, pageInfo);
+    public Page<UComment> findComment(String id, String userId, PageInfo pageInfo) {
+        return commentMapper.findComment(id, userId, pageInfo);
     }
 }
