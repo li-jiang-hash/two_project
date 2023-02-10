@@ -34,6 +34,7 @@ public class BBusinessInfoController {
     }
     @PostMapping("shenhe")
     public Result getById(@RequestBody BBusinessInfo bBusinessInfo){
+        System.out.println("111111111111111111111111111111111 = " + bBusinessInfo);
         UpdateWrapper<BBusinessInfo> wrapper=new UpdateWrapper<>();
         wrapper.set("status",bBusinessInfo.getStatus());
         wrapper.set("reason",bBusinessInfo.getReason());
