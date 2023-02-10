@@ -28,7 +28,7 @@ public class GSortController {
     @Resource
     private GSortServiceImpl gSortService;
 //   查询商品类型
-    @GetMapping("sort")
+    @GetMapping("/sort")
     public Result findAll(){
         return new Result(gSortService.list());
     }

@@ -1,5 +1,20 @@
 package com.aaa.group_three.test;
 
+import com.alibaba.nacos.common.JustForTest;
+import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.InjectionConfig;
+import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import org.apache.commons.lang3.StringUtils;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -15,7 +30,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -92,7 +106,7 @@ public class GeneratorTest {
         // 包配置
         PackageConfig pc = new PackageConfig();
         //pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.aaa.group_three");
+        pc.setParent("com.yyl.systemdemo");
         //pc.setXml("");
         pc.setEntity("entity");//实体的包
         pc.setMapper("dao");//dao的包

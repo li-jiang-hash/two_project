@@ -1,6 +1,9 @@
 package com.aaa.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -26,6 +29,7 @@ public class TbBottomArticle implements Serializable {
     /**
      * 首页管理主键
      */
+    @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
     /**
@@ -41,7 +45,8 @@ public class TbBottomArticle implements Serializable {
     /**
      * 逻辑删除
      */
-    private Integer isDeleted;
+    @TableLogic // 逻辑删除
+    private Integer isDeleted=0;
 
     /**
      * 父类id

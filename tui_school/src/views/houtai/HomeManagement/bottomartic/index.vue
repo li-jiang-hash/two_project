@@ -25,7 +25,7 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button icon="el-icon-search" size="mini" type="primary" @click="handleCheck"
+          <el-button icon="el-icon-search" size="mini" type="primary" @click="init()"
             >查询</el-button
           >
           <el-button icon="el-icon-refresh" size="mini" @click="handleReset"
@@ -185,32 +185,6 @@ export default {
     this.init();
   },
   methods: {
-    handleCheck() {
-      var that = this;
-      this.$http
-        .post(
-          // `/home/bottomArticle/getAllfurryBottomArticle/${this.currentPage}/${this.pageSize}`,
-          "/syssystem/tb-bottom-article?currentPage=" +
-            this.currentPage +
-            "&pageSize=" +
-            this.pageSize,
-          qs.stringify(this.formData)
-        )
-        .then(function (resp) {
-          if (resp.data.code === 2000) {
-            that.tableData = resp.data.data.records;
-            that.total = resp.data.data.total;
-          }
-          if (resp.data.code === 5000) {
-            that.$message({
-              message: resp.data.msg,
-              type: "error",
-            });
-            that.tableData = [];
-          }
-        });
-    },
-
     //文章管理按钮
     handleArticala(id) {
       this.$router.push({ path: "/home/foottext/detail", query: { id: id } });
@@ -227,37 +201,13 @@ export default {
       this.init();
     },
 
-    // 1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-           //角色权限分配
-    // fenpeiPermissionDialog(roleId) {
-    //   this.roleId = roleId;
-    //   this.fenDialogVisible = true;
-    //   //查询后台接口  所有的权限 以及当前用户具有的权限id
-    //   this.$http.post("/syssystem/e-role/selectPermission/" + roleId).then((result) => {
-    //     console.log(result);
-    //     this.data = result.data.data.firstMenus;
-    //     //默认选中的树的数据
-    //     // setTimeout(() =>{
-    //     //     result.data.result..forEach(item => {
-    //     //         this.$refs.tree.setChecked(item, true, false);
-    //     //     })}, 100)
-    //     setTimeout(() => {
-    //       result.data.data.permission.forEach((item) => {
-    //         this.$refs.tree.setChecked(item, true, false);
-    //       });
-    //     }, 100);
-
-    //     // this.checkItems=result.data.permission;
-    //   });
-    // },
-// 1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
     //初始化表格
     init() {
       var that = this;
       this.$http
         .post(
           //   `/home/bottomArticle/getAllBottomArticle/${this.currentPage}/${this.pageSize}`
-          "/syssystem/tb-bottom-article?currentPage=" +
+          "/syssystem/tb-bottom-article/getAllBottomArticle?currentPage=" +
             this.currentPage +
             "&pageSize=" +
             this.pageSize,
@@ -305,7 +255,7 @@ export default {
       })
         .then(() => {
           this.ctrl.loading = true;
-          this.$http.delete(`/syssystem/tb-bottom-article/${id}`).then(function (resp) {
+          this.$http.delete(`/syssystem/tb-bottom-article/delisable/${id}`).then(function (resp) {
             that.ctrl.loading = false;
             if (resp.data.code === 2000) {
               that.$message({

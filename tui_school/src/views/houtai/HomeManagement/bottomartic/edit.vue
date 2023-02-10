@@ -88,7 +88,7 @@ export default {
         if (valid) {
           this.$http
             .post(
-              "/syssystem/tb-bottom-article/addBottom",
+              "/syssystem/tb-bottom-article/updBottom",
               qs.stringify(this.editformData)
             )
             .then(function (resp) {

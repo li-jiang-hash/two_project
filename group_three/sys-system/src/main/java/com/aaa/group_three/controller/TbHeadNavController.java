@@ -32,8 +32,7 @@ public class TbHeadNavController {
     // 查询所有
     @PostMapping
     public Result getAllEmp(PageInfo page, TbHeadNav headNav){
-
-
+        System.out.println("---------------- = " + headNav);
         Page page1 = headNavService.getPageData(page, headNav);
         return new Result(page1);
     }

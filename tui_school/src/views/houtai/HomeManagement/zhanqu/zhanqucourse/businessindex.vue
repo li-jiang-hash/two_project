@@ -10,7 +10,7 @@
             <el-divider></el-divider>
             <el-form :inline="true" :model="searchformData" class="demo-form-inline" size="mini">
                 <el-form-item label="店铺名称">
-                    <el-input v-model="searchformData.sname" placeholder="请输入专区名称"></el-input>
+                    <el-input v-model="searchformData.sname" placeholder="请输入店铺名称"></el-input>
                 </el-form-item>
                 <el-form-item label="状态：">
                     <el-select v-model="searchformData.isDisable" class="auto-width" clearable filterable
@@ -34,13 +34,13 @@
         </div>
         <div>
             <el-table v-loading="ctrl.loading" size="medium" :data="tableData" stripe border style="width: 100%">
-                <el-table-column type="index" label="序号" width="50">
+                <el-table-column type="index" label="序号">
                 </el-table-column>
-                <el-table-column prop="id" v-if="false" label="编号" width="50">
+                <el-table-column prop="id" v-if="false" label="编号">
                 </el-table-column>
-                <el-table-column prop="businessInfo.bname" label="店铺名称" width="250">
+                <el-table-column prop="sname" label="店铺名称">
                 </el-table-column>
-                <el-table-column label="所属分类" width="200" prop="sortname">
+                <el-table-column label="所属分类" prop="sortname">
                     <!--<template slot-scope="scope">
                         <span v-if="scope.row.parentname!=null">
                             {{scope.row.parentname}}->【
@@ -51,13 +51,13 @@
                     </template>-->
 
                 </el-table-column>
-                <el-table-column align="center" prop="gmtCreate" label="添加时间" :formatter="dateFormat">
+                <el-table-column align="center" prop="gmt_create" label="添加时间" :formatter="dateFormat">
                 </el-table-column>
                 <el-table-column prop="sort" label="排序" width="50">
                 </el-table-column>
                 <el-table-column
                         width="170"
-                        prop="isDisable"
+                        prop="is_disable"
                         label="状态"
                         align="center"
                 >
@@ -111,7 +111,8 @@
 
 </template>
 <script>
-
+    import { longStackSupport } from "q";
+import qs from "qs";
     import Add from "./add";
     import Edit from "./edit"
 
@@ -164,7 +165,7 @@
         },
         created() {
             this.searchformData.id = this.$route.query.zoneId
-            this.init(this.searchformData)
+            this.init()
         },
         methods: {
 
@@ -207,7 +208,7 @@
 
             //改变状态
             changeStatus(id, isDisable) {
-                this.$http.get(`/syssystem/tb-zone-business/changeStatus/${id}/${isDisable}`).then(resp => {
+                this.$http.post(`/syssystem/tb-zone-business/changeStatus/${id}/${isDisable}`).then(resp => {
                     if (resp.data.code === 2000) {
                         this.$message({
                             message: resp.data.msg,
@@ -235,7 +236,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$http.get(`/syssystem/tb-zone-business/deleteZoneBusiness/${id}`).then(resp => {
+                    this.$http.delete(`/syssystem/tb-zone-business/deleteZoneBusiness/${id}`).then(resp => {
                         if (resp.data.code === 2000) {
                             this.$message({
                                 message: resp.data.msg,
@@ -274,14 +275,16 @@
             reload() {
                 this.searchformData = {}
                 this.searchformData.id = this.$route.query.zoneId
+                console.log("this.$route.query.zoneId="+this.$route.query.zoneId)
                 this.init()
+                console.log("this.init()="+this.init());
             },
 
             init() {
                 // this.searchformData.zoneId = this.$route.query.zoneId
-                this.$http.post("/syssystem/b-business-info/managementZone?currentPage=" +this.currentPage +"&pageSize=" + this.pageSize, qs.stringify(this.searchformData)).then(resp => {
+                this.$http.post("/syssystem/tb-zone-business/managementZone?currentPage=" +this.currentPage +"&pageSize=" + this.pageSize, qs.stringify(this.searchformData)).then(resp => {
                     if (resp.data.code === 2000) {
-                        //console.log(resp.data.data)
+                        console.log("resp.data.data="+resp.data.data)
                         this.tableData = resp.data.data.records;
                         this.total = resp.data.data.total;
                     }

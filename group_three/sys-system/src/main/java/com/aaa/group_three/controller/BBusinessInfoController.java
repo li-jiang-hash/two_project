@@ -43,7 +43,7 @@ public class BBusinessInfoController {
     public Result getSname(){
         return new Result(bBusinessInfoService.list());
     }
-
+    //根据手机号查询该用户是否为商家
     @GetMapping("tokenphone")
     public Result getPhone(String phone){
         QueryWrapper queryWrapper=new QueryWrapper<>();
@@ -51,5 +51,11 @@ public class BBusinessInfoController {
         boolean one = bBusinessInfoService.getOne(queryWrapper) ==null;
         return new Result(one);
     }
+    @PostMapping("/storeinsert")
+    public Result storeinsert(@RequestBody BBusinessInfo bBusinessInfo){
+        boolean save = bBusinessInfoService.save(bBusinessInfo);
+        return new Result(save);
+    }
+
 
 }

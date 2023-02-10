@@ -1,6 +1,7 @@
 package com.aaa.group_three.service;
 
 import com.aaa.entity.TbZoneBusiness;
+import com.aaa.util.PageInfo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -20,4 +21,10 @@ public interface ITbZoneBusinessService extends IService<TbZoneBusiness> {
     List<Map<String, Object>> findBusiness();
 
     Page getAll(Page page, TbZoneBusiness zoneBusiness);
+
+
+    /**
+     * 商户端-首页管理-专区管理—专区店铺-查询所有
+     */
+    Page getPageData(PageInfo page, TbZoneBusiness zoneBusiness);
 }
