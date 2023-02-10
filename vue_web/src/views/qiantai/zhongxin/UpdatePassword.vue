@@ -8,7 +8,7 @@
                 <div class="form_group">
                     <div class="label">手机号:</div>
                     <div class="form_ctl">
-                        <input type="text" v-model="pobj.mobile" class="form_input" placeholder="请输入手机号">
+                        <input type="text"  :disabled="true" v-model="pobj.mobile" class="form_input" placeholder="请输入手机号">
                     </div>
                 </div>
                 <div class="form_group">

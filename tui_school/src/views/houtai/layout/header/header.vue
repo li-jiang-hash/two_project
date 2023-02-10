@@ -172,7 +172,7 @@
             //退出登录方法
             tuichu(){
                 var that=this;
-                this.$http.get("/sso/loginOut").then(function (resp) {
+                this.$http.get("/syssso/logout").then(function (resp) {
                     sessionStorage.clear();//清空sessionStorage中的请求头
                     that.$router.push("/houLogin")//重定向到登录页面
                 })
