@@ -221,14 +221,8 @@ import qs from 'qs'
             handleReset() {
                 this.reload()
             },
-            // 关闭弹窗回调
-            closeCllback() {
-                this.$refs.addSubjectFormRef.resetFields();
-                this.reload()
-            },
             closeCllback1(){
                 this.checkvisible = false
-                this.$refs.editSubjectFormRef.resetFields();
                 this.reload()
             },
             // 刷新当前页面

@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author yuyongli
@@ -28,17 +28,10 @@ public class TbHeadNavServiceImpl extends ServiceImpl<TbHeadNavMapper, TbHeadNav
 
     @Override
     public Page getPageData(PageInfo page, TbHeadNav headNav) {
-
-        System.out.println("headNav的值："+headNav);
-        System.out.println("page的值："+page);
-//        Page page = new Page(currentPage,pageSize);
         QueryWrapper queryWrapper = new QueryWrapper();
-        // "" null
-        if(StringUtils.isNotBlank(headNav.getHeadName())){
-            queryWrapper.like("head_name",headNav.getHeadName());
-        }
-
-        return this.page(page,queryWrapper);
+        queryWrapper.like(StringUtils.isNotBlank(headNav.getHeadName()), "head_name", headNav.getHeadName());
+        queryWrapper.like(StringUtils.isNotBlank(headNav.getIsDisable()), "is_disable", headNav.getIsDisable());
+        return this.page(page, queryWrapper);
     }
 
     @Override
