@@ -27,13 +27,12 @@ public class GGoodsController {
     private IGGoodsService goodsService;
 
     /**
-     *店铺商品
+     *店铺商品查询
      * @return
      */
     @GetMapping("findGoodsByBid/{pageCurrent}/{pageSize}/{id}")
     public Result findAll(@PathVariable Integer pageCurrent, @PathVariable Integer pageSize, @PathVariable String id) {
         PageInfo pageInfo = new PageInfo(pageCurrent, pageSize);
-        Page page = goodsService.getGoodsAll(pageInfo,id);
         Page page = goodsService.getGoodsAll(pageInfo, id);
         return new Result(page);
     }
@@ -46,11 +45,6 @@ public class GGoodsController {
     public Result findGoodsByGoodsid(@PathVariable Integer id){
         Map<String,Object> map = goodsService.getGoodsByGoodsid(id);
         return new Result<>(map);
-    }
-
-    @GetMapping("getGoodsSellNum/{id")
-    public Result getGoodsSellNum(@PathVariable Integer id){
-        String sellNum = goodsService.getGoodsSellNum(id);
     }
 
 //    查询goods表中数据

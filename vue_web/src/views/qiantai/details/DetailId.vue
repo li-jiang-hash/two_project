@@ -434,8 +434,7 @@
 			},
 			//我的评论
 			getMyComments() {
-				this.$http.get("syssystem/u-comment/findComment/" + this.$route.params.id + "/" + this.pageCurrent + "/" +
-					this
+				this.$http.get("user/comment/findMyComment/" + this.$route.params.id + "/" + this.pageCurrent + "/" + this
 					.pageSize).then(res => {
 					if (res.data.code === 2000) {
 						this.mycomments = res.data.data.records;

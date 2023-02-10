@@ -22,7 +22,5 @@ public interface GGoodsMapper extends BaseMapper<GGoods> {
 
     Map<String, Object> getGoodsByGoodsid(Integer id);
 
-    String getGoodsSellNum(Integer id);
-
     Page findAllGoods(PageInfo pageInfo,@Param("goods") GGoods goods);
 }

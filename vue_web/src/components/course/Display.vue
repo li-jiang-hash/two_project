@@ -463,7 +463,8 @@
 				if (this.shouChangStatus === 0) {
 					status = 1;
 				}
-				this.$http.post("commodity/goods/changeCollectionStatus/" + this.$route.params.id + "/" + status).then(
+				this.$http.post("syssystem/u-collection/changeCollectionStatus/" + this.$route.params.id + "/" + status +
+					"/" + sessionStorage.getItem("userId")).then(
 					res => {
 						if (res.data.code === 2000) {
 							this.shouChangStatus = res.data.data;
@@ -474,19 +475,21 @@
 			},
 			//获取商品成交量
 			getSellNum() {
-				this.$http.post("commodity/goods/getGoodsSellNum/" + this.$route.params.id).then(res => {
+				this.$http.get("syssystem/o-stock/getGoodsSellNum/" + this.$route.params.id).then(res => {
 					if (res.data.code === 2000) {
-						this.sellNum = res.data.data
+						this.sellNum = res.data.data[0].sellNum
+
+
 					}
 				})
 			},
 			//渲染页面是否已经收藏
 			IsShouChang() {
 				var that = this;
-				this.$http.post("/commodity/goods/isGoodsCollection/" + this.$route.params.id).then(function(resp) {
+				this.$http.get("/syssystem/u-collection/isGoodsCollection/" + this.$route.params.id + "/" +
+					sessionStorage.getItem("userId")).then(function(resp) {
 					if (resp.data.code === 2000) {
 						that.shouChangStatus = resp.data.data;
-						// alert(that.shouChangStatus)
 					}
 
 				})
