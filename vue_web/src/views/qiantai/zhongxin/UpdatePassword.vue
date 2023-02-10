@@ -64,8 +64,9 @@
                 disabled: false,
             }
         },
-        mounted() {
-            this.pobj.mobile=window.sessionStorage.getItem("mobile")
+        created() {
+            console.log("lllllllllllllllllllllllllll:"+sessionStorage.getItem("telephone"));
+            this.pobj.mobile = sessionStorage.getItem("telephone")
             },
         methods: {
             //返回修改结果信息
