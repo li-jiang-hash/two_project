@@ -1,34 +1,32 @@
 package com.aaa.entity;
 
 import java.io.Serializable;
-
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 商品类别
+ * 保存方式
  * </p>
  *
- * @author wpp
- * @since 2023-02-01
+ * @author wanglei
+ * @since 2023-02-10
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class GSort implements Serializable {
+public class GDeposit implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 类别id
+     * 储藏方式id
      */
     private Integer id;
 
     /**
-     * 类别名称
+     * 储藏方式名称
      */
-    private String sortname;
+    private String depositname;
 
     /**
      * 逻辑删除
@@ -36,7 +34,7 @@ public class GSort implements Serializable {
     private Integer isDeleted;
 
     /**
-     * 0通过审核 1驳回 2待审核
+     * 审核状态 0成功 1驳回 2待审核
      */
     private Integer status;
 
@@ -44,7 +42,6 @@ public class GSort implements Serializable {
      * 审核备注
      */
     private String checkContent;
-
 
 
 }

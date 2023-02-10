@@ -3,11 +3,18 @@
 <mapper namespace="com.aaa.group_three.dao.GBrandMapper">
 
     <select id="getAll" resultType="java.util.Map">
-        select g_brand.id,brandname,sortname,g_brand.check_content,g_brand.status
+        select g_brand.id,g_brand.brandname,sortname,g_brand.check_content,g_brand.status
         from g_brand,g_sort
-        where g_brand.id=g_sort.id and g_brand.is_deleted=0
-<!--        <if test="brands.id!=null">-->
-<!--            and g_brand.id=#{brands.id}-->
-<!--        </if>-->
+        where g_brand.sortid=g_sort.id and g_brand.is_deleted=0
+        <if test="brands.id !=null">
+            and g_brand.id =#{brands.id}
+        </if>
+        <if test="brands.sortid !=null">
+            and g_brand.sortid =#{brands.sortid}
+        </if>
+        <if test="brands.status !=null">
+            and g_brand.status =#{brands.status}
+        </if>
+
     </select>
 </mapper>

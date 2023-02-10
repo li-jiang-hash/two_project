@@ -5,7 +5,9 @@ import com.aaa.entity.BBusinessInfo;
 import com.aaa.group_three.service.impl.BBusinessInfoServiceImpl;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,7 @@ import javax.annotation.Resource;
 public class BBusinessInfoController {
     @Resource
     private BBusinessInfoServiceImpl bBusinessInfoService;
+
     @PostMapping("ruzhu")
     public Result getAllApp(PageInfo page, @RequestBody BBusinessInfo bBusinessInfo){
         Page page1 = bBusinessInfoService.getPageData(page, bBusinessInfo);
@@ -31,9 +34,11 @@ public class BBusinessInfoController {
     }
     @PostMapping("shenhe")
     public Result getById(@RequestBody BBusinessInfo bBusinessInfo){
-        QueryWrapper<BBusinessInfo> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("status",bBusinessInfo.getStatus());
-        boolean byId = bBusinessInfoService.update(bBusinessInfo,queryWrapper);
+        UpdateWrapper<BBusinessInfo> wrapper=new UpdateWrapper<>();
+        wrapper.set("status",bBusinessInfo.getStatus());
+        wrapper.set("reason",bBusinessInfo.getReason());
+        wrapper.eq("id",bBusinessInfo.getId());
+        boolean byId = bBusinessInfoService.update(wrapper);
         return new Result(byId);
     }
 
@@ -48,15 +53,19 @@ public class BBusinessInfoController {
         queryWrapper.select("sname","id","bicon");
         return new Result<>(bBusinessInfoService.list(queryWrapper));
     }
+    //根据手机号查询该用户是否为商家
     @GetMapping("tokenphone")
     public Result getPhone(String phone){
         QueryWrapper queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("telephone",phone);
         boolean one = bBusinessInfoService.getOne(queryWrapper) ==null;
-        System.out.println("llllllllllllllllllllllllllllllllllllllllllllllllllll:++++++"+phone);
-        System.out.println("llllllllllllllllllllllllllllllllllllllllllllllllllll:"+bBusinessInfoService.getOne(queryWrapper));
         return new Result(one);
     }
+    @PostMapping("/storeinsert")
+    public Result storeinsert(@RequestBody BBusinessInfo bBusinessInfo){
+        boolean save = bBusinessInfoService.save(bBusinessInfo);
+        return new Result(save);
+    }
+
 
 }
-

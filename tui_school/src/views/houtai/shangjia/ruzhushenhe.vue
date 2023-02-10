@@ -189,20 +189,13 @@
 export default {
   data() {
     return {
-      sorts: {},
       checkformData: {},
       //审核的弹出层
       checkvisible: false,
       map: {},
       formData: {},
       tableData: [],
-      expands: [],
-      addSubjectFormData: {
-        remark: "",
-      },
-      editSubjectFormData: {},
       addDialogVisible: false,
-      editDialogVisible: false,
       page: {
         beginPageIndex: 1,
         currentPage: 1,
@@ -212,16 +205,31 @@ export default {
         totalPage: 0,
       },
       statusIdList: [],
-      //添加框的表单验证
-      addSubjectFormRule: {
-        title: [{ required: true, message: "分类名称不能为空", trigger: "blur" }],
-      },
     };
   },
   created() {
     this.findAllBrands();
   },
   methods: {
+
+
+    //页面加载查询所有品牌
+    findAllBrands() {
+      this.$http
+        .post(
+          "/syssystem/b-business-info/ruzhu?currentPage=" +
+            this.page.currentPage +
+            "&pageSize=" +
+            this.page.pageSize,
+          this.map
+        )
+        .then((res) => {
+          if (res.data.code === 2000) {
+            this.statusIdList = res.data.data.records;
+            this.page.totalCount = res.data.data.total;
+          }
+        });
+    },
     //提交审核的表单
     submitCheckForm() {
       var that = this;
@@ -242,7 +250,7 @@ export default {
     //审核取消后清空
     resetCheck() {
       this.checkvisible = false;
-      this.checkformData.checkContent = "";
+      // this.checkformData.checkContent = "";
       this.reload();
     },
     //点击审核的弹出层
@@ -250,34 +258,7 @@ export default {
       this.checkformData = row;
       this.checkvisible = true;
     },
-    //页面加载查询所有品牌
-    findAllBrands() {
-      this.$http
-        .post(
-          "/syssystem/b-business-info/ruzhu?currentPage=" +
-            this.page.currentPage +
-            "&pageSize=" +
-            this.page.pageSize,
-          this.map
-        )
-        .then((res) => {
-          if (res.data.code === 2000) {
-            this.statusIdList = res.data.data.records;
-            this.page.totalCount = res.data.data.total;
-          }
-        });
-    },
-    //编辑分类框
-    editSubject(row) {
-      this.editDialogVisible = true;
-      this.editSubjectFormData = row;
-    },
-    //添加分类框
-    addSubject(parentId, id) {
-      this.addDialogVisible = true;
-      this.addSubjectFormData.parentId = parentId;
-      this.addSubjectFormData.id = id;
-    },
+
     handleSizeChange(val) {
       this.page.pageSize = val;
       this.findAllBrands();
@@ -294,31 +275,16 @@ export default {
     handleReset() {
       this.reload();
     },
-
-    // 关闭弹窗回调
-    closeCllback() {
-      this.addDialogVisible = false;
-      // this.$refs.addSubjectFormRef.resetFields();
-      this.reload();
-    },
+    // 关闭审核弹窗
     closeCllback1() {
       this.checkvisible = false;
-      // this.$refs.editSubjectFormRef.resetFields();
       this.reload();
     },
-
     // 刷新当前页面
     reload() {
       this.map = {};
-      this.editSubjectFormData = {};
       this.findAllBrands();
-    },
-    textClass(userType) {
-      return {
-        c_red: userType === 0,
-        c_blue: userType === 2,
-      };
-    },
-  },
+    }
+  }
 };
 </script>

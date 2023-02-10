@@ -40,7 +40,6 @@ public class EExamineController {
 //新增数据
     @PostMapping("insert")
     public Result add(@RequestBody EExamine eExamine){
-        String dateFormat="yyyy-MM-dd HH:mm:ss";
         LocalDateTime time =LocalDateTime.now();
         eExamine.setGmtCreate(time);
         eExamine.setCheckman("1");

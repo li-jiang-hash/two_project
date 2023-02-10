@@ -41,7 +41,7 @@
                 <div class="form_ctl">
                 <el-upload
                         class="avatar-uploader"
-                        action="http://192.168.1.23:8000/business/upload"
+                        action="http://localhost:7500/syssystem/file/upload"
                         :show-file-list="false"
                         :headers="token"
                         :on-success="handleAvatarSuccess1"
@@ -71,7 +71,7 @@
                   <div class="form_ctl">
                     <el-upload
                         class="avatar-uploader"
-                        action="http://192.168.1.23:8000/business/upload"
+                        action="http://localhost:7500/syssystem/file/upload"
                         :show-file-list="false"
                         :headers="token"
                         :on-success="handleAvatarSuccess2"
@@ -98,7 +98,7 @@
                   <div class="form_ctl">
                     <el-upload
                         class="avatar-uploader"
-                        action="http://192.168.1.23:8000/business/upload"
+                        action="http://localhost:7500/syssystem/file/upload"
                         :show-file-list="false"
                         :headers="token"
                         :on-success="handleAvatarSuccess3"
@@ -115,7 +115,7 @@
                   <div class="form_ctl">
                     <el-upload
                         class="avatar-uploader"
-                        action="http://192.168.1.23:8000/business/upload"
+                        action="http://localhost:7500/syssystem/file/upload"
                         :show-file-list="false"
                         :headers="token"
                         :on-success="handleAvatarSuccess4"
@@ -359,7 +359,7 @@ export default {
     },
     submitForm () {
       var that=this;
-           this.$http.post("/business/storeinsert",this.ruleForm).then(function (resp) {
+           this.$http.post("/syssystem/b-business-info/storeinsert",this.ruleForm).then(function (resp) {
                   if (resp.data.code===2000){
                     that.$message({
                       message:resp.data.msg,
@@ -376,14 +376,10 @@ export default {
            })
 
     },
-
-
-
     //获取营业类别
     getstatus(){
 
-      this.$http.get("/commodity/sort/findAllSort").then(result => {
-
+      this.$http.get("/syssystem/g-sort/sort").then(result => {
         this.options=result.data.data
         console.log(this.status)
       })

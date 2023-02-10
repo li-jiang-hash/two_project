@@ -49,17 +49,17 @@
         <el-table-column prop="ename" label="用户名" align="center"> </el-table-column>
         <el-table-column
           :formatter="dateFormat"
-          prop="gmtCreate"
+          prop="gmt_create"
           label="入职时间"
           align="center"
         >
         </el-table-column>
-        <el-table-column :formatter="dateFormat" prop="gmtModified" label="修改时间">
+        <el-table-column :formatter="dateFormat" prop="gmt_modified" label="修改时间">
         </el-table-column>
         <el-table-column prop="telephone" label="电话号码" align="center">
         </el-table-column>
         <el-table-column prop="age" label="年龄" align="center"> </el-table-column>
-        <el-table-column prop="role.roleName" label="角色" align="center">
+        <el-table-column prop="role_name" label="角色" align="center">
         </el-table-column>
         <el-table-column header-align="center" align="center" prop="state" label="状态">
           <template slot-scope="scope">
@@ -81,7 +81,7 @@
             >
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="303" align="center">
+        <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
               >编辑</el-button
@@ -230,9 +230,10 @@
             <el-option label="在职" :value="0"></el-option>
             <el-option label="离职" :value="1"></el-option>
             <el-option label="冻结" :value="2"></el-option>
+           
           </el-select>
         </el-form-item>
-        <el-form-item label="职位" prop="updateUserFormData.roleName">
+        <el-form-item label="职位" prop="updateUserFormData.role_name">
           <el-select v-model="updateUserFormData.rid">
             <el-option
               v-for="item in rolenames"
@@ -569,7 +570,7 @@ export default {
       })
         .then(() => {
           var that = this;
-          this.$http.delete(`/syssystem/e-emp-info/${id}`).then(function (resp) {
+          this.$http.delete(`/syssystem/e-emp-info/delEmp/${id}`).then(function (resp) {
             if (resp.data.code === 2000) {
               that.$message.success(resp.data.msg);
               that.initTable();
@@ -625,6 +626,7 @@ export default {
         }
       });
     },
+
     //修改用户信息
     updateUser() {
       var that = this;

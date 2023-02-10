@@ -37,7 +37,7 @@ public class EEmpInfoServiceImpl extends ServiceImpl<EEmpInfoMapper, EEmpInfo> i
             queryWrapper.like("ename",empInfo.getEname());
         }
 
-        return this.page(page,queryWrapper);
+        return empInfoMapper.getRole(page,queryWrapper);
     }
 
     @Override

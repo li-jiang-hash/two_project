@@ -4,6 +4,7 @@ import com.aaa.util.Result;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.OSSException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,24 +25,33 @@ import java.util.UUID;
 @RestController
 @RequestMapping("file")
 public class Sso {
+    @Value("${com.aliyun.AccessKey_ID}")
+    private String AccessKey_ID;
+    @Value("${com.aliyun.AccessKey_Secret}")
+    private String AccessKey_Secret;
+
+    @Value("${com.aliyun.endPoint}")
+    private String endPoint;
+    @Value("${com.aliyun.bucketName}")
+    private String bucketName;
     @PostMapping("/upload")
     public Result upload(@RequestParam("file") MultipartFile file){
         System.out.println(file);
         //获取原始文件名
         String filename = file.getOriginalFilename();
         // Endpoint以华东1（杭州）为例，其它Region请按实际情况填写。
-        String endpoint = "oss-cn-hangzhou.aliyuncs.com";
+        String endPoint = this.endPoint;
         // 阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。
-        String accessKeyId = "LTAI5tBs7csbWuZD6MfAGgHg";
-        String accessKeySecret = "XKEBbSZ2U312Pcsa0bzMJPbhsPlvop";
+        String accessKeyId = this.AccessKey_ID;
+        String accessKeySecret = this.AccessKey_Secret;
         // 填写Bucket名称，例如examplebucket。
-        String bucketName = "two-project";
+        String bucketName = this.bucketName;
         // 填写Object完整路径，完整路径中不能包含Bucket名称，例如exampledir/exampleobject.txt。
         String suffix = filename.substring(filename.lastIndexOf("."));
         String objectName = UUID.randomUUID() + filename;
 //        // 创建OSSClient实例。
-        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
-        String src = "https://" + bucketName + "." + endpoint + "/" + objectName;
+        OSS ossClient = new OSSClientBuilder().build(endPoint, accessKeyId, accessKeySecret);
+        String src = "https://" + bucketName + "." + endPoint + "/" + objectName;
         Map map = new HashMap();
         map.put("src", src);
         try {

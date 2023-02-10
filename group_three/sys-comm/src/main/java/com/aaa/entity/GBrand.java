@@ -45,7 +45,7 @@ public class GBrand implements Serializable {
      */
     private String checkContent;
     /**
-     * 品牌所属类别
+     * 品牌所属类别名称
      */
     @TableField(exist = false)
     private GSort sortname;

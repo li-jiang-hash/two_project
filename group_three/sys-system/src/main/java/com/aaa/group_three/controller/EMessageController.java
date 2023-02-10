@@ -42,9 +42,6 @@ public class EMessageController {
         //创建/修改时间
         LocalDateTime dt = LocalDateTime.now ();
         message.setGmtDate(dt);
-        //saveOrUpdate  添加或修改
-        //message  对象有id的值的时候 修改
-        //id没有值的时候 添加
         return new Result(messageService.saveOrUpdate(message));
     }
 

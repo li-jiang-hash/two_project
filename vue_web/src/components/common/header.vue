@@ -17,9 +17,9 @@
 					<li class="">
 						<router-link :to="{path: '/myCart'}" v-if="this.loginType=='USER_PHONE'">我的购物车</router-link>
 					</li>
-					<!-- <li class="s_left">
+					<li class="s_left">
                         <router-link :to="{path: '/geRenCenter'}" v-if="this.loginType!=null">{{userInfo}}</router-link>
-                    </li>-->
+                    </li>
 					<li><a @click="tuichu" v-if="this.loginType!=null">退出</a></li>
 				</ul>
 				<ul class="top_list clearfix">
@@ -38,7 +38,7 @@
 			<ul class="h_nav_ul clearfix">
 				<li v-for="(item, index) in navList" :key="index">
 					<router-link :class="{active: isNow === item.href}" :to="item.href" target="_self"
-						v-if="item.skipWay==1 && item.headId!=6 && item.headId!=3 || item.headId==3 && token!='' && token!=null">
+						v-if="item.skipWay==1 && item.headId!=6 && item.headId!=3 || item.headId==3 && token!='' && token != null">
 						{{item.headName}}
 					</router-link>
 					<a :href="item.href" v-if="item.headId==6">{{item.headName}}</a>
@@ -93,7 +93,7 @@
 				that.token = sessionStorage.getItem('token');
 				console.log(that.token)
 				that.navList = resp.data.data;
-				//console.log(resp.data.data)
+				console.log(resp.data.data)
 			})
 			// this.$http.get("/syssso/isLoginAndBusiness").then(resp => {
 			// 	if (resp.data.code === 2000) {
