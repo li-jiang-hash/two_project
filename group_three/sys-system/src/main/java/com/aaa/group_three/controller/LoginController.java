@@ -6,11 +6,9 @@ import com.aaa.entity.REmpRole;
 import com.aaa.group_three.service.IEEmpInfoService;
 import com.aaa.group_three.service.IERoleService;
 import com.aaa.group_three.service.IREmpRoleService;
+import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -56,6 +54,12 @@ public class LoginController {
             roleList.add("ROLE_" + byId.getRoleName());
         }
         return roleList;
+    }
+    @GetMapping
+    public Result getUser(String telephone) {
+        QueryWrapper queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("telephone",telephone);
+        return new Result(empInfoService.getOne(queryWrapper));
     }
 
 }
