@@ -232,6 +232,8 @@ export default {
     },
     //提交审核的表单
     submitCheckForm() {
+      this.checkformData.password=sessionStorage.getItem("password")
+      this.checkformData.checker=sessionStorage.getItem("checker")
       var that = this;
       this.$http
         .post(`/syssystem/b-business-info/shenhe`, this.checkformData)

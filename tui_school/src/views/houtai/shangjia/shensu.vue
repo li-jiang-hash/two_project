@@ -25,7 +25,7 @@
         <el-table-column
           prop="appealTime"
           label="申请时间"
-          :formatter="datetime"
+          :formatter="dateFormat"
           align="center"
         >
         </el-table-column>
@@ -150,6 +150,32 @@ export default {
     this.init();
   },
   methods: {
+    dateFormat(row, column, cellValue, index) {
+      const daterc = row[column.property];
+      //console.log(row, column)
+      if (daterc) {
+        if (daterc.indexOf("T") === -1) return daterc;
+        const arr = daterc.split("T");
+        const d = arr[0];
+        const darr = d.split("-");
+        const t = arr[1];
+        const tarr = t.split(".000");
+        const marr = tarr[0].split(":");
+        const dd =
+        darr[0] +
+        "-" +
+        darr[1] +
+        "-" +
+        darr[2] +
+        " " +
+        marr[0] +
+        ":" +
+        marr[1] +
+        ":" +
+        marr[2].substring(0, 2);
+        return dd;
+      }
+    },
     //改变当前页数
     handleSizeChange(val) {
       this.pageSize = val;

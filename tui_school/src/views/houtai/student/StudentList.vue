@@ -46,7 +46,7 @@
         <el-table-column prop="uname" label="昵称"> </el-table-column>
         <el-table-column prop="age" label="年龄"> </el-table-column>
         <el-table-column prop="location" label="地址"> </el-table-column>
-        <el-table-column align="center" prop="createtime" label="创建时间">
+        <el-table-column align="center" prop="createtime" :formatter="dateFormat" label="创建时间">
         </el-table-column>
         <el-table-column prop="status" label="状态" align="center">
           <template slot-scope="scope">
@@ -121,6 +121,32 @@ export default {
     this.initTable();
   },
   methods: {
+    dateFormat(row, column, cellValue, index) {
+                const daterc = row[column.property];
+                //console.log(row, column)
+                if (daterc) {
+                    if (daterc.indexOf("T") === -1) return daterc;
+                    const arr = daterc.split("T");
+                    const d = arr[0];
+                    const darr = d.split("-");
+                    const t = arr[1];
+                    const tarr = t.split(".000");
+                    const marr = tarr[0].split(":");
+                    const dd =
+                    darr[0] +
+                    "-" +
+                    darr[1] +
+                    "-" +
+                    darr[2] +
+                    " " +
+                    marr[0] +
+                    ":" +
+                    marr[1] +
+                    ":" +
+                    marr[2].substring(0, 2);
+                    return dd;
+                }
+            },
     //模糊查询
     search() {
       this.currentPage = 1;

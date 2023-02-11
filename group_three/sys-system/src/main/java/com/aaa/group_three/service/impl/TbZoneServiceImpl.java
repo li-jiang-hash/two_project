@@ -33,7 +33,7 @@ public class TbZoneServiceImpl extends ServiceImpl<TbZoneMapper, TbZone> impleme
         if(StringUtils.isNotBlank(zone.getZoneName())){
             queryWrapper.like("zone_name",zone.getZoneName());
         }
-
+        queryWrapper.like(StringUtils.isNotBlank(zone.getIsDisable()), "is_disable", zone.getIsDisable());
         return this.page(page,queryWrapper);
     }
 

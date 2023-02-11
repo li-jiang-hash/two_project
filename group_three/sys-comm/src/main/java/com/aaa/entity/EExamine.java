@@ -1,7 +1,8 @@
 package com.aaa.entity;
 
-import java.time.LocalDateTime;
+
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -41,8 +42,7 @@ public class EExamine implements Serializable {
     /**
      * 审查时间
      */
-//    @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
-//   @DateTimeFormat(pattern = "YYYY-MM-dd HH:mm:ss")
+
     private LocalDateTime gmtCreate;
 
     /**
