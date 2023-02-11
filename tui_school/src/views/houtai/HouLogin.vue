@@ -103,17 +103,28 @@ export default {
         if (valid) {
           this.$http
             .post("/syssso/login", qs.stringify(this.loginFormData))
-            .then(function (resp) {
+            .then( resp => {
               if (resp.data.code === 2000) {
-                that.$message.success(resp.data.msg);
+                this.$message.success(resp.data.msg);
                 sessionStorage.setItem("token", resp.data.data);
                 sessionStorage.setItem("houtelephone", that.loginFormData.telephone);
                 sessionStorage.setItem("password", that.loginFormData.password);
-                that.$router.push("/dashboard");
+                this.$router.push("/dashboard");
               } else {
-                that.$message.error(resp.data.msg);
+                this.$message.error(resp.data.msg);
               }
-            });
+            }).then(
+              this.$http
+              .get(`/syssystem/login?telephone=${this.loginFormData.telephone}`)
+              .then(resp => {
+                if (resp.data.code === 2000) {
+                  sessionStorage.setItem("rid",resp.data.data.rid)
+                  this.$message.success(resp.data.msg);
+                } else {
+                  this.$message.error(resp.data.msg);
+                }
+              })
+            );
         }
       });
     },
