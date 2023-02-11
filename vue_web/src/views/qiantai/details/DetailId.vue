@@ -23,7 +23,8 @@
 						<div style="float: left;font-size: 15px;margin-left: 25px;margin-top: 3px">
 							{{item.userInfo.uname}}<br>
 							<span style="font-size: 10px">
-								{{item.updatetime}}
+								<span>评论时间：{{item.createtime}} </span>
+								<span v-if="item.updatetime!=null">修改时间：{{item.updatetime}}</span>
 							</span>
 						</div>
 						<div style="font-family: 幼圆;font-size: 10px">
@@ -56,7 +57,8 @@
 						<div style="float: left;font-size: 15px;margin-left: 25px;margin-top: 3px">
 							{{item.userInfo.uname}}<br>
 							<span style="font-size: 10px">
-								{{item.updatetime}}
+								<span>评论时间：{{item.createtime}} </span>
+								<span v-if="item.updatetime!=null">修改时间：{{item.updatetime}}</span>
 							</span>
 						</div>
 						<div style="font-family: 幼圆;font-size: 10px">
@@ -70,7 +72,7 @@
 								<div
 									style="font-size: 20px;font-family: 幼圆;float: right;margin-top: -20px;width: 124px">
 									<div style="float: left">
-										<el-link style="font-size: 20px" type="primary" @click="editComment(item.id)">
+										<el-link style="font-size: 20px" type="primary" @click="editComment(item)">
 											编辑
 										</el-link>
 									</div>
@@ -139,21 +141,21 @@
 					</el-input>
 					<div style="margin: 20px 0">最多上传三张图片!</div>
 					<el-upload style="float: left;margin-right: 40px" class="avatar-uploader"
-						action="http://192.168.1.23:8000/user/upload01" :show-file-list="false"
+						action="http://localhost:7500/syssystem/file/upload" :show-file-list="false"
 						:on-success="handleAvatarSuccess0" :before-upload="beforeAvatarUpload">
 						<img v-if="editData.imgs[0]" v-model="editData.imgs[0]" :src="editData.imgs[0]" class="avatar"
 							alt="">
 						<i v-else class="el-icon-plus avatar-uploader-icon"></i>
 					</el-upload>
 					<el-upload style="float: left;margin-right: 40px" class="avatar-uploader"
-						action="http://192.168.1.23:8000/user/upload01" :show-file-list="false"
+						action="http://localhost:7500/syssystem/file/upload" :show-file-list="false"
 						:on-success="handleAvatarSuccess1" :before-upload="beforeAvatarUpload">
 						<img v-if="editData.imgs[1]" v-model="editData.imgs[1]" :src="editData.imgs[1]" class="avatar"
 							alt="">
 						<i v-else class="el-icon-plus avatar-uploader-icon"></i>
 					</el-upload>
 					<el-upload style="float: left;margin-right: 40px" class="avatar-uploader"
-						action="http://192.168.1.23:8000/user/upload01" :show-file-list="false"
+						action="http://localhost:7500/syssystem/file/upload" :show-file-list="false"
 						:on-success="handleAvatarSuccess2" :before-upload="beforeAvatarUpload">
 						<img v-if="editData.imgs[2]" v-model="editData.imgs[2]" :src="editData.imgs[2]" class="avatar"
 							alt="">
@@ -182,21 +184,21 @@
 					</el-input>
 					<div style="margin: 20px 0">最多上传三张图片!</div>
 					<el-upload style="float: left;margin-right: 40px" class="avatar-uploader"
-						action="http://192.168.1.23:8000/user/upload01" :show-file-list="false"
+						action="http://localhost:7500/syssystem/file/upload" :show-file-list="false"
 						:on-success="addhandleAvatarSuccess0" :before-upload="beforeAvatarUpload">
 						<img v-if="addCommentData.imgs[0]" v-model="addCommentData.imgs[0]"
 							:src="addCommentData.imgs[0]" class="avatar" alt="">
 						<i v-else class="el-icon-plus avatar-uploader-icon"></i>
 					</el-upload>
 					<el-upload style="float: left;margin-right: 40px" class="avatar-uploader"
-						action="http://192.168.1.23:8000/user/upload01" :show-file-list="false"
+						action="http://localhost:7500/syssystem/file/upload" :show-file-list="false"
 						:on-success="addhandleAvatarSuccess1" :before-upload="beforeAvatarUpload">
 						<img v-if="addCommentData.imgs[1]" v-model="addCommentData.imgs[1]"
 							:src="addCommentData.imgs[1]" class="avatar" alt="">
 						<i v-else class="el-icon-plus avatar-uploader-icon"></i>
 					</el-upload>
 					<el-upload style="float: left;margin-right: 40px" class="avatar-uploader"
-						action="http://192.168.1.23:8000/user/upload01" :show-file-list="false"
+						action="http://localhost:7500/syssystem/file/upload" :show-file-list="false"
 						:on-success="addhandleAvatarSuccess2" :before-upload="beforeAvatarUpload">
 						<img v-if="addCommentData.imgs[2]" v-model="addCommentData.imgs[2]"
 							:src="addCommentData.imgs[2]" class="avatar" alt="">
@@ -234,13 +236,13 @@
 				addCommentData: {
 					level: null,
 					info: "",
-					imgs: ["", "", ""]
+					imgs: ["", "", ""],
 				},
 				addcommentDialogVisible: false,
 				editData: {
 					level: null,
 					info: "",
-					imgs: ["", "", ""]
+					imgs: ["", "", ""],
 				},
 				commentDialogVisible: false,
 				//我的评论
@@ -283,6 +285,8 @@
 			}
 		},
 		created() {
+			console.log(this.getCurrentTime())
+
 			this.queryClassAndTeacher();
 			//页面加载获取评论
 			this.getComments();
@@ -313,7 +317,10 @@
 			addCommentConfirm() {
 				this.addCommentData.goodsid = this.id;
 				this.addCommentData.bid = this.classData.busid;
-				this.$http.post("user/comment/addComment", this.addCommentData).then(res => {
+				this.addCommentData.userid = sessionStorage.getItem("userId")
+				// this.addCommentData.createtime = this.getCurrentTime();
+
+				this.$http.post("syssystem/u-comment/addComment", this.addCommentData).then(res => {
 					if (res.data.code === 2000) {
 						this.$message.success(res.data.msg);
 						this.addcommentDialogVisible = false;
@@ -337,11 +344,13 @@
 			},
 			//删除评论
 			deleteComment(id) {
-				this.$http.get("user/comment/deleteById?id=" + id).then(res => {
-					if (res.data.code === 2000) {
+				this.$http.get("syssystem/u-comment/deleteById?id=" + id).then(res => {
+					if (res.data.data) {
 						this.$message.success(res.data.msg)
 						this.getMyComments();
 						this.getComments()
+					} else {
+						this.$message.success("操作失败，请重试！")
 					}
 				})
 			},
@@ -351,12 +360,16 @@
 					this.$message.error("请编辑评论后再提交评价!")
 					return
 				}
-				this.$http.post("user/comment/updateComment", this.editData).then(res => {
-					if (res.data.code === 2000) {
+				// this.editData.updatetime =
+				this.$http.post("syssystem/u-comment/addComment", this.editData).then(res => {
+					if (res.data.data) {
 						this.$message.success(res.data.msg)
 						this.commentDialogVisible = false;
 						this.getMyComments()
 						this.getComments()
+					} else {
+						this.$message.success("失败，请重试！")
+
 					}
 				})
 			},
@@ -402,15 +415,13 @@
 				this.editData.imgs[2] = res.data;
 				this.$forceUpdate()
 			},
-			editComment(id) {
-				this.editData.id = id;
-				this.commentDialogVisible = true;
-				this.$http.post("user/comment/getCommentById/" + id).then(res => {
-					this.editData = res.data.data;
-					console.log(this.editData)
-				})
 
+			//编辑评论渲染
+			editComment(item) {
+				this.commentDialogVisible = true;
+				this.editData = item
 			},
+
 			changeComments(obj) {
 				this.tab = obj;
 				this.pageCurrent = 1;
@@ -523,6 +534,19 @@
 					// console.log(that.guanZhuData.teacherid)
 				})
 			},
+
+			getCurrentTime() {
+				//获取当前时间并打印
+				var _this = this;
+				let yy = new Date().getFullYear();
+				let mm = new Date().getMonth() + 1;
+				let dd = new Date().getDate();
+				let hh = new Date().getHours();
+				let mf = new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes();
+				let ss = new Date().getSeconds() < 10 ? '0' + new Date().getSeconds() : new Date().getSeconds();
+				_this.gettime = yy + '-' + mm + '-' + dd + ' ' + hh + ':' + mf + ':' + ss;
+				return _this.gettime;
+			}
 
 		}
 	}
