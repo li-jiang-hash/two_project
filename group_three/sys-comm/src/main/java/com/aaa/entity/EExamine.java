@@ -42,8 +42,7 @@ public class EExamine implements Serializable {
     /**
      * 审查时间
      */
-//    @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
-//   @DateTimeFormat(pattern = "YYYY-MM-dd HH:mm:ss")
+
     private LocalDateTime gmtCreate;
 
     /**

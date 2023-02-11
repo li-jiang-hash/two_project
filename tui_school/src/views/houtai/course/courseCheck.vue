@@ -98,9 +98,9 @@
             </el-table-column>
             <el-table-column prop="unitname" label="商品单位" width="80">
             </el-table-column>
-            <el-table-column prop="addtime" label="上架时间" width="180">
+            <el-table-column prop="addtime" label="上架时间" :formatter="dateFormat" width="180">
             </el-table-column>
-            <el-table-column prop="expirationtime" label="保质期" width="180">
+            <el-table-column prop="expirationtime" label="保质期" :formatter="dateFormat" width="180">
             </el-table-column>
             <el-table-column prop="check_content" label="审查备注" width="180">
             </el-table-column>
@@ -169,6 +169,32 @@ import qs  from 'qs'
             this.goodsSort()
         },
         methods: {
+            dateFormat(row, column, cellValue, index) {
+                const daterc = row[column.property];
+                //console.log(row, column)
+                if (daterc) {
+                    if (daterc.indexOf("T") === -1) return daterc;
+                    const arr = daterc.split("T");
+                    const d = arr[0];
+                    const darr = d.split("-");
+                    const t = arr[1];
+                    const tarr = t.split(".000");
+                    const marr = tarr[0].split(":");
+                    const dd =
+                    darr[0] +
+                    "-" +
+                    darr[1] +
+                    "-" +
+                    darr[2] +
+                    " " +
+                    marr[0] +
+                    ":" +
+                    marr[1] +
+                    ":" +
+                    marr[2].substring(0, 2);
+                    return dd;
+                }
+            },
             goodsSort(){
                this.$http.get("/syssystem/g-sort/sort").then(res=>{
                    if (res.data.code===2000){
