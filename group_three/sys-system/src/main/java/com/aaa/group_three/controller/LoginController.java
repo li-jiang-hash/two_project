@@ -32,7 +32,6 @@ public class LoginController {
         QueryWrapper<EEmpInfo> queryWrapper = new QueryWrapper();
         queryWrapper.eq("telephone", username);
         EEmpInfo one = empInfoService.getOne(queryWrapper);
-        System.out.println("one = " + one);
         return one;
     }
 
