@@ -112,7 +112,6 @@
 
 <script>
 var id;
-
 import qs from "qs";
 export default {
   name: "HeadNavigation",

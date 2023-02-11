@@ -4,12 +4,12 @@ import com.aaa.entity.GGoods;
 import com.aaa.group_three.dao.GGoodsMapper;
 import com.aaa.group_three.service.IGGoodsService;
 import com.aaa.util.PageInfo;
-import com.aaa.util.Result;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * <p>
@@ -33,4 +33,10 @@ public class GGoodsServiceImpl extends ServiceImpl<GGoodsMapper, GGoods> impleme
     public Page getGoodsAll(PageInfo pageInfo, String id) {
         return goodsMapper.getGoodsAll(pageInfo, id);
     }
+
+    @Override
+    public Map<String, Object> getGoodsByGoodsid(Integer id) {
+        return goodsMapper.getGoodsByGoodsid(id);
+    }
+
 }

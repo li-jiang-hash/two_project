@@ -90,10 +90,8 @@
 			this.bid = this.$route.params.id;
 
 			this.inintCourse()
-			this.$http.post("user/getShenfen").then(resp => {
-				this.shenfen = resp.data.data;
-				console.log(this.shenfen)
-			})
+			this.shenfen = sessionStorage.getItem("loginType")
+
 			//商家头像及名字
 			this.$http.get("syssystem/b-business-info/getsname?id=" + this.bid).then(res => {
 				this.business = res.data.data
@@ -107,7 +105,7 @@
 			},
 			tiaozhuan(gid) {
 				var token = sessionStorage.getItem("token");
-				if (token && this.shenfen === "BUSINESS_PHONE") {
+				if (token && this.shenfen === "EMP_PHONE") {
 					this.$message.warning("请使用用户身份登录")
 				} else if (token) {
 					this.$router.push({

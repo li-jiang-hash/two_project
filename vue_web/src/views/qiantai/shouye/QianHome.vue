@@ -45,8 +45,9 @@
 					<ul class="test_list clearfix">
 						<li :class="{test_option: true, right_0: (num % 2 == 1)}"
 							v-for="(resource, num) in item.zoneCourseLibList" :key="resource.id">
-							<router-link target="_blank" :to="{name: 'libraryDetail', params: {id: resource.id}}"><i
-									class="iconfont">&#xe6be;</i>{{resource.courseName}}</router-link>
+							<router-link target="_blank" :to="{name: 'libraryDetail', params: {id: resource.id}}">
+								<i class="iconfont">&#xe6be;</i>{{resource.courseName}}
+							</router-link>
 						</li>
 					</ul>
 				</div>
@@ -116,10 +117,12 @@
 		created() {
 			this.centerDialogVisible = false;
 			var that = this;
+			//首页专区
 			this.$http.get("syssystem/tb-zone/zone/prefecture").then(function(resp) {
 				that.zoneData = resp.data.data;
 				// console.log(that.zoneData)
 			})
+			//首页店铺
 			this.$http.get("syssystem/tb-zone-business/zoneBusiness/selectZoneBusiness").then(resp => {
 				this.business = resp.data.data;
 
@@ -131,6 +134,7 @@
 			if (this.webInfo && this.webInfo.isEnableVip) {
 				this.openVip = true
 			}
+			//首页轮播图
 			this.$http.get("syssystem/tb-banner/rotationalSeeding").then(function(resp) {
 				that.data = resp.data.data;
 				//console.log(that.data)
