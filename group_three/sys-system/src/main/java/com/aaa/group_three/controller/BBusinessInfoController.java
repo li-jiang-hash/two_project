@@ -2,16 +2,20 @@ package com.aaa.group_three.controller;
 
 
 import com.aaa.entity.BBusinessInfo;
+import com.aaa.entity.EEmpInfo;
 import com.aaa.group_three.service.impl.BBusinessInfoServiceImpl;
+import com.aaa.group_three.service.impl.EEmpInfoServiceImpl;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -27,17 +31,34 @@ public class BBusinessInfoController {
     @Resource
     private BBusinessInfoServiceImpl bBusinessInfoService;
 
+    @Resource
+    private EEmpInfoServiceImpl empInfoService;
+
     @PostMapping("ruzhu")
     public Result getAllApp(PageInfo page, @RequestBody BBusinessInfo bBusinessInfo){
         Page page1 = bBusinessInfoService.getPageData(page, bBusinessInfo);
         return new Result(page1);
     }
+    //商家审核
     @PostMapping("shenhe")
     public Result getById(@RequestBody BBusinessInfo bBusinessInfo){
+        System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbb = " + bBusinessInfo);
+
         UpdateWrapper<BBusinessInfo> wrapper=new UpdateWrapper<>();
         wrapper.set("status",bBusinessInfo.getStatus());
         wrapper.set("reason",bBusinessInfo.getReason());
         wrapper.eq("id",bBusinessInfo.getId());
+
+        //审核完成后把数据插入商家表
+        EEmpInfo empInfo = new EEmpInfo();
+        empInfo.setTelephone(bBusinessInfo.getTelephone());
+        empInfo.setPassword(new BCryptPasswordEncoder().encode(bBusinessInfo.getPassword()));
+        empInfo.setEname(bBusinessInfo.getSname());
+        empInfo.setGmtCreate(LocalDateTime.now());
+        empInfoService.save(empInfo);
+
+
+
         boolean byId = bBusinessInfoService.update(wrapper);
         return new Result(byId);
     }

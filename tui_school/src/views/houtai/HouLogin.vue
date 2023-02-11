@@ -119,6 +119,7 @@ export default {
               .then(resp => {
                 if (resp.data.code === 2000) {
                   sessionStorage.setItem("rid",resp.data.data.rid)
+                  sessionStorage.setItem("checker",resp.data.data.ename)
                   this.$message.success(resp.data.msg);
                 } else {
                   this.$message.error(resp.data.msg);
