@@ -29,6 +29,7 @@
             <div class="label">营业执照:</div>
             <div class="form_ctl upload_ctl">
               <input type="hidden" v-model="obj.license">
+              
              <!-- <el-upload
                   class="avatar-uploader"
                   action="http://192.168.1.23:8000/user/upload01"
