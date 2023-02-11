@@ -53,7 +53,7 @@
       >
         <el-table-column align="center" prop="ename" label="审查人"> </el-table-column>
         <el-table-column align="center" prop="sname" label="审查店铺"> </el-table-column>
-        <el-table-column align="center" prop="gmt_create" label="审查时间">
+        <el-table-column align="center" prop="gmt_create" :formatter="dateFormat" label="审查时间">
         </el-table-column>
 
         <el-table-column header-align="center" align="center" prop="state" label="状态">
@@ -226,6 +226,32 @@ export default {
     this.getBusiness();
   },
   methods: {
+    dateFormat(row, column, cellValue, index) {
+      const daterc = row[column.property];
+      //console.log(row, column)
+      if (daterc) {
+        if (daterc.indexOf("T") === -1) return daterc;
+        const arr = daterc.split("T");
+        const d = arr[0];
+        const darr = d.split("-");
+        const t = arr[1];
+        const tarr = t.split(".000");
+        const marr = tarr[0].split(":");
+        const dd =
+        darr[0] +
+        "-" +
+        darr[1] +
+        "-" +
+        darr[2] +
+        " " +
+        marr[0] +
+        ":" +
+        marr[1] +
+        ":" +
+        marr[2].substring(0, 2);
+        return dd;
+      }
+    },
     //获取所有店铺
     getBusiness() {
       const that = this;
