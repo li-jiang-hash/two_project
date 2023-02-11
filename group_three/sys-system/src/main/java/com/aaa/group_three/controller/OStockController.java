@@ -40,5 +40,17 @@ public class OStockController {
         wrapper.eq("goods_id",id);
         return new Result<>(stockService.list(wrapper));
     }
+
+    /**
+     * 获取商品剩余库存
+     * @return
+     */
+    @GetMapping("getStock/{id}")
+    public Result getStock(@PathVariable String id){
+        QueryWrapper<OStock> wrapper = new QueryWrapper<>();
+        wrapper.eq("goods_id",id);
+        wrapper.select("residue");
+        return new Result(stockService.list(wrapper).get(0).getResidue());
+    }
 }
 

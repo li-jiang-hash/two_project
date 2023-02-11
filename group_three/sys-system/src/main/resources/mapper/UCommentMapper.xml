@@ -9,7 +9,7 @@
     </resultMap>
 
     <select id="findComment" resultMap="find">
-        select u.uicon, u.uname, c.updatetime, c.level, c.info, c.img
+        select u.uicon, u.uname,c.createtime ,c.updatetime, c.level, c.info, c.img, c.id
         from u_comment c,u_user_info u
         where u.id = c.userid and c.is_deleted = 0 and c.goodsid = #{id}
         <if test="userId!=null and userId!=''">

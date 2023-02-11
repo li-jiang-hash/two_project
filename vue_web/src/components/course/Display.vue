@@ -333,7 +333,7 @@
 			},
 			//查询当前商品库存余量
 			getStock() {
-				this.$http.post("order/stock/getStock/" + this.$route.params.id).then(res => {
+				this.$http.get("syssystem/o-stock/getStock/" + this.$route.params.id).then(res => {
 					if (res.data.code === 2000) {
 						this.stockNum = res.data.data;
 					}
@@ -447,7 +447,7 @@
 			},
 			//获取当前用户所有收获地址
 			getAddr() {
-				this.$http.post("commodity/goods/getAllAddr").then(res => {
+				this.$http.get("syssystem/addr/findById?id=" + sessionStorage.getItem("userId")).then(res => {
 					if (res.data.code === 2000) {
 						this.addrForm = res.data.data;
 					}
