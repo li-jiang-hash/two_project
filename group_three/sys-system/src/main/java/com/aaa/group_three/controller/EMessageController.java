@@ -27,8 +27,8 @@ public class EMessageController {
 
     // 查询所有的emp
     @PostMapping
-    public Result getAllMessage(PageInfo page, EMessage message){
-        Page page1 = messageService.getPageData(page, message);
+    public Result getAllMessage(PageInfo page,EMessage message){
+        Page page1 = messageService.getPageData(page,message);
         return new Result(page1);
     }
 

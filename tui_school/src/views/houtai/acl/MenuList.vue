@@ -338,6 +338,8 @@ export default {
     //新增表单提交
     insertFormSubmit() {
       const that = this;
+      this.insertFormSubmit.rid=sessionStorage.getItem("rid")
+      console.log(sessionStorage.getItem("rid"));
       this.$refs.insertForm.validate((valid) => {
         if (valid) {
           that.$http

@@ -29,7 +29,7 @@ public class TbBannerServiceImpl extends ServiceImpl<TbBannerMapper, TbBanner> i
         if(StringUtils.isNotBlank(banner.getTitle())){
             queryWrapper.like("title",banner.getTitle());
         }
-
+        queryWrapper.like(StringUtils.isNotBlank(banner.getIsDisable()), "is_disable", banner.getIsDisable());
         return this.page(page,queryWrapper);
     }
 
