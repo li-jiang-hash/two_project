@@ -8,7 +8,7 @@
                 <div class="form_group">
                     <div class="label">手机号:</div>
                     <div class="form_ctl">
-                        <input type="text" v-model="pobj.mobile" class="form_input" placeholder="请输入手机号">
+                        <input type="text" :disabled="true" v-model="pobj.mobile" class="form_input" placeholder="请输入手机号">
                     </div>
                 </div>
                 <div class="form_group">
@@ -65,7 +65,7 @@
             }
         },
         mounted() {
-            this.pobj.mobile=window.sessionStorage.getItem("mobile")
+            this.pobj.mobile = sessionStorage.getItem("telephone")
             },
         methods: {
             //返回修改结果信息
@@ -98,7 +98,7 @@
 
                 var that=this;
 
-                this.$http.post(`/business/changepass/${this.pobj.mobile}/${this.pobj.newPassword}`).then(function (resp) {
+                this.$http.post(`/syssystem/e-emp-info/updatePassword/${this.pobj.mobile}/${this.pobj.newPassword}`).then(function (resp) {
                     if (resp.data.code===2000){
                         that.$message.success(resp.data.msg);
                         that.$router.push("/qianLogin")
@@ -113,13 +113,8 @@
             getCode () {
                 var that=this;
                 this.submitBtn = true;
-                if (!/^1[3|4|5|8|7][0-9]\d{8}$/.test(this.pobj.mobile)) {
-                    this.$message.error("请输入正确手机号码");
-                    return false;
-                }
-
                 //通过手机号获取验证码
-                this.$http.get(`/business/noteByPhone/${this.pobj.mobile}`).then(function (resp) {
+                this.$http.get(`/syssystem/user/noteByPhone/${this.pobj.mobile}`).then(function (resp) {
                     if (resp.data.code===2000){
                         that.shureCode=resp.data.data;
                         that.timeOut();
