@@ -197,7 +197,7 @@
                 this.$refs.updatePassword.validate((valid) => {//判断表单内是否有标红的地方
                 console.log(valid);
                     if (valid) {
-                        this.$http.post(`/syssystem/e-emp-info/updatePassword/${this.phone}/${this.updatePasswordDate.oldPassword}/${this.updatePasswordDate.newPassword}`).then(function (resp) {
+                        this.$http.post(`/syssystem/e-emp-info/updatePassword/${this.phone}/${this.updatePasswordDate.newPassword}`).then(function (resp) {
                             if (resp.data.code === 2000) {//修改成功
                                 that.$message.success(resp.data.msg);
                                 that.tuichu();

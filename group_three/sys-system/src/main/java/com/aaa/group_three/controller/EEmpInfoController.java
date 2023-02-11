@@ -41,7 +41,7 @@ public class EEmpInfoController {
      * @param empInfo
      * @return
      */
-    @PostMapping("insertEmp")
+    @PostMapping("changepass")
     public Result addEmp(EEmpInfo empInfo){
         //创建/修改时间
         LocalDateTime dt = LocalDateTime.now ();
@@ -65,8 +65,9 @@ public class EEmpInfoController {
      * @param
      * @return  Result
      */
-    @PostMapping("/updatePassword/{phone}/{oldPassword}/{newPassword}")
-    public Result UpdateEmp(@PathVariable String phone,@PathVariable String oldPassword,@PathVariable String newPassword){
+    @PostMapping("/updatePassword/{phone}/{newPassword}")
+    public Result UpdateEmp(@PathVariable String phone,@PathVariable String newPassword){
+        System.out.println("phone = " + phone);
         QueryWrapper queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("telephone",phone);
         EEmpInfo one = empInfoService.getOne(queryWrapper);
@@ -85,5 +86,8 @@ public class EEmpInfoController {
         //role  对象有id的值的时候 修改
         //id没有值的时候 添加
     }
+
+    //修改密码
+
 }
 
