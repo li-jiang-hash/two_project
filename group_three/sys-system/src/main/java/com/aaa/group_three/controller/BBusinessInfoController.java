@@ -35,28 +35,30 @@ public class BBusinessInfoController {
     private EEmpInfoServiceImpl empInfoService;
 
     @PostMapping("ruzhu")
-    public Result getAllApp(PageInfo page, @RequestBody BBusinessInfo bBusinessInfo){
+    public Result getAllApp(PageInfo page, @RequestBody BBusinessInfo bBusinessInfo) {
         Page page1 = bBusinessInfoService.getPageData(page, bBusinessInfo);
         return new Result(page1);
     }
+
     //商家审核
     @PostMapping("shenhe")
-    public Result getById(@RequestBody BBusinessInfo bBusinessInfo){
+    public Result getById(@RequestBody BBusinessInfo bBusinessInfo) {
         System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbb = " + bBusinessInfo);
 
-        UpdateWrapper<BBusinessInfo> wrapper=new UpdateWrapper<>();
-        wrapper.set("status",bBusinessInfo.getStatus());
-        wrapper.set("reason",bBusinessInfo.getReason());
-        wrapper.eq("id",bBusinessInfo.getId());
+        UpdateWrapper<BBusinessInfo> wrapper = new UpdateWrapper<>();
+        wrapper.set("status", bBusinessInfo.getStatus());
+        wrapper.set("reason", bBusinessInfo.getReason());
+        wrapper.eq("id", bBusinessInfo.getId());
 
         //审核完成后把数据插入商家表
-        EEmpInfo empInfo = new EEmpInfo();
-        empInfo.setTelephone(bBusinessInfo.getTelephone());
-        empInfo.setPassword(new BCryptPasswordEncoder().encode(bBusinessInfo.getPassword()));
-        empInfo.setEname(bBusinessInfo.getSname());
-        empInfo.setGmtCreate(LocalDateTime.now());
-        empInfoService.save(empInfo);
-
+        if (bBusinessInfo.getStatus().equals(0)) {
+            EEmpInfo empInfo = new EEmpInfo();
+            empInfo.setTelephone(bBusinessInfo.getTelephone());
+            empInfo.setPassword(new BCryptPasswordEncoder().encode(bBusinessInfo.getPassword()));
+            empInfo.setEname(bBusinessInfo.getSname());
+            empInfo.setGmtCreate(LocalDateTime.now());
+            empInfoService.save(empInfo);
+        }
 
 
         boolean byId = bBusinessInfoService.update(wrapper);
@@ -66,27 +68,37 @@ public class BBusinessInfoController {
     //查询店铺
     //首页店铺与名字
     @GetMapping("getsname")
-    public Result getBid(BBusinessInfo bBusinessInfo){
-        QueryWrapper queryWrapper=new QueryWrapper<>();
-        if (bBusinessInfo.getId() != null){
-            queryWrapper.eq("id",bBusinessInfo.getId());
+    public Result getBid(BBusinessInfo bBusinessInfo) {
+        QueryWrapper queryWrapper = new QueryWrapper<>();
+        if (bBusinessInfo.getId() != null) {
+            queryWrapper.eq("id", bBusinessInfo.getId());
         }
-        queryWrapper.select("sname","id","bicon");
+        queryWrapper.select("sname", "id", "bicon");
         return new Result<>(bBusinessInfoService.list(queryWrapper));
     }
+
     //根据手机号查询该用户是否为商家
     @GetMapping("tokenphone")
-    public Result getPhone(String phone){
-        QueryWrapper queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("telephone",phone);
-        boolean one = bBusinessInfoService.getOne(queryWrapper) ==null;
+    public Result getPhone(String phone) {
+        QueryWrapper queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("telephone", phone);
+        boolean one = bBusinessInfoService.getOne(queryWrapper) == null;
         return new Result(one);
     }
+
+    //保存入驻商家审核信息
     @PostMapping("/storeinsert")
-    public Result storeinsert(@RequestBody BBusinessInfo bBusinessInfo){
-        boolean save = bBusinessInfoService.save(bBusinessInfo);
+    public Result storeinsert(@RequestBody BBusinessInfo bBusinessInfo) {
+        boolean save = bBusinessInfoService.saveOrUpdate(bBusinessInfo);
         return new Result(save);
     }
 
+    //我的店铺回显
+    @GetMapping("/showshop")
+    public Result Show(String phone) {
+        QueryWrapper queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("telephone",phone);
+        return new Result(bBusinessInfoService.getOne(queryWrapper));
+    }
 
 }
