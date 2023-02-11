@@ -476,13 +476,13 @@ export default {
     //     return row.id;
     // },
 
-    // //获取角色
-    // getRole() {
-    //   this.$http.post("/syssystem/e-emp-info/selectRoleAll").then((result) => {
-    //     this.rolenames = result.data.data;
-    //     console.log(this.rolenames);
-    //   });
-    // },
+    //获取角色
+    getRole() {
+      this.$http.post("/syssystem/e-role/selectRoleAll").then((result) => {
+        this.rolenames = result.data.data;
+        console.log(this.rolenames);
+      });
+    },
     // //确认分配角色
     // confirmFenRole(){
     //     const idlist = [];

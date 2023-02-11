@@ -223,6 +223,9 @@ export default {
   //页面加载时初始化表格数据
   created() {
     this.initTable();
+
+    
+    this.insertFormDate.eid=sessionStorage.getItem("rid")
   },
   methods: {
     open(roleName, msg) {
@@ -338,8 +341,9 @@ export default {
     //新增表单提交
     insertFormSubmit() {
       const that = this;
-      this.insertFormSubmit.rid=sessionStorage.getItem("rid")
       console.log(sessionStorage.getItem("rid"));
+      
+      console.log(this.insertFormDate);
       this.$refs.insertForm.validate((valid) => {
         if (valid) {
           that.$http
