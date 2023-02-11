@@ -478,7 +478,9 @@ export default {
 
     //获取角色
     getRole() {
-      this.$http.post("/syssystem/e-emp-info/selectRoleAll").then((result) => {
+
+      this.$http.post("/syssystem/e-role/selectRoleAll").then((result) => {
+
         this.rolenames = result.data.data;
         console.log(this.rolenames);
       });

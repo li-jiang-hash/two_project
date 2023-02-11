@@ -17,4 +17,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 public interface EMessageMapper extends BaseMapper<EMessage> {
 
     Page getRole(PageInfo page, QueryWrapper queryWrapper);
+
+//    Page findAll(PageInfo pageInfo, String startTime, String endTime);
 }

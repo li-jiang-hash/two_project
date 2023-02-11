@@ -8,4 +8,17 @@
         INNER JOIN e_role r
         ON m.eid=r.id
     </select>
+
+<!--    <select id="findAll" resultType="java.util.Map">-->
+<!--        select m.gmt_date,m.stype,m.scontend,m.is_deleted,r.role_name-->
+<!--        from e_message m-->
+<!--        INNER JOIN e_role r-->
+<!--        ON m.eid=r.id-->
+<!--        <if test="startTime!=null and endTime!=null">-->
+<!--            <![CDATA[and #{startTime}<=e_message.gmt_date<=#{endTime}]]>-->
+<!--        </if>-->
+<!--&lt;!&ndash;        <if test="endTime!=null and endTime!=''">&ndash;&gt;-->
+<!--&lt;!&ndash;            <![CDATA[and e_message.gmt_create<=#{endTime}]]>&ndash;&gt;-->
+<!--&lt;!&ndash;        </if>&ndash;&gt;-->
+<!--    </select>-->
 </mapper>

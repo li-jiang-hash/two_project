@@ -32,7 +32,7 @@ public class TbLinkServiceImpl extends ServiceImpl<TbLinkMapper, TbLink> impleme
         if(StringUtils.isNotBlank(link.getLinkName())){
             queryWrapper.like("link_name",link.getLinkName());
         }
-
+        queryWrapper.like(StringUtils.isNotBlank(link.getIsDisable()), "is_disable", link.getIsDisable());
         return this.page(page,queryWrapper);
     }
 

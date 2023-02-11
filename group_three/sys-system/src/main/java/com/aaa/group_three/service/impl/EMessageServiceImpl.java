@@ -39,4 +39,9 @@ public class EMessageServiceImpl extends ServiceImpl<EMessageMapper, EMessage> i
 //        return this.page(page,queryWrapper);
         return eMessageMapper.getRole(page,queryWrapper);
     }
+//    @Override
+//    public Page getAll(PageInfo pageInfo, String startTime,String endTime) {
+//        Page list=eMessageMapper.findAll(pageInfo,startTime,endTime);
+//        return list;
+//    }
 }
