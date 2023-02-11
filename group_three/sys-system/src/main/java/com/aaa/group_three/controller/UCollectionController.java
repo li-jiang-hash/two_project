@@ -46,21 +46,19 @@ public class UCollectionController {
 
     /**
      * 修改收藏状态
-     * @param id goods_id
-     * @param status 收藏状态
      * @return
      */
     @PostMapping("changeCollectionStatus")
-    public Result changeCollection(String bid, String id, Integer status, String userId){
+    public Result changeCollection(@RequestBody UCollection collection){
         UpdateWrapper<UCollection> wrapper = new UpdateWrapper<>();
-        wrapper.set("status",status);
-        wrapper.eq("uid", userId);
-        if (id != null) {
-            wrapper.eq("goodsid",id);
+        wrapper.eq("uid", collection.getUid());
+        wrapper.eq("is_deleted", 0);
+        if (collection.getGoodsid() != null) {
+            wrapper.eq("goodsid",collection.getGoodsid());
         } else {
-            wrapper.eq("bid",bid);
+            wrapper.eq("bid",collection.getBid());
         }
-        return new Result<>(collectionService.update(wrapper));
+        return new Result<>(collectionService.saveOrUpdate(collection,wrapper));
     }
 
 }

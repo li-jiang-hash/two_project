@@ -269,7 +269,7 @@
 					teacherid: '',
 					memberid: window.sessionStorage.getItem("memberId"),
 				},
-				guanZhuStatus: 0,
+				guanZhuStatus: 1,
 				//新增入库的总条数
 				total: 0,
 				//新增入库的接受一个整型数组，数组元素为显示的选择每页显示的个数的选项
@@ -281,6 +281,8 @@
 				dialogImageUrl: '',
 				dialogVisible: false,
 				hasBuy: false,
+
+				collection: {}
 
 			}
 		},
@@ -474,9 +476,12 @@
 				if (this.guanZhuStatus === 0) {
 					status = 1;
 				}
-				this.$http.post("syssystem/u-collection/changeCollectionStatus?bid=" + this.classData.bid +
-					"&status=" + status + "&userId=" + sessionStorage.getItem("userId")).then(res => {
-					if (res.data.code === 2000) {
+
+				this.collection.bid = this.classData.bid
+				this.collection.status = status
+				this.collection.uid = sessionStorage.getItem("userId")
+				this.$http.post("syssystem/u-collection/changeCollectionStatus", this.collection).then(res => {
+					if (res.data.data) {
 						this.guanZhuStatus = res.data.data;
 						this.$message.success(res.data.msg);
 						this.isCollectionBusiness();
@@ -489,8 +494,9 @@
 				this.$http.get("syssystem/u-collection/isGoodsCollection?bid=" + this.classData.bid + "&userId=" +
 					sessionStorage.getItem("userId")).then(res => {
 					if (res.data.code === 2000) {
+
 						this.guanZhuStatus = res.data.data[0].status;
-						console.log(this.guanZhuStatus)
+
 					}
 				})
 			},
