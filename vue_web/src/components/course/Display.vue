@@ -270,12 +270,14 @@
 					//
 				},
 				MemberStatus: 0,
-				shouChangStatus: 0,
+				shouChangStatus: 1,
 
 				//查询支付状态定时器
 				timer: "",
 				//库存余量
 				stockNum: 0,
+
+				collection: {}
 			}
 		},
 		created() {
@@ -302,8 +304,9 @@
 				if (this.payForm.addrid != null && this.payForm.addrid !== "") {
 					this.payForm.goodsId = this.$route.params.id
 					this.payForm.price = this.classData.price * this.payForm.num
-					this.$http.post("order/cart/addCart", this.payForm).then(res => {
-						if (res.data.code === 2000) {
+					this.payForm.uid = sessionStorage.getItem("userId")
+					this.$http.post("syssystem/o-cart/addCart", this.payForm).then(res => {
+						if (res.data.data) {
 							this.$message.success(res.data.msg)
 						}
 						if (res.data.code === 6000) {
@@ -333,7 +336,7 @@
 			},
 			//查询当前商品库存余量
 			getStock() {
-				this.$http.post("order/stock/getStock/" + this.$route.params.id).then(res => {
+				this.$http.get("syssystem/o-stock/getStock/" + this.$route.params.id).then(res => {
 					if (res.data.code === 2000) {
 						this.stockNum = res.data.data;
 					}
@@ -447,7 +450,7 @@
 			},
 			//获取当前用户所有收获地址
 			getAddr() {
-				this.$http.post("commodity/goods/getAllAddr").then(res => {
+				this.$http.get("syssystem/addr/findById?id=" + sessionStorage.getItem("userId")).then(res => {
 					if (res.data.code === 2000) {
 						this.addrForm = res.data.data;
 					}
@@ -463,11 +466,14 @@
 				if (this.shouChangStatus === 0) {
 					status = 1;
 				}
-				this.$http.post("syssystem/u-collection/changeCollectionStatus?id=" + this.$route.params.id + "&status=" +
-					status +
-					"&userId=" + sessionStorage.getItem("userId")).then(
+
+				this.collection.goodsid = this.$route.params.id
+				this.collection.status = status
+				this.collection.uid = sessionStorage.getItem("userId")
+
+				this.$http.post("syssystem/u-collection/changeCollectionStatus", this.collection).then(
 					res => {
-						if (res.data.code === 2000) {
+						if (res.data.data) {
 							this.shouChangStatus = res.data.data;
 							this.$message.success(res.data.msg)
 							this.IsShouChang();
@@ -490,7 +496,9 @@
 				this.$http.get("/syssystem/u-collection/isGoodsCollection?id=" + this.$route.params.id + "&userId=" +
 					sessionStorage.getItem("userId")).then(function(resp) {
 					if (resp.data.code === 2000) {
+
 						that.shouChangStatus = resp.data.data[0].status;
+
 					}
 
 				})

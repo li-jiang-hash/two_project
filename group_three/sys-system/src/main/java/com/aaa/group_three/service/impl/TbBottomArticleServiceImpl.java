@@ -39,7 +39,7 @@ public class TbBottomArticleServiceImpl extends ServiceImpl<TbBottomArticleMappe
         if(StringUtils.isNotBlank(bottomArticle.getName())){
             queryWrapper.like("name",bottomArticle.getName());
         }
-
+        queryWrapper.like(StringUtils.isNotBlank(bottomArticle.getIsDisable()), "is_disable", bottomArticle.getIsDisable());
         return this.page(page,queryWrapper);
     }
 

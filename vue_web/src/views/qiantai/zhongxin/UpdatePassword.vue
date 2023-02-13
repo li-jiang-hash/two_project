@@ -8,7 +8,7 @@
                 <div class="form_group">
                     <div class="label">手机号:</div>
                     <div class="form_ctl">
-                        <input type="text"  :disabled="true" v-model="pobj.mobile" class="form_input" placeholder="请输入手机号">
+                        <input type="text" :disabled="true" v-model="pobj.mobile" class="form_input" placeholder="请输入手机号">
                     </div>
                 </div>
                 <div class="form_group">
@@ -65,7 +65,6 @@
             }
         },
         created() {
-            console.log("lllllllllllllllllllllllllll:"+sessionStorage.getItem("telephone"));
             this.pobj.mobile = sessionStorage.getItem("telephone")
             },
         methods: {
@@ -114,10 +113,6 @@
             getCode () {
                 var that=this;
                 this.submitBtn = true;
-                if (!/^1[3|4|5|8|7][0-9]\d{8}$/.test(this.pobj.mobile)) {
-                    this.$message.error("请输入正确手机号码");
-                    return false;
-                }
 
                 //通过手机号获取验证码
                 this.$http.get(`/syssystem/user/noteByPhone/${this.pobj.mobile}`).then(function (resp) {

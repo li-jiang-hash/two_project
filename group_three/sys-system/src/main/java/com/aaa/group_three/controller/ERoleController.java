@@ -27,7 +27,11 @@ public class ERoleController {
         Page page1 = roleService.getPageData(page, role);
         return new Result(page1);
     }
-
+    //查询下拉框职位
+    @PostMapping("selectRoleAll")
+    public Result getselectRoleAll(){
+        return new Result(roleService.list());
+    }
 
     /**
      * 添加角色信息
@@ -67,6 +71,7 @@ public class ERoleController {
      */
     @PostMapping("selectPermission/{id}")
     public Result selPermission(@PathVariable Integer id){
+
         return new Result(roleService.getPermissionData(id));
     }
 }
