@@ -1,6 +1,7 @@
 package com.aaa.group_three.controller;
 
 
+
 import com.aaa.entity.TbBanner;
 import com.aaa.group_three.service.ITbBannerService;
 import com.aaa.util.PageInfo;
@@ -57,17 +58,18 @@ public class TbBannerController {
 
 
     /**
-     * 添加banner信息
+     * 添加/修改banner信息
      * @param tbBanner
      * @return
      */
 
     @PostMapping("/addBanner")
     public Result AddBanner(TbBanner tbBanner){
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaS = " + tbBanner);
-//        return new Result(bannerService.saveOrUpdate(tbBanner));
-        return new Result();
+        tbBanner.setIsDisable("0");
+        return new Result(bannerService.saveOrUpdate(tbBanner));
     }
+
+
     /**
      * 首页轮播图
      * @return

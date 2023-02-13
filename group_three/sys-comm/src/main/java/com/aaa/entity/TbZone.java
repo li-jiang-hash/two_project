@@ -2,11 +2,13 @@ package com.aaa.entity;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -35,14 +37,17 @@ public class TbZone implements Serializable {
     /**
      * 创建时间
      */
-//    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime gmtCreate;
+
+//    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss")
+   //@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private String gmtCreate;
 
     /**
      * 修改时间
      */
-//    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime gmtModified;
+//    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss")
+   //@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private String gmtModified;
 
     /**
      * 逻辑删除(0:正常;1:禁用)

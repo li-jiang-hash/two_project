@@ -7,9 +7,10 @@
             select id from e_role where id=#{id})
     </select>
     <select id="getRole" resultType="java.util.Map">
-        select e.ename,e.gmt_create,e.gmt_modified,e.telephone,e.age,e.state,e.is_deleted,r.role_name
+        select e.id,e.ename,e.gmt_create,e.gmt_modified,e.telephone,e.age,e.state,e.is_deleted,e.rid,r.role_name
         from e_emp_info e
-        INNER JOIN e_role r
+        LEFT JOIN e_role r
         ON e.rid=r.id
+        WHERE e.is_deleted=0
     </select>
 </mapper>

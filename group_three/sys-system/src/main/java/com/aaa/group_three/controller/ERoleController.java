@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /*
  * @Author: 江Sir
@@ -27,9 +28,12 @@ public class ERoleController {
         Page page1 = roleService.getPageData(page, role);
         return new Result(page1);
     }
+
+
     //查询下拉框职位
     @PostMapping("selectRoleAll")
     public Result getselectRoleAll(){
+//        List<ERole> list=roleService.list();
         return new Result(roleService.list());
     }
 
