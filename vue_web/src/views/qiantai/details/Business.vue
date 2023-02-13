@@ -57,7 +57,10 @@
 				weiVisable: true,
 				openVip: false,
 				free: '',
+				//teacherId:this.$route.query.teacherId,
 				chindVal: this.$route.params.name,
+				teacherDate: {},
+				//课程信息
 				pageObj: {
 					//当前页面--》page
 					pageCurrent: '1',
@@ -106,15 +109,6 @@
 				})
 
 			},
-
-			// //获取讲师课程信息
-			// inintTeacherByTeacherId() {
-			// 	var that = this
-			// 	this.$http.get(`/core/course/findTeacherByTeacherId/${this.teacherId}`).then(function(resp) {
-			// 		that.teacherDate = resp.data.result;
-			// 	})
-			// },
-
 			//监听分页的触发
 			getPage: function(int) {
 				this.pageObj.pageCurrent = int;
@@ -296,8 +290,6 @@
 		width: 100%;
 		height: 100px;
 		background-image: url("../../../assets/img/jiangshi.jpg");
-		/*background: no-repeat 50%;*/
-		/*background-color: #1E1E1E;*/
 	}
 
 	.teacher_bg2 {

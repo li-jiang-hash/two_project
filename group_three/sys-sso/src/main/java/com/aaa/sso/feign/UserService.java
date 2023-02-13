@@ -1,5 +1,6 @@
 package com.aaa.sso.feign;
 
+import com.aaa.entity.BBusinessInfo;
 import com.aaa.entity.EEmpInfo;
 import com.aaa.entity.UUserInfo;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -24,7 +25,8 @@ public interface UserService {
     @GetMapping("/user/getUserByPhone/{telephone}")
     UUserInfo getUserByPhone(@PathVariable String telephone);
 
-//    @PostMapping("/user/signInsert")
-//    boolean insert(String mobile,String password);
+    // 根据商户名 获取TUser
+    @GetMapping("/b-business-info/getUserByName/{username}")
+    BBusinessInfo getBusiness(@PathVariable String username);
 
 }

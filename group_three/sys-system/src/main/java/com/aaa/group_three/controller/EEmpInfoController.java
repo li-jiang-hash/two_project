@@ -11,7 +11,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -43,10 +45,29 @@ public class EEmpInfoController {
      */
     @PostMapping("changepass")
     public Result addEmp(EEmpInfo empInfo){
-        //创建/修改时间
-        LocalDateTime dt = LocalDateTime.now ();
-        empInfo.setGmtCreate(dt);
+        //创建时间
+        Date date = new Date();
+        DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String format = dateFormat.format(date);
+        empInfo.setGmtCreate(format);
+        empInfo.setPassword(new BCryptPasswordEncoder().encode("123456"));
         return new Result(empInfoService.saveOrUpdate(empInfo));
+    }
+
+
+    /**
+     * 修改角色信息
+     * @param empInfo
+     * @return
+     */
+    @PostMapping("updEmp")
+    public Result updEmp(EEmpInfo empInfo){
+        //修改时间
+        Date date = new Date();
+        DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String format = dateFormat.format(date);
+        empInfo.setGmtModified(format);
+        return new Result(empInfoService.updateById(empInfo));
     }
 
 
@@ -71,7 +92,10 @@ public class EEmpInfoController {
         QueryWrapper queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("telephone",phone);
         EEmpInfo one = empInfoService.getOne(queryWrapper);
-        one.setGmtModified(LocalDateTime.now ());
+        Date date = new Date();
+        DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String format = dateFormat.format(date);
+        one.setGmtModified(format);
         one.setPassword(new BCryptPasswordEncoder().encode(newPassword));
         boolean b = empInfoService.updateById(one);
         Result result = new Result();
@@ -86,8 +110,6 @@ public class EEmpInfoController {
         //role  对象有id的值的时候 修改
         //id没有值的时候 添加
     }
-
-    //修改密码
 
 }
 

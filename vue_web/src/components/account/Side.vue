@@ -1,6 +1,6 @@
 <template>
   <header class="side_box">
-    <div class="menu_panel" v-if="shenfen==='EMP_PHONE'">
+    <div class="menu_panel" v-if="shenfen==='BUSINESS_PHONE'">
       <h3 class="title"><i class="iconfont">&#xe640;</i>商家中心</h3>
       <ul class="menus">
         <li :class="{on: type === 'jsxx'}" @click="changeColor('jsxx')"><router-link :to="{path: '/business'}">商铺管理</router-link></li>
@@ -47,8 +47,7 @@ export default {
   },
   methods: {
     init(){
-          this.shenfen = sessionStorage.getItem("loginType");
-    },
+          this.shenfen = sessionStorage.getItem("loginType");},
     changeColor(obj){
       this.type=obj;
     }

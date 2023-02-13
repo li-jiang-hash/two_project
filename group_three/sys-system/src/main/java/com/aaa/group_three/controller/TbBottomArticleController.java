@@ -10,8 +10,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,17 +46,25 @@ public class TbBottomArticleController {
      */
     @PostMapping("addBottom")
     public Result addBottom(TbBottomArticle bottomArticle){
-        LocalDateTime time =LocalDateTime.now();
-        bottomArticle.setGmtCreate(time);
-        bottomArticle.setGmtModified(time);
+        Date date = new Date();
+        DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String format = dateFormat.format(date);
+        bottomArticle.setGmtCreate(format);
+        bottomArticle.setGmtModified(format);
         bottomArticle.setIsDeleted(0);
         bottomArticle.setIsDisable("0");
         return new Result(bottomArticleService.save(bottomArticle));
     }
+
+    /**
+     * 修改
+     */
     @PostMapping("updBottom")
     public Result updBottom(TbBottomArticle bottomArticle){
-        LocalDateTime time =LocalDateTime.now();
-        bottomArticle.setGmtModified(time);
+        Date date = new Date();
+        DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String format = dateFormat.format(date);
+        bottomArticle.setGmtModified(format);
         return new Result(bottomArticleService.updateById(bottomArticle));
     }
 

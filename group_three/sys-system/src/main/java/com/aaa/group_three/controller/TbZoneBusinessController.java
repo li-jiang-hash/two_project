@@ -56,7 +56,7 @@ public class TbZoneBusinessController {
 
 
     /**
-     * 商户端-首页管理-专区管理—专区店铺-查询所有
+     * 商户端-首页管理-专区管理—专区店铺-根据专区查询对应店铺
      */
     @PostMapping("managementZone")
     public Result getAllZone(PageInfo page, TbZoneBusiness zoneBusiness){

@@ -1,6 +1,7 @@
 package com.aaa.group_three.controller;
 
 
+import com.aaa.entity.EEmpInfo;
 import com.aaa.entity.UUserInfo;
 import com.aaa.group_three.service.IUUserInfoService;
 import com.aaa.util.PageInfo;
@@ -8,6 +9,7 @@ import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -101,6 +103,29 @@ public class UUserInfoController {
         queryWrapper.select("id");
         return new Result<>(userInfoService.list(queryWrapper).get(0));
     }
+
+    @PostMapping("/updatePassword/{phone}/{newPassword}")
+    public Result UpdateEmp(@PathVariable String phone,@PathVariable String newPassword){
+        System.out.println("phone = " + phone);
+        QueryWrapper queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("telephone",phone);
+        UUserInfo one = userInfoService.getOne(queryWrapper);
+        one.setUpdatetime(LocalDateTime.now ());
+        one.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+        boolean b = userInfoService.updateById(one);
+        Result result = new Result();
+        if(b){
+            result.setMsg("密码修改成功，请您重新登录");
+            return result;
+        }else {
+            result.setMsg("系统繁忙，请稍后重新尝试");
+            return result;
+        }
+        //saveOrUpdate  添加或修改
+        //role  对象有id的值的时候 修改
+        //id没有值的时候 添加
+    }
+
 
 }
 

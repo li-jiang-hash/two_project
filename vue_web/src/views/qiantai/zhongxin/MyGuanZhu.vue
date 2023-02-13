@@ -3,7 +3,7 @@
         <div data-v-295bc851="" class="person_content">
             <ul data-v-295bc851="" class="person_title clearfix">
                 <li data-v-295bc851="" class="now">我关注的店铺</li>
-            </ul> <!---->
+            </ul> 
             <div data-v-295bc851="" class="person_info">
             <div data-v-295bc851="" class="course_content" v-for="item in GuanZhuXinxi">
                 <div data-v-295bc851="" class="img_box">
@@ -20,7 +20,6 @@
                         休息中
                     </el-tag>
                 </p>
-<!--                <p style="color: #ff691a;position: absolute;font-size: 14px;left: 145px;margin: -20px">店铺地址：{{item.address}}</p>-->
                 <router-link :to="{name: 'BusinessXinX',params:{id:item.id}}"><a data-v-295bc851="">进入主页</a></router-link>
                 <a data-v-295bc851="" class="close_collect" @click="cancel(item.id)">取消关注</a>
             </div>
@@ -36,18 +35,8 @@
         name: "MyGuanZhu.vue",
         data(){
             return{
-                GuanZhuXinxi:[
-                    {
-                        id:"",
-                        bicon:"",
-                        sname:"",
-                        address:"",
-                        status:""
-                    }
-                ],
-                guanZhuData:{
-
-                },
+                GuanZhuXinxi:{},
+                guanZhuData:{},
             }
         },
         created() {
@@ -57,15 +46,17 @@
             //查询所有关注的信息
             queryAllGuanZhuTeacher(){
                 var that=this;
-                this.$http.get("/user/collection/findBid/").then(function (resp) {
-                    //console.log(resp)
+                console.log(sessionStorage.getItem("userId"))
+                this.$http.get("/syssystem/u-collection/findShop?uid="+ sessionStorage.getItem("userId")).then(function (resp) {
                     that.GuanZhuXinxi=resp.data.data;
                 })
             },
             // //取消关注
             cancel(id){
                 var that=this;
-                this.$http.post("/user/collection/deleteBid?bid="+id).then(function (resp) {
+
+
+                this.$http.post("/syssystem/u-collection/unfollow/1?id="+id).then(function (resp) {
                     that.queryAllGuanZhuTeacher();
                 })
             }
@@ -146,10 +137,6 @@
         top: 25px;
         color: #333;
     }
-    /*.course_content .img_box[data-v-295bc851] {*/
-    /*    width: 86px;*/
-    /*    height: 86px;*/
-    /*}*/
     .course_content p.course_name[data-v-295bc851] {
         top: 25px;
         color: #333;

@@ -176,9 +176,9 @@
             <el-option
               v-for="item in rolenames"
               :label="item.roleName"
-              :value="item.rid"
-              v-if="item.rid != 1"
+              :value="item.id"
             ></el-option>
+            <!-- v-if="item.id != 1" -->
           </el-select>
         </el-form-item>
       </el-form>
@@ -204,6 +204,7 @@
         label-width="70px"
         class="demo-ruleForm"
       >
+      <el-table-column prop="updateUserFormData.id" v-if="false" label="编号"></el-table-column>
         <el-form-item label="用户名:" prop="ename">
           <el-input
             type="text"
@@ -233,14 +234,15 @@
            
           </el-select>
         </el-form-item>
-        <el-form-item label="职位" prop="updateUserFormData.role_name">
-          <el-select v-model="updateUserFormData.rid">
+        <el-form-item label="职位">
+          <el-select v-model="updateUserFormData.rid" > 
             <el-option
               v-for="item in rolenames"
               :label="item.roleName"
-              :value="item.rid"
-              v-if="item.rid != 1"
+              :value="item.id+''"
+              
             ></el-option>
+            <!-- v-if="item.id != 1" -->
           </el-select>
         </el-form-item>
       </el-form>
@@ -476,11 +478,18 @@ export default {
     //     return row.id;
     // },
 
+    // created() {
+		// 	this.initTable();
+		// 	// 查询 班级的信息   /tab-class
+		//   ax.get("/syssystem/e-role/selectRoleAll").then(r=>{
+		// 	console.log(r.data.t);
+		// 	// 将班级的信息  赋值给classList
+		// 	this.rolenames=r.data.data;
+		// })
+		// },
     //获取角色
     getRole() {
-
       this.$http.post("/syssystem/e-role/selectRoleAll").then((result) => {
-
         this.rolenames = result.data.data;
         console.log(this.rolenames);
       });
@@ -593,6 +602,7 @@ export default {
     //修改用户信息
     handleEdit(index, row) {
       this.updateUserFormData = row; //将当前行的数据放入
+
       this.updateUserDialog = true; //开启弹出框
     },
     //新增
@@ -632,12 +642,13 @@ export default {
     //修改用户信息
     updateUser() {
       var that = this;
+      // console.log(this.updateUserFormData);
       this.$refs.editerRef.validate((valid) => {
         //判断表单内是否有标红的地方
         if (valid) {
           this.$http
             .post(
-              "/syssystem/e-emp-info/insertEmp",
+              '/syssystem/e-emp-info/updEmp',
               qs.stringify(this.updateUserFormData)
             )
             .then(function (resp) {

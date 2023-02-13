@@ -2,10 +2,10 @@
     <div class="pad20">
         <el-form ref="formData" :model="formData" label-width="100px">
             <el-form-item label="文章名称：">
-                <el-input v-model="formData.artTitle" placeholder="请输入文章名称"></el-input>
+                <el-input v-model="formData.art_title" placeholder="请输入文章名称"></el-input>
             </el-form-item>
             <el-form-item label="文章描述：" style="width:80%">
-                <div id="artDesc" style="height:400px;max-height:500px;"></div>
+                <div id="art_desc" style="height:400px;max-height:500px;"></div>
             </el-form-item>
         </el-form>
         <el-row style="margin-top:17px; ">
@@ -61,7 +61,7 @@
 
                     that.createEdit();
 
-                })
+                }) 
             },
             handleClose() {
                 this.editor.txt.clear()

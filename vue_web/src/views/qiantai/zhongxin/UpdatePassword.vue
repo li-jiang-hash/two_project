@@ -98,7 +98,7 @@
 
                 var that=this;
 
-                this.$http.post(`/syssystem/user/signInsert/${this.pobj.mobile}/${this.pobj.newPassword}`).then(function (resp) {
+                this.$http.post(`/syssystem/user/updatePassword/${this.pobj.mobile}/${this.pobj.newPassword}`).then(function (resp) {
                     if (resp.data.code===2000){
                         that.$message.success(resp.data.msg);
                         that.$router.push("/qianLogin")
