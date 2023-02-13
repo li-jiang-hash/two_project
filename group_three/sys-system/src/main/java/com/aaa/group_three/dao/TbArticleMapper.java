@@ -1,10 +1,7 @@
 package com.aaa.group_three.dao;
 
 import com.aaa.entity.TbArticle;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-
-import java.util.List;
 
 /**
  * <p>
@@ -16,7 +13,4 @@ import java.util.List;
  */
 public interface TbArticleMapper extends BaseMapper<TbArticle> {
 
-    List getArticleById(String navId);
-
-    List getArticle(String navId);
 }
