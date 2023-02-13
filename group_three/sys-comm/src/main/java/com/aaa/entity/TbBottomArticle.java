@@ -57,14 +57,14 @@ public class TbBottomArticle implements Serializable {
     /**
      * 创建时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime gmtCreate;
+    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private String gmtCreate;
 
     /**
      * 更新时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime gmtModified;
+    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private String gmtModified;
 
     @TableField(exist = false)
     private List<TbBottomArticle> children = new ArrayList<>();

@@ -11,6 +11,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -22,4 +25,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class TbArticleServiceImpl extends ServiceImpl<TbArticleMapper, TbArticle> implements ITbArticleService {
 
+    @Resource
+    private TbArticleMapper articleMapper;
+    @Override
+    public List getArticleById(String navId) {
+//        QueryWrapper queryWrapper=new QueryWrapper<>();
+//        TbArticle article=new TbArticle();
+//        if(article.getNavId()!=null && article.getNavId()!=""){
+//            queryWrapper.eq("b.id",article.getNavId());
+//        }
+        return articleMapper.getArticleById(navId);
+    }
+
+    @Override
+    public List getArticle(String navId) {
+
+        return articleMapper.getArticle(navId);
+    }
 }

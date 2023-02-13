@@ -7,7 +7,6 @@ import com.aaa.group_three.service.impl.BBusinessInfoServiceImpl;
 import com.aaa.group_three.service.impl.EEmpInfoServiceImpl;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -15,7 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * <p>
@@ -42,8 +43,6 @@ public class BBusinessInfoController {
     //商家审核
     @PostMapping("shenhe")
     public Result getById(@RequestBody BBusinessInfo bBusinessInfo){
-        System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbb = " + bBusinessInfo);
-
         UpdateWrapper<BBusinessInfo> wrapper=new UpdateWrapper<>();
         wrapper.set("status",bBusinessInfo.getStatus());
         wrapper.set("reason",bBusinessInfo.getReason());
@@ -54,11 +53,11 @@ public class BBusinessInfoController {
         empInfo.setTelephone(bBusinessInfo.getTelephone());
         empInfo.setPassword(new BCryptPasswordEncoder().encode(bBusinessInfo.getPassword()));
         empInfo.setEname(bBusinessInfo.getSname());
-        empInfo.setGmtCreate(LocalDateTime.now());
+        Date date = new Date();
+        DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String format = dateFormat.format(date);
+        empInfo.setGmtCreate(format);
         empInfoService.save(empInfo);
-
-
-
         boolean byId = bBusinessInfoService.update(wrapper);
         return new Result(byId);
     }
@@ -87,6 +86,4 @@ public class BBusinessInfoController {
         boolean save = bBusinessInfoService.save(bBusinessInfo);
         return new Result(save);
     }
-
-
 }

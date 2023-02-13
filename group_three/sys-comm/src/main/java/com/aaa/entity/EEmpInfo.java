@@ -36,12 +36,12 @@ public class EEmpInfo implements Serializable {
     /**
      * 入职时间
      */
-    private LocalDateTime gmtCreate;
+    private String gmtCreate;
 
     /**
      * 更新时间
      */
-    private LocalDateTime gmtModified;
+    private String gmtModified;
 
     /**
      * 电话

@@ -52,6 +52,7 @@ public class EMessageController {
      */
     @DeleteMapping("{id}")
     public Result delMessage(@PathVariable Integer id){
+        System.out.println("jkdvhjk="+id);
         return new Result(messageService.removeById(id));
     }
 
