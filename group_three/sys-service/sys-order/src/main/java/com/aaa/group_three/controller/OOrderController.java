@@ -7,7 +7,10 @@ import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -40,9 +43,14 @@ public class OOrderController {
     }
 
     @GetMapping("findOrder/{pageCurrent}/{pageSize}")
-    public Result findOrder(@PathVariable Integer pageCurrent, @PathVariable Integer pageSize,String zhuangtai,String userId){
+    public Result findOrder(@PathVariable Integer pageCurrent, @PathVariable Integer pageSize,Integer zhuangtai,String userId){
         PageInfo pageInfo = new PageInfo(pageCurrent, pageSize);
-        Page page = orderService.findOrder(pageInfo,userId);
+
+        if (zhuangtai == null){
+            zhuangtai = 0;
+        }
+
+        Page page = orderService.findOrder(pageInfo,userId,zhuangtai);
         return new Result<>(page);
     }
 

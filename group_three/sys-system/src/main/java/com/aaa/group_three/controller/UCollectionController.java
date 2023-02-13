@@ -9,7 +9,6 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Map;
 
 /**
  * <p>
@@ -61,6 +60,7 @@ public class UCollectionController {
         }
         return new Result<>(collectionService.saveOrUpdate(collection,wrapper));
     }
+
 //    查询关注的店铺
     @GetMapping("findShop")
         public Result findCollection(String uid){
