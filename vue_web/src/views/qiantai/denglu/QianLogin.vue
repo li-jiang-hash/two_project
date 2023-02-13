@@ -79,11 +79,9 @@
 	import qs from "qs"
 	export default {
 		components: {
-			// YHeader,
 			YButton
 		},
 		data() {
-
 			return {
 				/*验证码的获取*/
 				txt: '获取验证码',
@@ -156,8 +154,6 @@
 					}
 				}, 1000)
 			},
-
-
 			changetab(int) {
 				this.tab = int;
 				setTimeout(() => {
@@ -171,15 +167,6 @@
 				}
 				this.errTip1 = '';
 				this.errTip2 = '';
-				// if (!(/^1[3|4|5|8|7][0-9]\d{4,8}$/.test(this.obj.mobile.trim())) && !(/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/).test(this.obj.mobile.trim())) {
-				//     this.errTip1 = '请输入正确手机号或者邮箱';
-				//     return false;
-				// }
-				// if (this.obj.qianPassword.length < 6) {
-				//     this.errTip2 = '请输入正确的账号或密码';
-				//     return false;
-				// }
-
 				this.subState = true;
 				this.$http.post("/syssso/login", qs.stringify(this.obj)).then(resp => {
 					if (resp.data.code === 2000) {
@@ -188,13 +175,11 @@
 						sessionStorage.setItem("token", resp.data.data);
 						sessionStorage.setItem("loginType", this.obj.loginType);
 						sessionStorage.setItem("telephone", this.obj.telephone);
-
 						//获取userid
 						this.$http.get("syssystem/user/getUserid/" + sessionStorage.getItem("telephone")).then(
 							resp => {
 								if (resp.data.code === 2000) {
 									sessionStorage.setItem("userId", resp.data.data.id);
-
 								}
 							})
 
@@ -202,7 +187,6 @@
 							this.$router.push("/")
 						} else if (this.obj.loginType === "EMP_PHONE") {
 							this.$router.replace("/")
-							// window.location.href="http:///localhost:8085/dashboard"
 						}
 					} else {
 						this.subState = false;
@@ -241,21 +225,17 @@
 					this.$message.error("请先阅读并同意用户协议");
 					return false;
 				}
-
 				if (this.pobj.code !== this.shureCode) {
 					this.$message.error("验证码错误");
 					return false;
 				}
-
 				var that = this;
-
 				this.$http.post(`/syssystem/user/signInsert/${this.pobj.mobile}/${this.pobj.qianPassword}`).then(
 					function(resp) {
 						if (resp.data.code === 2000) {
 							that.$message.success(resp.data.msg);
 							that.changetab(1);
 							that.pobj = {};
-
 						} else if (resp.data.code === 4000) {
 							//该手机号以注册
 							that.$message.error(resp.data.msg);

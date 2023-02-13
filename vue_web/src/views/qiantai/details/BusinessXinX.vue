@@ -2,11 +2,9 @@
 	<div class="courselist_page">
 		<app-header @getCourseByCourseName="getCourseByCourseName"></app-header>
 		<div>
-			<!--背景色设置-->
 			<div class="teacher_bg">
 				<img src="../../../assets/img/1.jpg" height="110" width="1920" />
 			</div>
-			<!--讲师信息展示-->
 			<div class="login_Avatar" style="float: left">
 				<!--商家头像-->
 				<img :src="business[0].bicon" height="434" width="434" />
@@ -39,7 +37,6 @@
 			</ul>
 			<d-page v-if="pageObj.totalPage > 1" :page="pageObj" @btnClick="getPage"></d-page>
 		</div>
-
 	</div>
 </template>
 
@@ -67,40 +64,29 @@
 				free: '',
 				bid: "",
 				courseName: '',
-				teacherDate: {},
-				//课程信息
 				pageObj: {
-					//当前页面--》page
 					pageCurrent: '1',
-					//每页条数--》limit
 					pageSize: '8',
-					//总条数
 					totalCount: '',
-					//total的页数（有几页）【totalCount/pageSize】
 					totalPage: '',
 					list: {},
 				},
 				business: {},
 				goods: {},
 				shenfen: ""
-
 			}
 		},
 		created() {
 			this.bid = this.$route.params.id;
-
 			this.inintCourse()
 			this.shenfen = sessionStorage.getItem("loginType")
-
 			//商家头像及名字
 			this.$http.get("syssystem/b-business-info/getsname?id=" + this.bid).then(res => {
 				this.business = res.data.data
 			})
-
 		},
 		methods: {
 			getCourseByCourseName() {
-
 				this.inintCourse();
 			},
 			tiaozhuan(gid) {
@@ -135,7 +121,6 @@
 					that.pageObj.totalPage = Math.ceil(that.pageObj.totalCount / 8)
 				})
 			},
-
 			//监听分页的触发
 			getPage: function(int) {
 				this.pageObj.pageCurrent = int;

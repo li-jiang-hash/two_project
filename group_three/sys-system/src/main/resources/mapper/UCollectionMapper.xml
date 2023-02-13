@@ -2,4 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.group_three.dao.UCollectionMapper">
 
+    <select id="findAll" resultType="java.util.Map">
+        select c.id,b.bicon,b.sname,c.status
+        from u_collection c,b_business_info b
+        where bid=b.id  and c.status=0 and uid=#{uid}
+    </select>
 </mapper>
