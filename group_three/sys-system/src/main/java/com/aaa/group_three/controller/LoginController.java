@@ -6,6 +6,7 @@ import com.aaa.entity.REmpRole;
 import com.aaa.group_three.service.IEEmpInfoService;
 import com.aaa.group_three.service.IERoleService;
 import com.aaa.group_three.service.IREmpRoleService;
+import com.aaa.group_three.service.impl.BBusinessInfoServiceImpl;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,8 @@ public class LoginController {
     private IEEmpInfoService empInfoService;
     @Resource
     private IREmpRoleService empRoleService;
+    @Resource
+    private BBusinessInfoServiceImpl bBusinessInfoService;
     @Resource
     private IERoleService roleService;
 

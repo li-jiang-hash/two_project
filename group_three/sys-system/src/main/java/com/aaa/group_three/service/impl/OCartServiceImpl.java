@@ -3,8 +3,12 @@ package com.aaa.group_three.service.impl;
 import com.aaa.entity.OCart;
 import com.aaa.group_three.dao.OCartMapper;
 import com.aaa.group_three.service.IOCartService;
+import com.aaa.util.PageInfo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * <p>
@@ -17,4 +21,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class OCartServiceImpl extends ServiceImpl<OCartMapper, OCart> implements IOCartService {
 
+    @Resource
+    private OCartMapper oCartMapper;
+    @Override
+    public Page findCart(String userId, PageInfo pageInfo) {
+        return oCartMapper.findCart(userId, pageInfo);
+    }
 }

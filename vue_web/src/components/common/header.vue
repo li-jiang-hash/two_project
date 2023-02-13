@@ -9,7 +9,7 @@
 						<router-link :to="{path: '/geRenCenter'}" v-if="this.loginType=='USER_PHONE'">个人中心</router-link>
 					</li>
 					<li class="">
-						<router-link :to="{path: '/business'}" v-if="this.loginType=='EMP_PHONE'">我的店铺</router-link>
+						<router-link :to="{path: '/business'}" v-if="this.loginType=='BUSINESS_PHONE'">我的店铺</router-link>
 					</li>
 					<li class="">
 						<router-link :to="{path: '/myorder'}" v-if="this.loginType=='USER_PHONE'">我的订单</router-link>

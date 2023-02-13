@@ -191,8 +191,6 @@
 				</div>
 			</div>
 		</div>
-
-
 	</div>
 </template>
 
@@ -305,7 +303,7 @@
 					this.payForm.goodsId = this.$route.params.id
 					this.payForm.price = this.classData.price * this.payForm.num
 					this.payForm.uid = sessionStorage.getItem("userId")
-					this.$http.post("syssystem/o-cart/addCart", this.payForm).then(res => {
+					this.$http.post("sys-order/o-cart/addCart", this.payForm).then(res => {
 						if (res.data.data) {
 							this.$message.success(res.data.msg)
 						}

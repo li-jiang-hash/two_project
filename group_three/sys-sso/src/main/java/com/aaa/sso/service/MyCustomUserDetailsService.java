@@ -1,5 +1,6 @@
 package com.aaa.sso.service;
 
+import com.aaa.entity.BBusinessInfo;
 import com.aaa.entity.EEmpInfo;
 import com.aaa.entity.UUserInfo;
 import com.aaa.sso.feign.UserService;
@@ -33,6 +34,8 @@ public class MyCustomUserDetailsService implements CustomUserDetailService{
 
         }else if(var2.equals("USER_PHONE")){
             return loadUserByUsername2(var1);
+        } else if (var2.equals("BUSINESS_PHONE")) {
+            return loadUserByUsername3(var1);
         }
         return null;
     }
@@ -65,6 +68,15 @@ public class MyCustomUserDetailsService implements CustomUserDetailService{
             throw  new UsernameNotFoundException("用户名不对");
         }
         return new User(telephone,user.getPassword(), AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_user"));
+    }
+    private UserDetails loadUserByUsername3(String telephone) {
+        BBusinessInfo user = userService.getBusiness(telephone);
+        if(user==null){
+            System.out.println("商家名不对");
+            System.out.println(telephone);
+            throw  new UsernameNotFoundException("商家名不对");
+        }
+        return new User(telephone,user.getPassword(), AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_emp"));
     }
 
     @Override

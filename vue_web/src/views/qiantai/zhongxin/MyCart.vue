@@ -143,9 +143,10 @@
 			</div>
 		</el-dialog>
 
-		<!-- 支付弹出层 -->
+
+		<!--支付弹出层
 			<el-dialog title="请选择支付类型" :visible.sync="payDialogVisible" width="50" @close="aboutpay">
-				<!--支付宝和微信选择 -->
+				<!--支付宝和微信选择-->
 		<div style="height: 520px;margin-top: 20px;margin-left: 100px">
 			<el-button @click="alipay">
 				<img style="padding: 0" width="200" height="60"
@@ -342,6 +343,7 @@
 					} else {
 						this.$message.error("当前库存不充足,请更改数量后再尝试")
 						this.$http.post("order/cart/changeCart", this.selectionData).then(res => {
+
 						})
 						this.getList();
 					}
@@ -373,6 +375,7 @@
 					} else {
 						this.$message.error("当前库存不充足,请更改数量后再尝试")
 						this.$http.post("order/order/changeCart", this.selectionData).then(res => {
+
 						})
 						this.getList()
 					}
@@ -382,6 +385,7 @@
 			aboutpay() {
 				if (this.payResult.codeUrl === "" && this.payResultAli.codeUrl === "" || this.payResult.codeUrl === null &&
 					this.payResultAli.codeUrl === null) {
+
 				} else {
 					this.orderDialogVisible = true;
 				}
@@ -396,7 +400,7 @@
 			},
 			//获取当前用户所有收获地址
 			getAddr() {
-				this.$http.post("commodity/goods/getAllAddr").then(res => {
+				this.$http.get("syssystem/addr/findById?id=" + sessionStorage.getItem("userId")).then(res => {
 					if (res.data.code === 2000) {
 						this.addrForm = res.data.data;
 						console.log(this.addrForm)
@@ -406,6 +410,7 @@
 			//购买事件
 			buyCourse() {
 				var item = sessionStorage.getItem("token");
+				// alert(this.playStatus)
 				if (item == null) {
 					this.$msgBox({
 						content: '请登录后再购买',
@@ -433,6 +438,7 @@
 							this.orderInfo = res.data.data
 							var info = this.orderInfo[0];
 							this.payForm.addrid = info[0].addrid
+
 						}
 					})
 				}, 500);
@@ -516,7 +522,7 @@
 
 			// 获取购物车列表
 			getList() {
-				this.$http.get("sysorder/o-cart/findCart?currentPage=" + this.currentPage + "&pageSize=" + this.pageSize +
+				this.$http.get("sys-order/o-cart/findCart?currentPage=" + this.currentPage + "&pageSize=" + this.pageSize +
 					"&userId=" + sessionStorage.getItem("userId")).then(res => {
 					if (res.data.code === 2000) {
 						this.total = res.data.data.total
@@ -581,7 +587,7 @@
 						for (var i = 0; i < _this.selectionData.length; i++) {
 							ids[i] = _this.selectionData[i].id
 						}
-						_this.$http.get("sysorder/o-cart/deleteCart?id=" + ids).then(res => {
+						_this.$http.get("sys-order/o-cart/deleteCart?id=" + ids).then(res => {
 							if (res.data.code === 2000) {
 								_this.$message.success(res.data.msg);
 								_this.getList();
@@ -599,7 +605,7 @@
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(() => {
-					this.$http.get("sysorder/o-cart/deleteCart?id=" + id).then(res => {
+					this.$http.get("sys-order/o-cart/deleteCart?id=" + id).then(res => {
 						if (res.data.data) {
 							this.getList()
 							this.$message({
