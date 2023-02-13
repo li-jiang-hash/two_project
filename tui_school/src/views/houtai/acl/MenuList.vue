@@ -342,7 +342,7 @@ export default {
     insertFormSubmit() {
       const that = this;
       console.log(sessionStorage.getItem("rid"));
-      
+      sessionStorage.getItem("rid")
       console.log(this.insertFormDate);
       this.$refs.insertForm.validate((valid) => {
         if (valid) {

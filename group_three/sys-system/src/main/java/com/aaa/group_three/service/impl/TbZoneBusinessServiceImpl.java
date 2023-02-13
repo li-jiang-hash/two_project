@@ -7,6 +7,7 @@ import com.aaa.util.PageInfo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -53,17 +54,20 @@ public class TbZoneBusinessServiceImpl extends ServiceImpl<TbZoneBusinessMapper,
         System.out.println("zone的值："+zoneBusiness);
         System.out.println("page的值："+page);
         QueryWrapper queryWrapper = new QueryWrapper();
-        if(zoneBusiness.getIsDisable()!=null){
+        if(zoneBusiness.getId()!=null && zoneBusiness.getId()!=""){
+            queryWrapper.eq("zb.zone_id",zoneBusiness.getId());
+        }
+        if(zoneBusiness.getIsDisable()!=null && zoneBusiness.getIsDisable()!=""){
             queryWrapper.eq("zb.is_disable",zoneBusiness.getIsDisable());
         }
-        if(zoneBusiness.getZoneId()!=null){
+        if(zoneBusiness.getZoneId()!=null && zoneBusiness.getZoneId()!=""){
             queryWrapper.eq("zb.zone_id",zoneBusiness.getZoneId());
         }
         if(zoneBusiness.getPutaway()!=null){
             queryWrapper.eq("zb.putaway",zoneBusiness.getPutaway());
         }
         // "" null
-        if(StringUtils.isNotBlank(zoneBusiness.getSname())){
+        if(ObjectUtils.isNotEmpty(zoneBusiness.getSname())){
             queryWrapper.like("bb.sname",zoneBusiness.getSname());
         }
         return tbZoneBusinessMapper.getAllZone(page,queryWrapper);

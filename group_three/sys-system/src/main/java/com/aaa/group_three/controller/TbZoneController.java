@@ -78,10 +78,16 @@ public class TbZoneController {
      * @param zone
      * @return
      */
-    @PostMapping("updatePrefecture")
+    @PostMapping("addPrefecture")
     public Result addZone(TbZone zone){
         System.out.println("155nnnnnnnnnnnnnnnnnnn"+zone);
-        return new Result( zoneService.saveOrUpdate(zone));
+        return new Result( zoneService.save(zone));
+    }
+
+    @PostMapping("updatePrefecture")
+    public Result updZone(TbZone zone){
+        System.out.println("888nnnnnnnnnnnnnnnnnnn"+zone);
+        return new Result( zoneService.updateById(zone));
     }
 
 }

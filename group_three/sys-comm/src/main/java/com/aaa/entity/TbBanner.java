@@ -61,14 +61,14 @@ public class TbBanner implements Serializable {
     /**
      * 创建时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime gmtCreate;
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private String gmtCreate;
 
     /**
      * 更新时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime gmtModified;
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private String gmtModified;
 
     /**
      * 当前的启用状态

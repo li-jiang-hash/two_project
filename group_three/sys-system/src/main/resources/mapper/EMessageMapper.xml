@@ -5,8 +5,9 @@
     <select id="getRole" resultType="java.util.Map">
         select m.gmt_date,m.stype,m.scontend,m.is_deleted,r.role_name
         from e_message m
-        INNER JOIN e_role r
+        LEFT JOIN e_role r
         ON m.eid=r.id
+        WHERE m.is_deleted=0
     </select>
 
 <!--    <select id="findAll" resultType="java.util.Map">-->
