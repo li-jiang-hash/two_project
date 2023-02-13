@@ -3,13 +3,11 @@ package com.aaa.group_three.controller;
 
 import com.aaa.entity.OOrder;
 import com.aaa.group_three.service.IOOrderService;
+import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -39,6 +37,13 @@ public class OOrderController {
         wrapper.eq("goodsid", id);
         wrapper.eq("uid",userid);
         return new Result<>(orderService.list(wrapper).size() != 0);
+    }
+
+    @GetMapping("findOrder/{pageCurrent}/{pageSize}")
+    public Result findOrder(@PathVariable Integer pageCurrent, @PathVariable Integer pageSize,String zhuangtai,String userId){
+        PageInfo pageInfo = new PageInfo(pageCurrent, pageSize);
+        Page page = orderService.findOrder(pageInfo,userId);
+        return new Result<>(page);
     }
 
 }

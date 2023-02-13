@@ -1,15 +1,12 @@
 package com.aaa.group_three.controller;
 
-
 import com.aaa.entity.UCollection;
 import com.aaa.group_three.service.IUCollectionService;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
-
 /**
  * <p>
  *  前端控制器
@@ -52,7 +49,6 @@ public class UCollectionController {
     @PostMapping("changeCollectionStatus")
     public Result changeCollection(@RequestBody UCollection collection){
         UpdateWrapper<UCollection> wrapper = new UpdateWrapper<>();
-        wrapper.eq("uid", collection.getUid());
         wrapper.eq("is_deleted", 0);
         if (collection.getGoodsid() != null) {
             wrapper.eq("goodsid",collection.getGoodsid());
@@ -60,6 +56,32 @@ public class UCollectionController {
             wrapper.eq("bid",collection.getBid());
         }
         return new Result<>(collectionService.saveOrUpdate(collection,wrapper));
+    }
+//    查询关注的店铺
+    @GetMapping("findShop")
+        public Result findCollection(String uid){
+            return new Result(collectionService.findAll(uid));
+    }
+//    取消关注的店铺
+    @PostMapping("unfollow/{status}")
+    public Result unfollow(@PathVariable String status, String id){
+        UpdateWrapper updateWrapper=new UpdateWrapper<>();
+        updateWrapper.set("status",status);
+        updateWrapper.eq("id",id);
+        return new Result(collectionService.update(updateWrapper));
+    }
+//查询关注的商品
+    @GetMapping("findGoods")
+    public Result findGoods(String uid){
+        return new Result(collectionService.findGoods(uid));
+    }
+//    取消关注的商品
+    @PostMapping("unGoods/{status}")
+    public Result unGoods(@PathVariable String status, String id){
+        UpdateWrapper updateWrapper=new UpdateWrapper<>();
+        updateWrapper.set("status",status);
+        updateWrapper.eq("id",id);
+        return new Result(collectionService.update(updateWrapper));
     }
 
 }

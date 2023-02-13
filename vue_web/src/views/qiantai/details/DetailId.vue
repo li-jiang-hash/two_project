@@ -320,8 +320,6 @@
 				this.addCommentData.goodsid = this.id;
 				this.addCommentData.bid = this.classData.busid;
 				this.addCommentData.userid = sessionStorage.getItem("userId")
-				// this.addCommentData.createtime = this.getCurrentTime();
-
 				this.$http.post("syssystem/u-comment/addComment", this.addCommentData).then(res => {
 					if (res.data.code === 2000) {
 						this.$message.success(res.data.msg);
@@ -333,7 +331,7 @@
 			},
 			//页面加载判断该用户是否买过该商品
 			hasByThisGoods() {
-				this.$http.get("syssystem/o-order/hasBuyThisGoods/" + this.id + "/" + sessionStorage.getItem("userId"))
+				this.$http.get("sys-order/o-order/hasBuyThisGoods/" + this.id + "/" + sessionStorage.getItem("userId"))
 					.then(res => {
 						if (res.data.data) {
 							this.hasBuy = true;
@@ -362,7 +360,6 @@
 					this.$message.error("请编辑评论后再提交评价!")
 					return
 				}
-				// this.editData.updatetime =
 				this.$http.post("syssystem/u-comment/addComment", this.editData).then(res => {
 					if (res.data.data) {
 						this.$message.success(res.data.msg)
@@ -371,7 +368,6 @@
 						this.getComments()
 					} else {
 						this.$message.success("失败，请重试！")
-
 					}
 				})
 			},
@@ -504,8 +500,6 @@
 			//父传子
 			UpdateStatus(isTitileUpdate) {
 				this.isTitileUpdate = isTitileUpdate;
-				// alert(this.isTitileUpdate)
-
 			},
 			FuChuanZi: function(videoSourceId) {
 				// childValue就是子组件传过来的值

@@ -2,4 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.group_three.dao.OOrderMapper">
 
+<!--    <select id="findOrder" resultType="map">-->
+<!--        select o.id, u.uname, o.code, o.orderdate,-->
+<!--        from o_order o-->
+<!--            inner join b_business_info b on b.id = o.uid-->
+<!--        where u.id = 1-->
+<!--    </select>-->
 </mapper>
