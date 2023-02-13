@@ -57,10 +57,7 @@
 				weiVisable: true,
 				openVip: false,
 				free: '',
-				//teacherId:this.$route.query.teacherId,
 				chindVal: this.$route.params.name,
-				teacherDate: {},
-				//课程信息
 				pageObj: {
 					//当前页面--》page
 					pageCurrent: '1',
@@ -91,8 +88,8 @@
 				this.pageObj.list = {}
 				var that = this
 				this.$http.get("syssystem/tb-zone-business/findBusinessByName?chandVal=" + this.chindVal +
-					"&pageCurrent=" + this
-					.pageObj.pageCurrent + "&pageSize=" + this.pageObj.pageSize).then(function(resp) {
+					"&pageCurrent=" + this.pageObj.pageCurrent +
+					"&pageSize=" + this.pageObj.pageSize).then(function(resp) {
 					if (resp.data.code === 2000) {
 
 						that.pageObj.list = resp.data.data.records;
@@ -110,13 +107,13 @@
 
 			},
 
-			//获取讲师课程信息
-			inintTeacherByTeacherId() {
-				var that = this
-				this.$http.get(`/core/course/findTeacherByTeacherId/${this.teacherId}`).then(function(resp) {
-					that.teacherDate = resp.data.result;
-				})
-			},
+			// //获取讲师课程信息
+			// inintTeacherByTeacherId() {
+			// 	var that = this
+			// 	this.$http.get(`/core/course/findTeacherByTeacherId/${this.teacherId}`).then(function(resp) {
+			// 		that.teacherDate = resp.data.result;
+			// 	})
+			// },
 
 			//监听分页的触发
 			getPage: function(int) {

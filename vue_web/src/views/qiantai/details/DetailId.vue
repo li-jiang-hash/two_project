@@ -320,7 +320,6 @@
 				this.addCommentData.goodsid = this.id;
 				this.addCommentData.bid = this.classData.busid;
 				this.addCommentData.userid = sessionStorage.getItem("userId")
-				// this.addCommentData.createtime = this.getCurrentTime();
 
 				this.$http.post("syssystem/u-comment/addComment", this.addCommentData).then(res => {
 					if (res.data.code === 2000) {
@@ -333,7 +332,7 @@
 			},
 			//页面加载判断该用户是否买过该商品
 			hasByThisGoods() {
-				this.$http.get("syssystem/o-order/hasBuyThisGoods/" + this.id + "/" + sessionStorage.getItem("userId"))
+				this.$http.get("sys-order/o-order/hasBuyThisGoods/" + this.id + "/" + sessionStorage.getItem("userId"))
 					.then(res => {
 						if (res.data.data) {
 							this.hasBuy = true;

@@ -1,7 +1,9 @@
 package com.aaa.group_three.dao;
 
 import com.aaa.entity.OCart;
+import com.aaa.util.PageInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface OCartMapper extends BaseMapper<OCart> {
 
+    Page findCart(String userId, PageInfo pageInfo);
 }

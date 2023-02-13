@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.group_three.dao.OCartMapper">
+
+    <select id="findCart" resultType="map">
+        select c.id, c.num, c.price, s.residue ,g.img ,g.gname
+        from o_cart c
+            inner join g_goods g on g.id = c.goods_id
+            left join o_stock s on s.goods_id = g.id
+            left join u_addr a on a.id = c.addrid
+        where c.is_deleted = 0 and c.uid = #{userId}
+    </select>
+</mapper>

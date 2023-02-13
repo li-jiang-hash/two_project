@@ -11,7 +11,7 @@
     </select>
 
     <select id="findBusinessByName" resultType="java.util.Map">
-        select b.bicon, b.sname, min(g.price) minprice, sum(s.sell_num) sales
+        select b.id, b.bicon, b.sname, min(g.price) minprice, sum(s.sell_num) sales
         from b_business_info b
             inner join g_goods g on g.bid = b.id
             left join o_stock s on s.goods_id = g.id

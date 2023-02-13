@@ -189,6 +189,8 @@
 						sessionStorage.setItem("loginType", this.obj.loginType);
 						sessionStorage.setItem("telephone", this.obj.telephone);
 
+						console.log(sessionStorage.getItem("token"))
+
 						//获取userid
 						this.$http.get("syssystem/user/getUserid/" + sessionStorage.getItem("telephone")).then(
 							resp => {
