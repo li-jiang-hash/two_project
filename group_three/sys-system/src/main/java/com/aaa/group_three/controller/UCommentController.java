@@ -5,12 +5,12 @@ import com.aaa.entity.UComment;
 import com.aaa.group_three.service.IUCommentService;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 /**
@@ -29,7 +29,7 @@ public class UCommentController {
     private IUCommentService commentService;
 
     /**
-     * 用户评论
+     * 查询用户评论
      * @return
      */
     @GetMapping("findComment")
@@ -41,8 +41,38 @@ public class UCommentController {
             String[] split = page.getRecords().get(i).getImg().split(",");
             page.getRecords().get(i).setImgs(Arrays.asList(split));
         }
-
         return new Result<>(page);
+    }
+
+    /**
+     * 添加/修改评论
+     * @return
+     */
+    @PostMapping("addComment")
+    public Result addComment(@RequestBody UComment comment){
+        if (comment.getId() == null) {
+            comment.setCreatetime(LocalDateTime.now ());
+        } else {
+            comment.setUpdatetime(LocalDateTime.now ());
+        }
+
+        //将 imgs 转成 String 并放入 img
+        String img = String.join(",", comment.getImgs());
+        comment.setImg(img);
+
+        return new Result<>(commentService.saveOrUpdate(comment));
+    }
+
+    /**
+     * 删除评论
+     * @return
+     */
+    @GetMapping("deleteById")
+    public Result deleteById(String id){
+        UpdateWrapper<UComment> wrapper = new UpdateWrapper<>();
+        wrapper.set("is_deleted",1);
+        wrapper.eq("id",id);
+        return new Result<>(commentService.update(wrapper));
     }
 
 }

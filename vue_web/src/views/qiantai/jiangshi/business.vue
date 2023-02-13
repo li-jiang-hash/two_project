@@ -14,7 +14,7 @@
               <input type="hidden" v-model="obj.bicon">
               <el-upload
                   class="avatar-uploader"
-                  action="http://192.168.1.23:8000/user/upload01"
+                  action="http://localhost:7500/syssystem/file/upload"
                   :show-file-list="false"
                   :on-success="handleAvatarSuccess"
                   :before-upload="beforeAvatarUpload"
@@ -29,13 +29,14 @@
             <div class="label">营业执照:</div>
             <div class="form_ctl upload_ctl">
               <input type="hidden" v-model="obj.license">
-<!--              <el-upload
+              
+             <!-- <el-upload
                   class="avatar-uploader"
                   action="http://192.168.1.23:8000/user/upload01"
                   :show-file-list="false"
                   :on-success="handleAvatarSuccess"
                   :before-upload="beforeAvatarUpload"
-              >-->
+              > -->
                 <img style="height: 100px;width: 100px" v-if="obj.license" v-model="obj.license" :src="obj.license" class="avatar" alt="">
                 <i v-else  class="el-icon-plus avatar-uploader-icon"></i>
 <!--              </el-upload>-->
@@ -209,7 +210,7 @@ export default {
     baoCunYongHu(){
       // console.log(this.obj)
       var that=this;
-      this.$http.post('/business/changeshop',this.obj).then(function (resp) {
+      this.$http.post('/syssystem/b-business-info/storeinsert',this.obj).then(function (resp) {
         that.$message.success(resp.data.msg);
         that.isLogin=false
         //重新加载页面
@@ -266,9 +267,9 @@ export default {
     //初始化用户信息
     initMember(){
       var that=this;
-      this.$http.get(`/business/showshop`).then(function (result) {
-        that.obj=result.data.data;
-        console.log(that.obj);
+      this.$http.get(`/syssystem/b-business-info/showshop?phone=${sessionStorage.getItem("telephone")}`).then(res=> {
+        this.obj=res.data.data;
+        console.log(this.obj);
         //console.log(result)
       })
     }
