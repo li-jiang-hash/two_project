@@ -1,16 +1,12 @@
 package com.aaa.group_three.controller;
 
-
 import com.aaa.entity.UCollection;
 import com.aaa.group_three.service.IUCollectionService;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
-import java.util.Map;
-
 /**
  * <p>
  *  前端控制器
@@ -74,5 +70,19 @@ public class UCollectionController {
         updateWrapper.eq("id",id);
         return new Result(collectionService.update(updateWrapper));
     }
+//查询关注的商品
+    @GetMapping("findGoods")
+    public Result findGoods(String uid){
+        return new Result(collectionService.findGoods(uid));
+    }
+//    取消关注的商品
+    @PostMapping("unGoods/{status}")
+    public Result unGoods(@PathVariable String status, String id){
+        UpdateWrapper updateWrapper=new UpdateWrapper<>();
+        updateWrapper.set("status",status);
+        updateWrapper.eq("id",id);
+        return new Result(collectionService.update(updateWrapper));
+    }
+
 }
 

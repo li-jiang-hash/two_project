@@ -46,7 +46,6 @@
             //查询所有关注的信息
             queryAllGuanZhuTeacher(){
                 var that=this;
-                console.log(sessionStorage.getItem("userId"))
                 this.$http.get("/syssystem/u-collection/findShop?uid="+ sessionStorage.getItem("userId")).then(function (resp) {
                     that.GuanZhuXinxi=resp.data.data;
                 })
@@ -54,8 +53,6 @@
             // //取消关注
             cancel(id){
                 var that=this;
-
-
                 this.$http.post("/syssystem/u-collection/unfollow/1?id="+id).then(function (resp) {
                     that.queryAllGuanZhuTeacher();
                 })
