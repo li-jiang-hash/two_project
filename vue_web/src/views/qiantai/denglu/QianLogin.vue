@@ -20,7 +20,7 @@
 							<div class="error_msg">{{errTip2}}</div>
 							<div id="changge">
 								<el-radio v-model="obj.loginType" label="USER_PHONE">用户平台</el-radio>
-								<el-radio v-model="obj.loginType" label="EMP_PHONE">商家平台</el-radio>
+								<el-radio v-model="obj.loginType" label="BUSINESS_PHONE">商家平台</el-radio>
 							</div>
 							<input type="submit" v-if="subState" disabled="disabled" value="登录中···" class="btn" />
 							<input type="submit" v-else value="登录" class="btn" />
@@ -103,7 +103,7 @@
 				errTip2: '',
 				ipInfo: {},
 				obj: {
-					telephone: '123',
+					telephone: '18749021423',
 					password: '123456',
 					loginType: 'USER_PHONE'
 				},
@@ -198,18 +198,11 @@
 								}
 							})
 
-						if (this.obj.loginType === "USER_PHONE") {
 							this.$router.push("/")
-						} else if (this.obj.loginType === "EMP_PHONE") {
-							this.$router.replace("/")
-							// window.location.href="http:///localhost:8085/dashboard"
-						}
 					} else {
 						this.subState = false;
 						this.$message.error(resp.data.msg);
 					}
-				}).then(re = {
-
 				})
 				return false;
 			},

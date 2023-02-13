@@ -20,6 +20,7 @@ public class EPermissionController {
     @Resource
     private IEPermissionService permissionService;
 
+
     @GetMapping({"leftMenus"})
     public Result leftMenus() {
         return new Result(permissionService.getAllMenus());
