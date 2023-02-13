@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 /**
@@ -49,6 +50,12 @@ public class UCommentController {
      */
     @PostMapping("addComment")
     public Result addComment(@RequestBody UComment comment){
+        if (comment.getId() == null) {
+            comment.setCreatetime(LocalDateTime.now ());
+        } else {
+            comment.setUpdatetime(LocalDateTime.now ());
+        }
+
         //将 imgs 转成 String 并放入 img
         String img = String.join(",", comment.getImgs());
         comment.setImg(img);

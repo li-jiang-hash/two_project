@@ -35,6 +35,7 @@ public class UCollectionController {
     public Result isGoodsCollection(String bid, String id, String userId) {
         QueryWrapper<UCollection> wrapper = new QueryWrapper<>();
         wrapper.select("status");
+        wrapper.eq("is_deleted", 0);
         wrapper.eq("uid", userId);
         if (id != null) {
             wrapper.eq("goodsid",id);
