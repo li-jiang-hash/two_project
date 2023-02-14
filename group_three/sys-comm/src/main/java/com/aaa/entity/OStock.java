@@ -1,9 +1,10 @@
 package com.aaa.entity;
 
-import java.math.BigDecimal;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * <p>
@@ -42,12 +43,12 @@ public class OStock implements Serializable {
     /**
      * 商品售出数量
      */
-    private String sellNum;
+    private Integer sellNum;
 
     /**
      * 商品剩余数量
      */
-    private String residue;
+    private Integer residue;
 
 
 }

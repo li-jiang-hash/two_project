@@ -301,7 +301,7 @@
 			addCart() {
 				if (this.payForm.addrid != null && this.payForm.addrid !== "") {
 					this.payForm.goodsId = this.$route.params.id
-					this.payForm.price = this.classData.price * this.payForm.num
+					this.payForm.price = this.classData.price
 					this.payForm.uid = sessionStorage.getItem("userId")
 					this.$http.post("sys-order/o-cart/addCart", this.payForm).then(res => {
 						if (res.data.data) {
@@ -472,6 +472,7 @@
 				this.$http.post("syssystem/u-collection/changeCollectionStatus", this.collection).then(
 					res => {
 						if (res.data.data) {
+
 							this.shouChangStatus = res.data.data;
 							this.$message.success(res.data.msg)
 							this.IsShouChang();

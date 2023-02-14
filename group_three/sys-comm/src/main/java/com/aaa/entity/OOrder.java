@@ -1,12 +1,16 @@
 package com.aaa.entity;
 
-import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -33,6 +37,7 @@ public class OOrder implements Serializable {
     /**
      * 订单时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime orderdate;
 
     /**
@@ -90,5 +95,10 @@ public class OOrder implements Serializable {
      */
     private Integer paysort;
 
+    @TableField(exist = false)
+    private BBusinessInfo businessInfo;
+
+    @TableField(exist = false)
+    private List<GGoods> goodsList;
 
 }

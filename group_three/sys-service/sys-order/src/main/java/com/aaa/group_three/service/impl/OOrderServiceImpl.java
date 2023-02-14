@@ -1,4 +1,4 @@
-package com.aaa.group_three.service.imp;
+package com.aaa.group_three.service.impl;
 
 import com.aaa.entity.OOrder;
 import com.aaa.group_three.dao.OOrderMapper;
@@ -25,6 +25,6 @@ public class OOrderServiceImpl extends ServiceImpl<OOrderMapper, OOrder> impleme
     private OOrderMapper orderMapper;
     @Override
     public Page findOrder(PageInfo pageInfo, String userId, Integer zhuangtai) {
-        return orderMapper.findOrder(pageInfo,userId);
+        return orderMapper.findOrder(pageInfo,userId,zhuangtai);
     }
 }

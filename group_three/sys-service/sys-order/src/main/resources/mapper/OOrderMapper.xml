@@ -2,8 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.group_three.dao.OOrderMapper">
 
-    <select id="findOrder" resultType="map">
-        select o.*,b.sname,g.* from o_order o , b_business_info b,g_goods g
-        where o.bid=b.id and  o.goodsid=g.id and o.uid=#{id} and o.state=#{zhuangtai}
+    <resultMap id="getOrder" type="com.aaa.entity.OOrder" autoMapping="true">
+        <id property="id" column="id"/>
+        <association property="businessInfo" javaType="com.aaa.entity.BBusinessInfo" autoMapping="true">
+            <id column="bid" property="id"/>
+        </association>
+        <collection property="goodsList" ofType="com.aaa.entity.GGoods" autoMapping="true" >
+            <id property="id" column="goodsid"/>
+        </collection>
+    </resultMap>
+
+    <select id="findOrder" resultMap="getOrder">
+        select o.*,b.sname, g.* from o_order o , b_business_info b,g_goods g
+        where o.bid=b.id and  o.goodsid=g.id and o.uid=#{userId} and o.state != 2
+        <if test="zhuangtai!=null">
+            and o.state=#{zhuangtai}
+        </if>
     </select>
 </mapper>

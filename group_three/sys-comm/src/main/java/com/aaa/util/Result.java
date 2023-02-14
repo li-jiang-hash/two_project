@@ -27,5 +27,10 @@ public class Result<T> {
         this.msg="操作成功！！";
         this.data = t;
     }
+    public Result(T t,String msg) {
+        this.code=2000;
+        this.msg=msg;
+        this.data = t;
+    }
 
 }
