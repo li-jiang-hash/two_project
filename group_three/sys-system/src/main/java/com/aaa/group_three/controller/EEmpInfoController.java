@@ -27,23 +27,24 @@ public class EEmpInfoController {
     @PostMapping
     public Result getAllEmp(PageInfo page, EEmpInfo empInfo){
         Page page1 = empInfoService.getPageData(page, empInfo);
+        System.out.println("dfjdkljfkldj="+page+"dhfjkdhn="+empInfo);
         return new Result(page1);
     }
 
 
 
-    // 根据员工的id 查询员工的角色
-    @GetMapping("{id}")
-    public List<EEmpInfo> findByUid(@PathVariable Integer id){
-        return empInfoService.getById(id);
-    }
+//    // 根据员工的id 查询员工的角色
+//    @GetMapping("{id}")
+//    public List<EEmpInfo> findByUid(@PathVariable Integer id){
+//        return empInfoService.getById(id);
+//    }
 
     /**
      * 添加角色信息
      * @param empInfo
      * @return
      */
-    @PostMapping("changepass")
+    @PostMapping("insertEmp")
     public Result addEmp(EEmpInfo empInfo){
         //创建时间
         Date date = new Date();

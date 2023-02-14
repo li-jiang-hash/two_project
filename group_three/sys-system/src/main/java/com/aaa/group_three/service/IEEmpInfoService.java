@@ -19,10 +19,11 @@ public interface IEEmpInfoService extends IService<EEmpInfo> {
 
     Page getPageData(PageInfo page, EEmpInfo empInfo);
 
-    /**
-     * 根据员工的rid查询员工的角色信息
-     *
-     */
-    List<EEmpInfo> getById(Integer id);
+//    /**
+//     * 根据员工的rid查询员工的角色信息
+//     *
+//     */
+//    List<EEmpInfo> getById(Integer id);
+
 
 }

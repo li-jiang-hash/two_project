@@ -2,21 +2,14 @@ package com.aaa.group_three.controller;
 
 
 import com.aaa.entity.BAppeal;
-import com.aaa.entity.BBusinessInfo;
-import com.aaa.entity.EEmpInfo;
-import com.aaa.group_three.service.IEEmpInfoService;
 import com.aaa.group_three.service.impl.BAppealServiceImpl;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import lombok.val;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>

@@ -15,8 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IEMessageService extends IService<EMessage> {
 
-    Page getPageData(PageInfo page, EMessage message);
-
-
-//    Page getAll(PageInfo page, String startTime, String endTime);
+    Page getPageData(PageInfo page, String startTime, String endTime);
 }

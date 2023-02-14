@@ -2,9 +2,12 @@ package com.aaa.group_three.dao;
 
 import com.aaa.entity.EMessage;
 import com.aaa.util.PageInfo;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -16,7 +19,5 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
  */
 public interface EMessageMapper extends BaseMapper<EMessage> {
 
-    Page getRole(PageInfo page, QueryWrapper queryWrapper);
-
-//    Page findAll(PageInfo pageInfo, String startTime, String endTime);
+    Page getRole(PageInfo page, @Param(Constants.WRAPPER) Wrapper wrapper);
 }

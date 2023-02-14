@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 
@@ -25,23 +26,14 @@ public class EMessageServiceImpl extends ServiceImpl<EMessageMapper, EMessage> i
 
     @Resource
     private EMessageMapper eMessageMapper;
-    @Override
-    public Page getPageData(PageInfo page, EMessage message) {
-        System.out.println("empInfo的值："+message);
-        System.out.println("page的值："+page);
-//        Page page = new Page(currentPage,pageSize);
-        QueryWrapper queryWrapper = new QueryWrapper();
-        // "" null
-        if(StringUtils.isNotBlank(message.getStype())){
-            queryWrapper.like("ename",message.getStype());
-        }
 
-//        return this.page(page,queryWrapper);
-        return eMessageMapper.getRole(page,queryWrapper);
+    @Override
+    public Page getPageData(PageInfo page, String startTime, String endTime) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.between(!startTime.equals("1"), "gmt_date",startTime,endTime);
+//        queryWrapper.l
+
+        return eMessageMapper.getRole(page, queryWrapper);
     }
-//    @Override
-//    public Page getAll(PageInfo pageInfo, String startTime,String endTime) {
-//        Page list=eMessageMapper.findAll(pageInfo,startTime,endTime);
-//        return list;
-//    }
 }
+

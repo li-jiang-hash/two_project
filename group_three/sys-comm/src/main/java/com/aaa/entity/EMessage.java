@@ -26,13 +26,13 @@ public class EMessage implements Serializable {
     /**
      * 通知id
      */
-    @TableId(type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
      * 发送日期
      */
-    private LocalDateTime gmtDate;
+    private String gmtDate;
 
     /**
      * 管理员id
