@@ -1,5 +1,7 @@
 package com.aaa.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -23,17 +25,18 @@ public class TbArticle implements Serializable {
     /**
      * 主键
      */
+    @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
     /**
      * 创建时间
      */
-    private LocalDateTime gmtCreate;
+    private String gmtCreate;
 
     /**
      * 修改时间
      */
-    private LocalDateTime gmtModified;
+    private String gmtModified;
 
     /**
      * 状态（1有效，0无效）
