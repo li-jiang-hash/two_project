@@ -60,19 +60,32 @@ public class UCollectionController {
         }
         return new Result<>(collectionService.saveOrUpdate(collection,wrapper));
     }
-
-//    查询关注的店铺
+//    查询关注的店铺/商品
     @GetMapping("findShop")
         public Result findCollection(String uid){
-            return new Result(collectionService.findAll(uid));
+        return new Result(collectionService.findAll(uid));
     }
-//    取消关注的店铺
+//    取消关注的店铺/商品
     @PostMapping("unfollow/{status}")
-    public Result unfollow(@PathVariable String status, String id){
+    public Result unfollow(@PathVariable String status, String cid){
         UpdateWrapper updateWrapper=new UpdateWrapper<>();
         updateWrapper.set("status",status);
-        updateWrapper.eq("id",id);
+        updateWrapper.eq("id",cid);
         return new Result(collectionService.update(updateWrapper));
     }
+//查询关注的商品
+    @GetMapping("findGoods")
+    public Result findGoods(String uid){
+        return new Result(collectionService.findGoods(uid));
+    }
+//    取消关注的商品
+    @PostMapping("unGoods/{status}")
+    public Result unGoods(@PathVariable String status, String cid){
+        UpdateWrapper updateWrapper=new UpdateWrapper<>();
+        updateWrapper.set("status",status);
+        updateWrapper.eq("id",cid);
+        return new Result(collectionService.update(updateWrapper));
+    }
+
 }
 

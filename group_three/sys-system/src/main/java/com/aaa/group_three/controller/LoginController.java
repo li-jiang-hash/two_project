@@ -43,6 +43,7 @@ public class LoginController {
      */
     @GetMapping("/{eid}")
     public List<String> getRoleList(@PathVariable String eid) {
+
         // 根据用户的id查询用户的角色信息
         // 1. 根据用户的id查询用户的角色的id
         QueryWrapper queryWrapper = new QueryWrapper();
@@ -55,6 +56,7 @@ public class LoginController {
             ERole byId = roleService.getById(rEmpRole.getRoleId());
             roleList.add("ROLE_" + byId.getRoleName());
         }
+        System.out.println("1212121212111111111111111111111 = " + roleList+":"+eid);
         return roleList;
     }
     @GetMapping

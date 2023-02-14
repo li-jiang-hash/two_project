@@ -17,4 +17,6 @@ import java.util.Map;
 public interface UCollectionMapper extends BaseMapper<UCollection> {
 
     List<Map<String,Object>> findAll(String uid);
+
+    List<Map<String, Object>> findGoods(String uid);
 }

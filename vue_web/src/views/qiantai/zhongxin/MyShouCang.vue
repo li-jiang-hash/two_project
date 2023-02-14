@@ -1,44 +1,33 @@
 <template>
             <div data-v-049ea09a="" class="person_content">
-                                <ul data-v-049ea09a="" class="person_title clearfix">
-                                    <li data-v-049ea09a="" class="">
-                                        <a data-v-049ea09a="" href="javascript:">商品收藏</a>
-                                    </li>
-                                </ul>
+                <ul data-v-049ea09a="" class="person_title clearfix">
+                    <li data-v-049ea09a="" class="">
+                        <a data-v-049ea09a="" href="javascript:">商品收藏</a>
+                    </li>
+                </ul>
                 <div data-v-049ea09a="" class="notdata" v-if="shouCangData===false">
                     <i data-v-049ea09a="" class="iconfont"></i>暂时没有数据
-                </div> <!---->
-
+                </div> 
                 <div data-v-049ea09a="" class="person_info" v-if="shouCangData===true">
-                    <!--            <div data-v-049ea09a="" class="course_content clearfix">-->
                     <div data-v-049ea09a="" class="course_content clearfix" v-for="item in shouCangXinxi">
                         <div class="order_title clearfix" style="background-color: rgba(204,204,204,0.27);height: 25px;line-height: 2.0;">
                             <span id="sname"><i class="el-icon-s-shop"></i></span>
-                            <span class="order_num">店铺名：{{item.businessInfo.sname}}</span>
-
+                            <span class="order_num">店铺名：{{item.sname}}</span>
                         </div>
                         <div data-v-049ea09a="" class="img_box fl">
-                            <!--                    <img data-v-049ea09a="" src="https://static.roncoo.com/roncoo/course/a9f80b7dbc6b483a843a0e12960d1030.jpg" alt="">-->
                             <img data-v-049ea09a="" :src="item.img" alt="">
                         </div>
-                        <!--                <p data-v-049ea09a="" class="course_name fl">基于电商业务的全链路数据中台落地方案（全渠道、全环节、全流程）</p> &lt;!&ndash;&ndash;&gt;-->
                         <p style="color: #ff691a;margin: 20px" data-v-049ea09a="" class="course_name fl">商品名称：{{item.gname}}</p>
                         <p style="color: #ff691a" data-v-049ea09a="" class="course_name fl">商品价格：{{item.price}}元</p>
-
-                        <!---->
-                        <!--                <a data-v-049ea09a="" href="https://www.roncoo.com/view/1343053809300340737">进入学习</a> &lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt;-->
                         <router-link :to=" {name:'DetailId',params:{id:item.id}}"><a data-v-049ea09a="">进入购买</a>
                         </router-link>
-
-                        <!--                <a data-v-049ea09a="" class="close_collect">取消收藏</a>-->
-                        <a data-v-049ea09a="" class="close_collect" @click="cancel(item.id)">取消收藏</a>
+                        <a data-v-049ea09a="" class="close_collect" @click="cancel(item.cid)">取消收藏</a>
                     </div>
                 </div>
             </div>
 </template>
 
 <script>
-
     export default {
         name: "MyShouCang",
         data() {
@@ -46,46 +35,29 @@
                 shouCangXinxi: [
                     {
                         id:'',
-                        goodsid: '',
                         price:'',
                         img: '',
                         businessInfo: []
                     }
                 ],
-                //是否有数据
                 shouCangData: false,
-                shouChangData: {
-                    goodsid: '',
-                    //memberid: window.sessionStorage.getItem("memberId"),
-                    //
-                },
             }
         },
         created() {
             this.queryGuanZhuById();
         },
         methods: {
-            //根据会员id查询当前用户的所有收藏课程
             queryGuanZhuById() {
                 var that = this;
-                //this.shouCangData = false;
-                this.$http.get(`/user/collection/findGid`).then(function (resp) {
-                    console.log(resp.data.data)
-                    // if (resp.data.code === 5000) {
-                    //     that.shouCangData = false;
-                    // }else if (resp.data.code===2000){
-                         that.shouCangData=true;
-                         that.shouCangXinxi = resp.data.data;
-                    // }
-
+                this.$http.get(`/syssystem/u-collection/findGoods?uid=`+sessionStorage.getItem("userId")).then(function (resp) {
+                    that.shouCangData=true;
+                    that.shouCangXinxi = resp.data.data;
                 })
-
             },
-            // // 根据课程id和会员id取消收藏
-            cancel(id) {
-                // this.shouChangData.courseid = courseid;
+            // 取消关注商品
+            cancel(cid) {
                 var that = this;
-                this.$http.post("/user/collection/deleteGid?goodsid="+id).then(function (resp) {
+                this.$http.post("/syssystem/u-collection/unGoods/1?cid="+cid).then(function (resp) {
                     that.queryGuanZhuById();
                 })
             },
@@ -108,7 +80,7 @@
         position: relative;
     }
 
-    .cl:before, .clearfix:before, .container:before {
+    .clearfix:before {
         content: "";
         display: table;
     }

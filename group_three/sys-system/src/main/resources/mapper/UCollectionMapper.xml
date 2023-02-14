@@ -3,8 +3,14 @@
 <mapper namespace="com.aaa.group_three.dao.UCollectionMapper">
 
     <select id="findAll" resultType="java.util.Map">
-        select c.id,b.bicon,b.sname,c.status
+        select c.id cid,b.id,b.bicon,b.sname,c.status
         from u_collection c,b_business_info b
         where bid=b.id  and c.status=0 and uid=#{uid}
     </select>
+    <select id="findGoods" resultType="java.util.Map">
+        select u.id cid,g.id,u.goodsid,g.price,g.img,g.gname,b.sname,u.status
+        from u_collection u,b_business_info b,g_goods g
+        where u.goodsid=g.id  and g.bid=b.id and u.status=0 and uid=#{uid}
+    </select>
+
 </mapper>

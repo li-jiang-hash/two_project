@@ -53,7 +53,7 @@ public class MyCustomUserDetailsService implements CustomUserDetailService{
             throw  new UsernameNotFoundException("商户不对");
         }
         System.out.println("emp.getId() = " + emp.getId());
-        List<String> byUid = userService.getRoleList(emp.getId());
+        List<String> byUid = userService.getRoleList(Integer.parseInt(emp.getRid()));
         List<SimpleGrantedAuthority> collect = byUid.stream().map(s -> new SimpleGrantedAuthority(s)).collect(Collectors.toList());
 
         return new User(var1,emp.getPassword(), collect);

@@ -2,19 +2,22 @@ package com.aaa.group_three.controller;
 
 
 import com.aaa.entity.TbArticle;
-import com.aaa.entity.TbBottomArticle;
-import com.aaa.entity.TbZoneBusiness;
 import com.aaa.group_three.service.ITbArticleService;
-import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -36,23 +39,32 @@ public class TbArticleController {
      * @return
      */
     @PostMapping("getArticleByNavId/{navId}")
-    public Result getAllArticle(String navId){
-//        QueryWrapper queryWrapper = new QueryWrapper<>();
-//        queryWrapper.eq("nav_id",navId);
-//        List list = articleService.list(queryWrapper);
-//        System.out.println(list);
-        return new Result(articleService.getArticle(navId));
+    public Result getAllArticle(@PathVariable String navId){
+        QueryWrapper queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("nav_id",navId);
+        return new Result(articleService.getOne(queryWrapper));
     }
-
+    //    查询文章
+    @PostMapping("getArticle")
+    public Result getArtTesc(String id){
+        QueryWrapper queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("nav_id",id);
+        return new Result(articleService.getOne(queryWrapper));
+    }
     /**
-     * 添加/修改
+     * 修改文章内容
      * @param article
      * @return
      */
     @PostMapping("updateArticleByNavId")
     public Result addBottom(TbArticle article){
-
-        return new Result(articleService.saveOrUpdate(article));
+        Date date = new Date();
+        DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String format = dateFormat.format(date);
+        article.setGmtCreate(format);
+        article.setGmtModified(format);
+        article.setIsDeleted(0);
+        return new Result(articleService.updateById(article));
     }
 
 }

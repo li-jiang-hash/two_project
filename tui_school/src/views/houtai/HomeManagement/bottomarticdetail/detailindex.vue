@@ -2,10 +2,10 @@
     <div class="pad20">
         <el-form ref="formData" :model="formData" label-width="100px">
             <el-form-item label="文章名称：">
-                <el-input v-model="formData.art_title" placeholder="请输入文章名称"></el-input>
+                <el-input v-model="formData.artTitle" placeholder="请输入文章名称"></el-input>
             </el-form-item>
             <el-form-item label="文章描述：" style="width:80%">
-                <div id="art_desc" style="height:400px;max-height:500px;"></div>
+                <div id="artDesc" style="height:400px;max-height:500px;"></div>
             </el-form-item>
         </el-form>
         <el-row style="margin-top:17px; ">
@@ -17,7 +17,7 @@
 </template>
 <script>
     import * as commonalityApi from '/src/api/commonality'
-
+    import qs from "qs";
     export default {
 
         data() {
@@ -35,6 +35,7 @@
             this.formData.navId = this.$route.query.id
 
             this.getArticala(this.formData.navId)
+            console.log(this.formData.navId);
         },
         methods: {
             createEdit() {
@@ -52,16 +53,18 @@
             },
             getArticala(navId) {
                 var that = this;
+                console.log(navId);
                 this.$http.post(`/syssystem/tb-article/getArticleByNavId/${navId}`).then(function (resp) {
                     if (resp.data.data != null) {
                         that.formData = resp.data.data;
+                        console.log(that.formData);
                     } else {
                         that.formData = {};
                     }
 
                     that.createEdit();
 
-                }) 
+                })
             },
             handleClose() {
                 this.editor.txt.clear()
@@ -73,7 +76,7 @@
                 console.log(this.formData)
                 this.$refs[formData].validate((valid) => {
                     if (valid) {
-                        this.$http.post("/syssystem/tb-article/updateArticleByNavId", this.formData).then(function (resp) {
+                        this.$http.post("/syssystem/tb-article/updateArticleByNavId", qs.stringify(this.formData)).then(function (resp) {
                             if (resp.data.code === 2000) {
                                 that.$message({
                                     message: resp.data.msg,

@@ -55,5 +55,9 @@ public class EPermission implements Serializable {
      */
     @TableField(exist = false)
     private List<EPermission> children = new ArrayList<>();
+    // 角色的信息
+
+    //@TableField(exist = false)
+
 
 }

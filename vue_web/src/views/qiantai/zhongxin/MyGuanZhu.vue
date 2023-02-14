@@ -21,7 +21,7 @@
                     </el-tag>
                 </p>
                 <router-link :to="{name: 'BusinessXinX',params:{id:item.id}}"><a data-v-295bc851="">进入主页</a></router-link>
-                <a data-v-295bc851="" class="close_collect" @click="cancel(item.id)">取消关注</a>
+                <a data-v-295bc851="" class="close_collect" @click="cancel(item.cid)">取消关注</a>
             </div>
         </div>
     </div>
@@ -46,17 +46,14 @@
             //查询所有关注的信息
             queryAllGuanZhuTeacher(){
                 var that=this;
-                console.log(sessionStorage.getItem("userId"))
                 this.$http.get("/syssystem/u-collection/findShop?uid="+ sessionStorage.getItem("userId")).then(function (resp) {
                     that.GuanZhuXinxi=resp.data.data;
                 })
             },
-            // //取消关注
-            cancel(id){
+            // //取消关注店铺
+            cancel(cid){
                 var that=this;
-
-
-                this.$http.post("/syssystem/u-collection/unfollow/1?id="+id).then(function (resp) {
+                this.$http.post("/syssystem/u-collection/unfollow/1?cid="+cid).then(function (resp) {
                     that.queryAllGuanZhuTeacher();
                 })
             }

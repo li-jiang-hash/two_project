@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface IEPermissionService extends IService<EPermission> {
 
-    List<EPermission> getAllMenus();
+    List<EPermission> getAllMenus(String rid);
 }

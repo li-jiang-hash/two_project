@@ -28,4 +28,9 @@ private UCollectionMapper uCollectionMapper;
     public List<Map<String, Object>> findAll(String uid) {
         return uCollectionMapper.findAll(uid);
     }
+
+    @Override
+    public List<Map<String, Object>> findGoods(String uid) {
+        return uCollectionMapper.findGoods(uid);
+    }
 }
