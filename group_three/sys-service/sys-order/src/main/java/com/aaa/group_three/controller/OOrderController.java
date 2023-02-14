@@ -3,6 +3,7 @@ package com.aaa.group_three.controller;
 
 import com.aaa.entity.OOrder;
 import com.aaa.group_three.service.IOOrderService;
+import com.aaa.group_three.service.IOStockService;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -10,6 +11,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * <p>
@@ -26,6 +30,9 @@ public class OOrderController {
     @Resource
     private IOOrderService orderService;
 
+    @Resource
+    private IOStockService stockService;
+
     /**
      * 查询用户是否买过这个商品
      * @param id goods_id
@@ -39,12 +46,29 @@ public class OOrderController {
         return new Result<>(orderService.list(wrapper).size() != 0);
     }
 
+    /**
+     * 查询订单
+     * @param zhuangtai state
+     * @return
+     */
     @GetMapping("findOrder/{pageCurrent}/{pageSize}")
-    public Result findOrder(@PathVariable Integer pageCurrent, @PathVariable Integer pageSize,String zhuangtai,String userId){
+    public Result findOrder(@PathVariable Integer pageCurrent, @PathVariable Integer pageSize,Integer zhuangtai,String userId){
         PageInfo pageInfo = new PageInfo(pageCurrent, pageSize);
-        Page page = orderService.findOrder(pageInfo,userId);
+        Page page = orderService.findOrder(pageInfo,userId,zhuangtai);
         return new Result<>(page);
     }
 
+    /**
+     * 添加订单
+     * @return
+     */
+    @PostMapping("settlement")
+    public Result settlement(@RequestBody List<OOrder> orderList){
+        for (OOrder oOrder : orderList) {
+            oOrder.setCode(UUID.randomUUID().toString());
+            oOrder.setOrderdate(LocalDateTime.now());
+        }
+        return new Result<>(orderService.saveOrUpdateBatch(orderList),"添加订单成功！");
+    }
 }
 

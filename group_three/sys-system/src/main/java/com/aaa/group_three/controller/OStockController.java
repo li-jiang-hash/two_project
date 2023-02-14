@@ -2,14 +2,12 @@ package com.aaa.group_three.controller;
 
 
 import com.aaa.entity.OStock;
+import com.aaa.group_three.service.IGGoodsService;
 import com.aaa.group_three.service.IOStockService;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -27,6 +25,9 @@ public class OStockController {
 
     @Resource
     private IOStockService stockService;
+
+    @Resource
+    private IGGoodsService goodsService;
 
     /**
      * 获取商品交易数量
@@ -51,6 +52,32 @@ public class OStockController {
         wrapper.eq("goods_id",id);
         wrapper.select("residue");
         return new Result(stockService.list(wrapper).get(0).getResidue());
+    }
+
+    /**
+     * 减去商品库存
+     * @return
+     */
+    @PostMapping("subtractResidue")
+    public Result subtractResidue(Integer[] goodsIds,Integer[] nums){
+        for (int i = 0; i < goodsIds.length; i++) {
+            //获取商品库存
+            QueryWrapper<OStock> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("goods_id",goodsIds[i]);
+            Integer residue = stockService.list(queryWrapper).get(i).getResidue();
+            residue = residue - nums[i];
+            //判断商品库存是否足够
+            if (residue < 0) {
+                String gname = goodsService.getById(goodsIds[i]).getGname();
+                return new Result<>( false,gname + "库存不足，添加订单失败");
+            }
+            //设置剩余库存
+            UpdateWrapper<OStock> updateWrapper = new UpdateWrapper<>();
+            updateWrapper.set("residue",residue);
+            updateWrapper.eq("goods_id",goodsIds[i]);
+            stockService.update(updateWrapper);
+        }
+        return new Result<>(true);
     }
 }
 

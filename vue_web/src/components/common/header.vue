@@ -37,11 +37,14 @@
 
 			<ul class="h_nav_ul clearfix">
 				<li v-for="(item, index) in navList" :key="index">
+				<!-- 首页导航 -->
 					<router-link :class="{active: isNow === item.href}" :to="item.href" target="_self"
 						v-if="item.skipWay==1 && item.headId!=6 && item.headId!=3 || item.headId==3 && token!='' && token != null">
 						{{item.headName}}
 					</router-link>
+					<!-- 码云地址 -->
 					<a :href="item.href" v-if="item.headId==6">{{item.headName}}</a>
+					<!-- tag  标签 ; target 目标-->
 					<router-link tag="a" target="_blank" :to="item.href" v-if="item.skipWay==0">{{item.headName}}
 					</router-link>
 				</li>

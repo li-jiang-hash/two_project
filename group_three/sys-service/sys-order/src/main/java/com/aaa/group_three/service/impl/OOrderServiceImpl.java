@@ -24,7 +24,7 @@ public class OOrderServiceImpl extends ServiceImpl<OOrderMapper, OOrder> impleme
     @Resource
     private OOrderMapper orderMapper;
     @Override
-    public Page findOrder(PageInfo pageInfo, String userId) {
-        return orderMapper.findOrder(pageInfo,userId);
+    public Page findOrder(PageInfo pageInfo, String userId, Integer zhuangtai) {
+        return orderMapper.findOrder(pageInfo,userId,zhuangtai);
     }
 }

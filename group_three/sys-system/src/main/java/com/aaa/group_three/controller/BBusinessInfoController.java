@@ -64,7 +64,7 @@ public class BBusinessInfoController {
     }
 
     //查询店铺
-    //首页店铺与名字
+    //首页店铺与名字///
     @GetMapping("getsname")
     public Result getBid(BBusinessInfo bBusinessInfo) {
         QueryWrapper queryWrapper = new QueryWrapper<>();

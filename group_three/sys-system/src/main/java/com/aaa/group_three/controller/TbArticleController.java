@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -40,7 +44,13 @@ public class TbArticleController {
         queryWrapper.eq("nav_id",navId);
         return new Result(articleService.getOne(queryWrapper));
     }
-
+    //    查询文章
+    @PostMapping("getArticle")
+    public Result getArtTesc(String id){
+        QueryWrapper queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("nav_id",id);
+        return new Result(articleService.getOne(queryWrapper));
+    }
     /**
      * 修改文章内容
      * @param article
@@ -56,5 +66,6 @@ public class TbArticleController {
         article.setIsDeleted(0);
         return new Result(articleService.updateById(article));
     }
+
 }
 

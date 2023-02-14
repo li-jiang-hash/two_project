@@ -15,5 +15,5 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
  */
 public interface OOrderMapper extends BaseMapper<OOrder> {
 
-    Page findOrder(PageInfo pageInfo, String userId);
+    Page findOrder(PageInfo pageInfo, String userId, Integer zhuangtai);
 }

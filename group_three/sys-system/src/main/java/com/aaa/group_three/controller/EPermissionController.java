@@ -22,7 +22,8 @@ public class EPermissionController {
 
 
     @GetMapping({"leftMenus"})
-    public Result leftMenus() {
-        return new Result(permissionService.getAllMenus());
+    public Result leftMenus(String r) {
+        System.out.println("r = " + r);
+        return new Result(permissionService.getAllMenus(r));
     }
 }

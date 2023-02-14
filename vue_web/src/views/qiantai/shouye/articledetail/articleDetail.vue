@@ -32,7 +32,6 @@ export default {
   created() {
     //根据id获取全部信息
     this.get()
-
   },
   watch:{
     $route: {
@@ -45,14 +44,12 @@ export default {
   methods:{
     get(){
       var that=this;
-      this.$http.post(`/home/article/getAllQianArticle/${this.id}`).then(function (resp) {
+      this.$http.post(`/syssystem/tb-article/getArticle?id=`+this.id).then(function (resp) {
         that.webInfo=resp.data.data;
       })
     }
   },
   mounted () {
-
-
   },
   components: {
     YSide

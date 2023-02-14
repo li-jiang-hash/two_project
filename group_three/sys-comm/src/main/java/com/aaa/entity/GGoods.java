@@ -1,15 +1,14 @@
 package com.aaa.entity;
 
-import cn.hutool.core.date.DateTime;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -70,7 +69,7 @@ public class GGoods implements Serializable {
      * 上架时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private DateTime addtime;
+    private LocalDateTime addtime;
 
     /**
      * 保质期
