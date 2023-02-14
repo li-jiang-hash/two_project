@@ -2,11 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.group_three.dao.EPermissionMapper">
 
-    <!--resultType="com.yyl.entity.EPermission"-->
-    <select id="getAllPermission" resultMap="getSonMenus">
-       select * from e_permission where pid=0
+<!--    resultType="com.yyl.entity.EPermission"-->
+    <select id="getPermission" resultType="com.aaa.entity.EPermission">
+
+
+SELECT p.* FROM  e_permission p,r_role_permission rp
+                             where p.id=rp.permission_id
+                               and rp.role_id=#{roleId} and p.pid=0
     </select>
 
+    <select id="getAllPermission" resultMap="getSonMenus">
+               select * from e_permission where pid=0
+    </select>
     <resultMap id="getSonMenus" type="com.aaa.entity.EPermission" autoMapping="true">
        <id column="id" property="id"></id>
         <!-- children 子菜单 collection-->
@@ -14,13 +21,24 @@
         <!--ofType List里面存放的是什么 com.yyl.entity.EPermission -->
         <!-- select 属性映射的是 对应的sql语句-->
         <!---->
-        <collection property="children" ofType="com.aaa.entity.EPermission" select="getSonSql" column="id" autoMapping="true">
+        <collection property="children" ofType="com.aaa.entity.EPermission" select="getSonSql" column="{id=id,roleid=roleid}" autoMapping="true">
             <id column="id" property="id"></id>
         </collection>
     </resultMap>
 
     <select id="getSonSql" resultMap="getSonMenus">
-            select * from e_permission where pid=#{id}
+--             select * from e_permission where pid=#{id}
+
+
+SELECT p.*,rp.role_id roleid FROM  e_permission p,r_role_permission rp where p.id=rp.permission_id and rp.role_id=#{rid} and p.id=#{id}
+    </select>
+    <select id="getsonPermission" resultType="com.aaa.entity.EPermission">
+
+
+        SELECT p.* FROM  e_permission p,r_role_permission rp
+        where p.id=rp.permission_id
+          and rp.role_id=#{roleId} and p.pid=#{id}
+
     </select>
 
 </mapper>

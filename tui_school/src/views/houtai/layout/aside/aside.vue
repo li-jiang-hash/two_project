@@ -2,7 +2,7 @@
     <div class="aside">
         <el-aside id="asideNav">
             <div class="logo-name">
-                <p>菜先生-后台</p>
+                <p>后台管理</p>
             </div>
             <el-menu :unique-opened="true" background-color="#5e6d82" text-color="#fff" active-text-color="#ffd04b"
                 :default-active="activeIndex" router>
@@ -68,9 +68,8 @@ export default {
 
         //初始化侧边导航栏，，获取所有的菜单
         initMenu() {
-
             const that = this;
-            this.$http.get("/syssystem/e-permission/leftMenus").then(function (resp) {
+            this.$http.get(`/syssystem/e-permission/leftMenus?r=${sessionStorage.getItem("rid")}`).then(function (resp) {
                 that.menuData = resp.data.data;
                 console.log(that.menuData)
             });
