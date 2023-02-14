@@ -1,7 +1,5 @@
 <template>
-
     <div class="courselist_page">
-        <!--课程中心-->
         <div class="course_content" >
             <ul class="clearfix business_list"  style="width: 1220px">
                 <div class="big_text">
@@ -19,13 +17,11 @@
                         </div>
                         <!-- 店铺名 -->
                         <p style="font-size: 18px;color:red;font-family: 黑体">{{ item.businessInfo.sname }}</p>
-
                         <!-- 成交信息 -->
                         <p class="productStatus">
                             <span v-if="item.businessInfo.sales!=null">月成交<span style="font-size: 14px;">{{item.businessInfo.sales}}</span>单</span>
                             <span v-if="item.businessInfo.sales==null" style="font-size: 14px;color: #8c939d">暂未出单</span>
                         </p>
-
                         <div class="price_box" v-if="item.businessInfo.minprice!=null">￥{{Number(item.businessInfo.minprice).toFixed(2)}}起</div>
                         <div class="price_box" v-if="item.businessInfo.minprice==null">￥0.00起</div>
                     </router-link>
@@ -34,19 +30,6 @@
             </ul>
         </div>
         <RightTap :weiVisable="weiVisable" ></RightTap>
-        <!--<div class="pageclass" >
-            <el-pagination
-                    background
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :current-page="pageObj.pageCurrent"
-                    :page-size="pageObj.pageSize"
-                    :page-sizes="[12, 20, 50, 100]"
-                    :total="pageObj.totalCount">
-            </el-pagination>
-        </div>-->
-
     </div>
 </template>
 
@@ -67,11 +50,7 @@
                 zoneDesc: this.$route.params.zoneDesc,
                 weiVisable:true,
                 menuData:{},
-                openVip: false,
-                free: '',
                 search: {},
-                activityList: [],
-                classList: [],
                 pageObj : {
                     list: {},
                     pageCurrent: 1,
@@ -82,7 +61,6 @@
             }
         },
         created() {
-            //this.getInit()
             this.getAllMenu()
         },
         methods:{
@@ -109,7 +87,6 @@
                 this.search.oneSubjectId = this.$route.query.categoryno1
                 this.search.twoSubjectId = this.$route.query.categoryno2
                 this.search.isFree = this.$route.query.isFree
-                console.log(this.search)
                 this.getCourse()
             },
             //分页查询
@@ -226,3 +203,5 @@
         }
     }
 </style>
+
+
