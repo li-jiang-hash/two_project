@@ -6,10 +6,10 @@
 
         SELECT a.id,a.nav_id,a.art_title,a.art_pic,a.art_desc
         from tb_article a
-                 INNER JOIN tb_bottom_article b
-                            ON a.nav_id=b.id
+                 INNER JOIN tb_bottom_article b ON a.nav_id=b.id
     </select>
     <select id="getArticle" resultType="java.util.List">
         select * from tb_article where nav_id=#{navId}
     </select>
+
 </mapper>

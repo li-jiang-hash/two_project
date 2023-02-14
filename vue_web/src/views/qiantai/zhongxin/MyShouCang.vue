@@ -21,7 +21,7 @@
                         <p style="color: #ff691a" data-v-049ea09a="" class="course_name fl">商品价格：{{item.price}}元</p>
                         <router-link :to=" {name:'DetailId',params:{id:item.id}}"><a data-v-049ea09a="">进入购买</a>
                         </router-link>
-                        <a data-v-049ea09a="" class="close_collect" @click="cancel(item.id)">取消收藏</a>
+                        <a data-v-049ea09a="" class="close_collect" @click="cancel(item.cid)">取消收藏</a>
                     </div>
                 </div>
             </div>
@@ -54,9 +54,10 @@
                     that.shouCangXinxi = resp.data.data;
                 })
             },
-            cancel(id) {
+            // 取消关注商品
+            cancel(cid) {
                 var that = this;
-                this.$http.post("/syssystem/u-collection/unGoods/1?id="+id).then(function (resp) {
+                this.$http.post("/syssystem/u-collection/unGoods/1?cid="+cid).then(function (resp) {
                     that.queryGuanZhuById();
                 })
             },
@@ -79,7 +80,7 @@
         position: relative;
     }
 
-    .cl:before, .clearfix:before, .container:before {
+    .clearfix:before {
         content: "";
         display: table;
     }

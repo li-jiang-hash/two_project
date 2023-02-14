@@ -9,12 +9,11 @@ import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -37,13 +36,15 @@ public class TbArticleController {
      */
     @PostMapping("getArticleByNavId/{navId}")
     public Result getAllArticle(String navId){
-//        QueryWrapper queryWrapper = new QueryWrapper<>();
-//        queryWrapper.eq("nav_id",navId);
-//        List list = articleService.list(queryWrapper);
-//        System.out.println(list);
         return new Result(articleService.getArticle(navId));
     }
-
+//    查询文章
+    @PostMapping("getArticle")
+    public Result getArtTesc(String id){
+        QueryWrapper queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("nav_id",id);
+        return new Result(articleService.getOne(queryWrapper));
+    }
     /**
      * 添加/修改
      * @param article

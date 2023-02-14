@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -42,4 +43,5 @@ public class TbArticleServiceImpl extends ServiceImpl<TbArticleMapper, TbArticle
 
         return articleMapper.getArticle(navId);
     }
+
 }
