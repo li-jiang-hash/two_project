@@ -51,11 +51,10 @@ public class UCommentController {
     @PostMapping("addComment")
     public Result addComment(@RequestBody UComment comment){
         if (comment.getId() == null) {
-            comment.setCreatetime(LocalDateTime.now ());
+            comment.setCreatetime(LocalDateTime.now());
         } else {
-            comment.setUpdatetime(LocalDateTime.now ());
+            comment.setUpdatetime(LocalDateTime.now());
         }
-
         //将 imgs 转成 String 并放入 img
         String img = String.join(",", comment.getImgs());
         comment.setImg(img);

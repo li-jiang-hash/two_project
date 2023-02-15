@@ -15,5 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IOOrderService extends IService<OOrder> {
 
-    Page findOrder(PageInfo pageInfo, String userId);
+    Page findOrder(PageInfo pageInfo, String userId, Integer zhuangtai);
 }

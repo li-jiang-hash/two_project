@@ -3,23 +3,16 @@
 <mapper namespace="com.aaa.group_three.dao.EMessageMapper">
 
     <select id="getRole" resultType="java.util.Map">
-        select m.gmt_date,m.stype,m.scontend,m.is_deleted,r.role_name
+        select m.id,m.gmt_date,m.stype,m.scontend,m.is_deleted,r.role_name
         from e_message m
-        LEFT JOIN e_role r
+        INNER JOIN e_role r
         ON m.eid=r.id
-        WHERE m.is_deleted=0
-    </select>
+        ${ew.customSqlSegment}
+        and m.is_deleted=0
+        group by  m.id,m.gmt_date,m.stype,m.scontend,m.is_deleted,r.role_name
 
-<!--    <select id="findAll" resultType="java.util.Map">-->
-<!--        select m.gmt_date,m.stype,m.scontend,m.is_deleted,r.role_name-->
-<!--        from e_message m-->
-<!--        INNER JOIN e_role r-->
-<!--        ON m.eid=r.id-->
-<!--        <if test="startTime!=null and endTime!=null">-->
-<!--            <![CDATA[and #{startTime}<=e_message.gmt_date<=#{endTime}]]>-->
-<!--        </if>-->
-<!--&lt;!&ndash;        <if test="endTime!=null and endTime!=''">&ndash;&gt;-->
-<!--&lt;!&ndash;            <![CDATA[and e_message.gmt_create<=#{endTime}]]>&ndash;&gt;-->
-<!--&lt;!&ndash;        </if>&ndash;&gt;-->
-<!--    </select>-->
+
+
+
+    </select>
 </mapper>

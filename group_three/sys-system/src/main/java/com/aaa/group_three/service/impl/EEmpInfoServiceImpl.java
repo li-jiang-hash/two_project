@@ -36,12 +36,12 @@ public class EEmpInfoServiceImpl extends ServiceImpl<EEmpInfoMapper, EEmpInfo> i
         if(StringUtils.isNotBlank(empInfo.getEname())){
             queryWrapper.like("ename",empInfo.getEname());
         }
-
+        System.out.println("jdfhjkdsh="+queryWrapper);
         return empInfoMapper.getRole(page,queryWrapper);
     }
-
-    @Override
-    public List<EEmpInfo> getById(Integer id) {
-        return empInfoMapper.getRoleById(id);
-    }
+//
+//    @Override
+//    public List<EEmpInfo> getById(Integer id) {
+//        return empInfoMapper.getRoleById(id);
+//    }
 }

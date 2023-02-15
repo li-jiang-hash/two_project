@@ -317,7 +317,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          this.$http.delete(`/syssystem/e-message/${id}`).then((resp) => {
+          this.$http.delete(`/syssystem/e-message/delmessage/${id}`).then((resp) => {
             if (resp.data.code === 2000) {
               this.$message.success(resp.data.msg);
               this.initTable();
@@ -375,7 +375,7 @@ export default {
       this.$refs.updateForm.validate((valid) => {
         if (valid) {
           this.$http
-            .post(`/syssystem/e-message/sendMessage`, qs.stringify(this.updateFormDate))
+            .post(`/syssystem/e-message/updMessage`, qs.stringify(this.updateFormDate))
             .then((resp) => {
               if (resp.data.code === 2000) {
                 this.$message.success(resp.data.msg);

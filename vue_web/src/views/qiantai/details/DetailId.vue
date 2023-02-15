@@ -1,10 +1,7 @@
 <template>
 	<div class="course_detail">
-
 		<y-display :classData="classData" :ChildId="ChildId" :isTitileUpdate="isTitileUpdate" :isFree="isFree"
 			:videoId="videoId" @TeacherVideoStatus="TeacherVideoStatus"></y-display>
-
-
 		<div class=" detail_info detail_box clearfix">
 			<div class="layout_left">
 				<ul class="course_tab clearfix">
@@ -42,7 +39,6 @@
 						</div>
 						<el-divider></el-divider>
 					</div>
-
 					<div class="block" style="float: left;margin-top: -14px">
 						<el-pagination style="float: right" @size-change="handleSizeChange"
 							@current-change="handleCurrentChange" :current-page="pageCurrent" :page-sizes="pageSizes"
@@ -81,7 +77,6 @@
 											删除
 										</el-link>
 									</div>
-
 								</div>
 							</div>
 							<span style="margin-right: 20px" v-for="items in item.imgs" v-if="items!=''">
@@ -90,7 +85,6 @@
 						</div>
 						<el-divider></el-divider>
 					</div>
-
 					<div class="block" style="float: left;margin-top: -14px">
 						<el-pagination style="float: right" @size-change="handleSizeChange"
 							@current-change="handleCurrentChange" :current-page="pageCurrent" :page-sizes="pageSizes"
@@ -114,12 +108,9 @@
 					</span>
 					<div class="teacher_msg">
 						<div class="teacher_msg_right">
-
 							<div>
-								<!--                            <img class="teacher_phone" v-if="classData.avatar" :src="classData.avatar" alt="">-->
 								<img class="teacher_phone" v-if="classData.avatar" :src="classData.avatar" alt="">
 							</div>
-							<!--                            <img class="teacher_phone" v-else src="./src/assets/image/da1.png" alt="">-->
 							<div class="teacher_name">
 								<router-link :to="{name: 'BusinessXinX', params: {id:classData.bid}}">
 									<img :src="classData.bicon" style="width: 300px;margin-left: -17px">
@@ -130,7 +121,6 @@
 					</div>
 				</div>
 			</div>
-
 
 			<el-dialog title="编辑评论" :visible.sync="commentDialogVisible" width="50%">
 				<span>
@@ -216,11 +206,8 @@
 					<el-button type="primary" @click="addCommentConfirm">确 定</el-button>
 				</span>
 			</el-dialog>
-
-
 		</div>
 	</div>
-
 </template>
 
 <script>
@@ -281,14 +268,10 @@
 				dialogImageUrl: '',
 				dialogVisible: false,
 				hasBuy: false,
-
 				collection: {}
-
 			}
 		},
 		created() {
-			console.log(this.getCurrentTime())
-
 			this.queryClassAndTeacher();
 			//页面加载获取评论
 			this.getComments();
@@ -387,7 +370,6 @@
 				const isJPG = file.type === 'image/jpeg';
 				const isPNG = file.type === 'image/png';
 				const isLt2M = file.size / 1024 / 1024 < 5;
-
 				if (!isJPG && !isPNG) {
 					this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
 					return
@@ -413,13 +395,11 @@
 				this.editData.imgs[2] = res.data;
 				this.$forceUpdate()
 			},
-
 			//编辑评论渲染
 			editComment(item) {
 				this.commentDialogVisible = true;
 				this.editData = item
 			},
-
 			changeComments(obj) {
 				this.tab = obj;
 				this.pageCurrent = 1;
@@ -442,7 +422,6 @@
 				} else {
 					this.getMyComments();
 				}
-
 			},
 			//我的评论
 			getMyComments() {
@@ -461,7 +440,6 @@
 					"&pageCurrent=" + this.pageCurrent + "&pageSize=" + this.pageSize).then(res => {
 					if (res.data.code === 2000) {
 						this.comments = res.data.data.records;
-						// console.log(res.data.data.records.imgs)
 						this.total = res.data.data.total
 					}
 				})
@@ -472,7 +450,6 @@
 				if (this.guanZhuStatus === 0) {
 					status = 1;
 				}
-
 				this.collection.bid = this.classData.bid
 				this.collection.status = status
 				this.collection.uid = sessionStorage.getItem("userId")
@@ -483,58 +460,43 @@
 						this.isCollectionBusiness();
 					}
 				})
-
 			},
 			//是否关注店铺
 			isCollectionBusiness() {
 				this.$http.get("syssystem/u-collection/isGoodsCollection?bid=" + this.classData.bid + "&userId=" +
 					sessionStorage.getItem("userId")).then(res => {
 					if (res.data.code === 2000) {
-
 						this.guanZhuStatus = res.data.data[0].status;
-
 					}
 				})
 			},
-
 			//父传子
 			UpdateStatus(isTitileUpdate) {
 				this.isTitileUpdate = isTitileUpdate;
 			},
 			FuChuanZi: function(videoSourceId) {
-				// childValue就是子组件传过来的值
 				this.ChildId = videoSourceId
-
 			},
 			TeacherVideoStatus(TeacherVideoStatus) {
 				this.TeacherStatus = TeacherVideoStatus;
-
 			},
 			//是否免费
 			updateIsFree(isFree) {
 				this.isFree = isFree;
-				// alert(this.isFree)
 			},
-			//VideoId
 			updateVideoId(val) {
 				this.videoId = val;
-				// alert(this.videoId)
 			},
 			//根据gooodsid查询所有商品信息
 			queryClassAndTeacher() {
-
 				var that = this;
 				this.$http.get("syssystem/g-goods/findGoodsByGoodsid/" + this.id).then(function(resp) {
 					if (resp.data.code === 2000) {
 						that.classData = resp.data.data;
-						console.log(that.classData)
 						that.isCollectionBusiness();
 					}
-
-					// console.log(that.guanZhuData.teacherid)
 				})
 			},
-
 			getCurrentTime() {
 				//获取当前时间并打印
 				var _this = this;
@@ -547,7 +509,6 @@
 				_this.gettime = yy + '-' + mm + '-' + dd + ' ' + hh + ':' + mf + ':' + ss;
 				return _this.gettime;
 			}
-
 		}
 	}
 </script>

@@ -8,7 +8,7 @@
 						<span>></span>
 					</li>
 					<li>
-						<router-link to="/list">返回店铺</router-link>
+						<router-link to="/BusinessXinX/1">返回店铺</router-link>
 						<span>></span>
 					</li>
 					<li>{{classData.title}}</li>
@@ -24,7 +24,6 @@
 						</div>
 					</div>
 					<div class="view_info">
-						<p>
 							商品详情
 						<div class="study_num">
 							<span class="iconfont mgr10">
@@ -42,26 +41,12 @@
 								商品名称:
 							</span>
 							<span style="color: #ec7e00">{{classData.gname}}</span><br />
-							<!--                            <span class="text_b">-->
-							<!--                                商品编号:-->
-							<!--                            </span>-->
-							<!--                            <span style="color: #ec7e00">{{classData.id}}</span><br/>-->
 							<span class="text_b">
 								商品描述:
 							</span><br />
 							<span style="color: #ec7e00;margin-left: 30px">{{classData.remark}}</span><br />
-
-							<!--                            <span class="text_b">讲师:</span>{{}}-->
 						</div>
-						<!--                        <div class="view_teacher mgt20">-->
-						<!--                            <span class="text_b">购买人数:</span>{{classData.buyCount}} 人-->
-						<!--                        </div>-->
-
-
 						<div class="foot_box">
-
-							<!--                            <button class="buy_btn">登录观看</button>-->
-
 							<div @click="changeShouCang">
 								<span v-if="shouChangStatus===0">
 									<a href="javascript:" class="collect_btn">
@@ -76,17 +61,10 @@
 									</a>
 								</span>
 							</div>
-
-
 							<div>
-
-								<!--                                <button class="buy_btn"  @click="boFang">学习/暂停</button>-->
-								<!--                                >立即观看</button>-->
 								<button class="buy_btn" style="margin-left: 0px" id="buyBtn" @click="buyCourse">立即购买
 								</button>
-
 							</div>
-
 							<el-dialog title="收银台" :visible.sync="dialogFormVisible" width="600px">
 								<div data-v-1ee14d65="" style="height: 420px;margin: auto">
 									<table data-v-1ee14d65="" class="table" style="width: 550px;">
@@ -136,9 +114,7 @@
 										@click="choosePay">立即购买
 									</button>
 									<button class="buy_btn" @click="addCart">加入购物车</button>
-
 								</div>
-								<!--                                </div>-->
 							</el-dialog>
 							<!--                            微信支付-->
 							<!--支付弹出层-->
@@ -199,7 +175,6 @@
 
 	export default {
 		name: "Display",
-		// props:['classData','ChildId'],
 		props: {
 			classData: {
 				type: Object,
@@ -301,7 +276,7 @@
 			addCart() {
 				if (this.payForm.addrid != null && this.payForm.addrid !== "") {
 					this.payForm.goodsId = this.$route.params.id
-					this.payForm.price = this.classData.price * this.payForm.num
+					this.payForm.price = this.classData.price
 					this.payForm.uid = sessionStorage.getItem("userId")
 					this.$http.post("sys-order/o-cart/addCart", this.payForm).then(res => {
 						if (res.data.data) {
@@ -472,6 +447,7 @@
 				this.$http.post("syssystem/u-collection/changeCollectionStatus", this.collection).then(
 					res => {
 						if (res.data.data) {
+
 							this.shouChangStatus = res.data.data;
 							this.$message.success(res.data.msg)
 							this.IsShouChang();

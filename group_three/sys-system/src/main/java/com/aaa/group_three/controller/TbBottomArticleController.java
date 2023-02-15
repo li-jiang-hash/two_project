@@ -35,6 +35,7 @@ public class TbBottomArticleController {
     @PostMapping("getAllBottomArticle")
     public Result getAllBottom(PageInfo page, TbBottomArticle bottomArticle){
         Page page1 = bottomArticleService.getPageData(page, bottomArticle);
+        System.out.println("page="+page+"bottomArticle="+bottomArticle);
         return new Result(page1);
     }
 

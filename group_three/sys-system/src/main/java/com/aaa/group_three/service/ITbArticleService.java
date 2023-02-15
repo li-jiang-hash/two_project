@@ -1,7 +1,13 @@
 package com.aaa.group_three.service;
 
 import com.aaa.entity.TbArticle;
+import com.aaa.util.PageInfo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -12,5 +18,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2023-01-19
  */
 public interface ITbArticleService extends IService<TbArticle> {
+
+    List getArticleById(String navId);
+
+    List getArticle(String navId);
 
 }

@@ -3,11 +3,11 @@
 <mapper namespace="com.aaa.group_three.dao.OCartMapper">
 
     <select id="findCart" resultType="map">
-        select c.id, c.num, c.price, s.residue ,g.img ,g.gname
+        select c.id, c.num, c.price, s.residue, g.img, g.gname, g.bid, c.goods_id
         from o_cart c
             inner join g_goods g on g.id = c.goods_id
             left join o_stock s on s.goods_id = g.id
             left join u_addr a on a.id = c.addrid
-        where c.is_deleted = 0 and c.uid = #{userId}
+        where c.is_deleted = 0 and c.uid = 1
     </select>
 </mapper>
