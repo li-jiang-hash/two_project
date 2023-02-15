@@ -17,7 +17,8 @@
 					<span class="order_num">订单号：{{item.code}}</span>
 					<span class="time">下单时间：{{item.orderdate}}</span>
 					<span id="sname"><i class="el-icon-s-shop"></i> {{item.sname}}</span>
-					<el-link style="float: right;margin-right: 20px;color: #ec7e00" @click="delOrder(item.code)">
+					<el-link style="float: right;margin-right: 20px;color: #ec7e00"
+						@click="delOrder(item.code,item.state)">
 						<i class="el-icon-delete">删除订单</i>
 					</el-link>
 					<i class="money" style="float:right;margin-right: 30px;color: red">总计:￥{{item.totalmoney}}</i>
@@ -319,14 +320,19 @@
 				return parseInt(d) < 10 ? "0" + d : d;
 			},
 			//删除订单
-			delOrder(code) {
-				this.$http.get("/order/order/deleteOrder/" + code).then(res => {
-					if (res.data.code === 2000) {
-						this.$message.success(res.data.msg);
-						this.pageObj.pageCurrent = 1;
-						this.initOrderList();
-					}
-				})
+			delOrder(code, state) {
+				if (state != 1) {
+					this.$http.get("sys-order/o-order/deleteOrder/" + code).then(res => {
+						if (res.data.code === 2000) {
+							this.$message.success(res.data.msg);
+							this.pageObj.pageCurrent = 1;
+							this.initOrderList();
+						}
+					})
+				} else {
+					this.$message.success("请支付或取消订单后删除！");
+
+				}
 			},
 			queryPayStatus() {
 				//继续支付

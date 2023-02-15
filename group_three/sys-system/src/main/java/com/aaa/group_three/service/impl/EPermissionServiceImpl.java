@@ -31,9 +31,7 @@ public class EPermissionServiceImpl extends ServiceImpl<EPermissionMapper, EPerm
         for (EPermission ePermission : permission) {
 
             if(ePermission.getPid()==0){
-
-                System.out.println(" = ））））））））））））））））））））））））））））））））" );
-                //查询 对应的子菜单
+                 //查询 对应的子菜单
                 List<EPermission> sonp =  permissionMapper.getsonPermission(rid,ePermission.getId());
                 ePermission.setChildren(sonp);
             }

@@ -64,7 +64,7 @@ public class OStockController {
             //获取商品库存
             QueryWrapper<OStock> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("goods_id",goodsIds[i]);
-            Integer residue = stockService.list(queryWrapper).get(i).getResidue();
+            Integer residue = stockService.list(queryWrapper).get(0).getResidue();
             residue = residue - nums[i];
             //判断商品库存是否足够
             if (residue < 0) {
