@@ -203,13 +203,14 @@ export default {
     //初始化表格
     init() {
       var that = this;
+      console.log(this.formData);
       this.$http
         .post(
           //   `/home/bottomArticle/getAllBottomArticle/${this.currentPage}/${this.pageSize}`
-          "/syssystem/tb-bottom-article/getAllBottomArticle?currentPage=" +
-            this.currentPage +
-            "&pageSize=" +
-            this.pageSize,
+          "/syssystem/tb-bottom-article/getAllBottomArticle" ,
+            // this.currentPage +
+            // "&pageSize=" +
+            // this.pageSize,
           qs.stringify(this.formData)
         )
         .then(function (resp) {
