@@ -63,10 +63,18 @@ public class UUserInfoController {
     }
     //修改
     @PostMapping("updateMessage")
-    public boolean updateMessage(@RequestBody UUserInfo uUserInfo){
+    public Result updateMessage(@RequestBody UUserInfo uUserInfo){
         uUserInfo.setUpdatetime(LocalDateTime.now());
         uUserInfo.setUpdateman(uUserInfo.getUname());
-        return userInfoService.updateById(uUserInfo);
+        boolean b = userInfoService.updateById(uUserInfo);
+        Result result = new Result();
+        if(b){
+            result.setMsg("修改用户信息成功");
+            return result;
+        }else {
+            result.setMsg("系统繁忙，请稍后重新尝试");
+            return result;
+        }
     }
 
 //    查询会员列表信息
