@@ -13,7 +13,7 @@
     </resultMap>
 
     <select id="findOrder" resultMap="getOrder">
-        select o.*,b.sname, g.* from o_order o , b_business_info b,g_goods g
+        select o.*,b.sname, g.* , u.unitname from o_order o , b_business_info b,g_goods g,g_unit u
         where o.bid=b.id and  o.goodsid=g.id and o.uid=#{userId} and o.state != 2
         <if test="zhuangtai!=null">
             and o.state=#{zhuangtai}

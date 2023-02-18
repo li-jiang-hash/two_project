@@ -40,7 +40,8 @@
 						<a class="go_btn go_pay" @click="choosePaySort(item.code)">
 							继续支付
 						</a>
-						<a @click="quxiao(item.id)" class="cancel" style="cursor: pointer">取消订单</a>
+						<a @click="quxiao(item.id,item.num,item.goodsList)" class="cancel"
+							style="cursor: pointer">取消订单</a>
 					</li>
 				</ul>
 				<div class="order_body clearfix">
@@ -415,7 +416,8 @@
 			},
 
 			//取消订单
-			quxiao(id) {
+			quxiao(id, num, goodsList) {
+
 				this.$confirm(`确定要取消订单吗?`, {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
@@ -423,15 +425,27 @@
 				}).then(() => {
 					var that = this;
 					var state = 4;
+
 					this.$http.get("/sys-order/o-order/deleteOrder/" + id + "/" + state).then(function(resp) {
 						if (resp.data.code === 2000) {
 							that.$message.success(resp.data.msg);
+
+
+
 						} else {
 							that.$message.error(resp.data.msg);
 						}
 						that.pageObj.pageCurrent = 1;
 						that.initOrderList();
 						//that.$router.go(0);
+					}).then(() => {
+						this.$http.post("syssystem/o-stock/regainResidue?goodsId=" + goodsList[0].id +
+							"&num=" + num).then(resp => {
+							if (resp.data.data) {
+
+							}
+
+						})
 					})
 				}).catch(() => {
 					this.$message({

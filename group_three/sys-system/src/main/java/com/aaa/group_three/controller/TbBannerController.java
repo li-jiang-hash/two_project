@@ -79,6 +79,7 @@ public class TbBannerController {
         QueryWrapper<TbBanner> wrapper = new QueryWrapper<>();
         wrapper.eq("is_disable","0");
         wrapper.select("id","title","image_url","link_url","sort");
+        wrapper.orderBy(true, true, "sort");
         return new Result<>(bannerService.list(wrapper));
     }
 }

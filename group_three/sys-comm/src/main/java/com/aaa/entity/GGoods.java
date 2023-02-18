@@ -25,7 +25,7 @@ public class GGoods implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 商品主键
+     * 商品主键	
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
@@ -111,12 +111,15 @@ public class GGoods implements Serializable {
      * 店铺名称
      */
     @TableField(exist = false)
-    private BBusinessInfo sname;
+    private  BBusinessInfo  sname;
     /**
      * 商品类型
      */
     @TableField(exist = false)
     private GSort sortname;
+
+    @TableField(exist = false)
+    private String unitname;
 
 
     //商品数量

@@ -34,6 +34,7 @@ public class TbZoneController {
     public Result getZone(){
         QueryWrapper<TbZone> wrapper = new QueryWrapper<>();
         wrapper.eq("is_disable","0");
+        wrapper.orderBy(true,true ,"sort");
         return new Result<>(zoneService.list(wrapper));
     }
 

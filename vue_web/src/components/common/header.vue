@@ -9,7 +9,8 @@
 						<router-link :to="{path: '/geRenCenter'}" v-if="this.loginType=='USER_PHONE'">个人中心</router-link>
 					</li>
 					<li class="">
-						<router-link :to="{path: '/business'}" v-if="this.loginType=='BUSINESS_PHONE'">我的店铺</router-link>
+						<router-link :to="{path: '/business'}" v-if="this.loginType=='BUSINESS_PHONE'">我的店铺
+						</router-link>
 					</li>
 					<li class="">
 						<router-link :to="{path: '/myorder'}" v-if="this.loginType=='USER_PHONE'">我的订单</router-link>
@@ -18,8 +19,8 @@
 						<router-link :to="{path: '/myCart'}" v-if="this.loginType=='USER_PHONE'">我的购物车</router-link>
 					</li>
 					<li class="s_left">
-                        <router-link :to="{path: '/geRenCenter'}" v-if="this.loginType!=null">{{userInfo}}</router-link>
-                    </li>
+						<router-link :to="{path: '/geRenCenter'}" v-if="this.loginType!=null">{{userInfo}}</router-link>
+					</li>
 					<li><a @click="tuichu" v-if="this.loginType!=null">退出</a></li>
 				</ul>
 				<ul class="top_list clearfix">
@@ -37,7 +38,7 @@
 
 			<ul class="h_nav_ul clearfix">
 				<li v-for="(item, index) in navList" :key="index">
-				<!-- 首页导航 -->
+					<!-- 首页导航 -->
 					<router-link :class="{active: isNow === item.href}" :to="item.href" target="_self"
 						v-if="item.skipWay==1 && item.headId!=6 && item.headId!=3 || item.headId==3 && token!='' && token != null">
 						{{item.headName}}
@@ -45,7 +46,7 @@
 					<!-- 码云地址 -->
 					<a :href="item.href" v-if="item.headId==6">{{item.headName}}</a>
 					<!-- tag  标签 ; target 目标-->
-					<router-link tag="a" target="_blank" :to="item.href" v-if="item.skipWay==0">{{item.headName}}
+					<router-link tag="a" :to="item.href" v-if="item.skipWay==0">{{item.headName}}
 					</router-link>
 				</li>
 			</ul>

@@ -67,7 +67,7 @@ public class OOrderController {
     }
 
     /**
-     * 删除/取消订单
+     * 删除/取消/失效订单
      * @return
      */
     @GetMapping("deleteOrder/{id}/{state}")

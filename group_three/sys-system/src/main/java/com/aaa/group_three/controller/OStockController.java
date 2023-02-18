@@ -79,5 +79,23 @@ public class OStockController {
         }
         return new Result<>(true);
     }
+
+    /**
+     * 订单取消/失效 库存恢复
+     * @return
+     */
+    @PostMapping("regainResidue")
+    public Result regainResidue(Integer goodsId,Integer num){
+        QueryWrapper<OStock> wrapper = new QueryWrapper<>();
+        //查剩余库存
+        wrapper.eq("goods_id",goodsId);
+        Integer residue = stockService.getOne(wrapper).getResidue();
+        //设置剩余库存
+        residue = num + residue;
+        UpdateWrapper<OStock> wrapper1 = new UpdateWrapper<>();
+        wrapper1.eq("goods_id",goodsId);
+        wrapper1.set("residue",residue);
+        return new Result<>(stockService.update(wrapper1));
+    }
 }
 
