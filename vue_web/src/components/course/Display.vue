@@ -172,7 +172,7 @@
 
 <script>
 	import vueQr from 'vue-qr'
-
+	import qs from 'qs'
 	export default {
 		name: "Display",
 		props: {
@@ -250,7 +250,9 @@
 				//库存余量
 				stockNum: 0,
 
-				collection: {}
+				collection: {},
+				orderInfo:{},
+				D: {}
 			}
 		},
 		created() {
@@ -328,23 +330,23 @@
 			queryPayStatus(code) {
 				//继续支付
 				var that = this;
-				this.$http.get("order/payLog/paystatus/" + code).then(r => {
-					if (r.data.code === 2000) {
-						this.payResult.codeUrl = "",
-							this.payResultAli.codeUrl = "",
-							clearInterval(this.timer);
-						//如果支付成功，清除定时器
-						that.$message.success(r.data.msg);
-						//消除定时器
-						clearInterval(this.timer);
-						that.timer = null;
-						that.payDialogVisible = false;
-						that.dialogFormVisible = false;
+				// this.$http.get("sys-order/wx/getPayStatus/" + ).then(r => {
+				// 	if (r.data.code === 2000) {
+				// 		this.payResult.codeUrl = "",
+				// 			this.payResultAli.codeUrl = "",
+				// 			clearInterval(this.timer);
+				// 		//如果支付成功，清除定时器
+				// 		that.$message.success(r.data.msg);
+				// 		//消除定时器
+				// 		clearInterval(this.timer);
+				// 		that.timer = null;
+				// 		that.payDialogVisible = false;
+				// 		that.dialogFormVisible = false;
 
-						//刷新界面
-						that.initOrderList();
-					}
-				})
+				// 		//刷新界面
+				// 		that.initOrderList();
+				// 	}
+				// })
 			},
 			//生成支付二维码
 			weixinpay() {
@@ -358,15 +360,20 @@
 					}, 6000)
 					return
 				}
-				this.payForm.goodsid = this.$route.params.id
-				this.payForm.price = this.classData.price
-				this.payForm.bid = this.classData.busid
-				this.payForm.paysort = this.payStatus
-				this.payForm.code = this.payResult.code
-				this.$http.post("order/order/buyNow", this.payForm).then(res => {
-					console.log(res.data.data)
+				// this.payForm.orderNum = this.$route.params.id
+				// this.payForm.money = this.classData.price
+				// this.payForm.bid = this.classData.busid
+				// this.payForm.paysort = this.payStatus
+				// this.payForm.describe = this.payResult.code
+				this.D.orderNum = this.orderInfo.code
+				this.D.money = this.orderInfo.price * this.payForm.num
+				this.D.describe= this.classData.gname
+				console.log(this.D);
+				console.log(this.orderInfo);
+				this.$http.post("syssystem/wx/getNativeCodeUrl", qs.stringify(this.D)).then(res => {
+					console.log(res.data)
 					if (res.data.code === 2000) {
-						this.payResult.codeUrl = res.data.data.codeUrl;
+						this.payResult.codeUrl = res.data.data.code_url;
 						this.payResult.code = res.data.data.orderNo;
 						this.payResultAli.code = res.data.data.orderNo;
 						this.payResult.code = res.data.data.orderNo;
@@ -383,39 +390,71 @@
 				})
 			},
 			alipay() {
-				clearInterval(this.timer);
-				this.timer = null;
-				this.payStatus = 1;
-				if (this.payResultAli.codeUrl !== '') {
-					this.timer = setInterval(() => {
-						this.queryPayStatus(this.payResultAli.code);
-					}, 6000)
-					return;
-				}
-				this.payForm.goodsid = this.$route.params.id
-				this.payForm.price = this.classData.price
-				this.payForm.bid = this.classData.busid
-				this.payForm.paysort = this.payStatus
-				this.payForm.code = this.payResultAli.code
-				this.$http.post("order/order/buyNow", this.payForm).then(res => {
-					if (res.data.code === 2000) {
-						this.payResultAli.codeUrl = res.data.data.codeUrl;
-						this.payResultAli.code = res.data.data.orderNo;
-						this.payResult.code = res.data.data.orderNo;
-						this.payResultAli.total_fee = res.data.data.price;
-						this.timer = setInterval(() => {
-							this.queryPayStatus(this.payResultAli.code);
-						}, 6000)
-					} else if (res.data.code === 5001) {
-						this.$message.error(res.data.msg)
-					} else {
-						this.$message.error("当前库存不充足,请更改数量后再尝试")
-					}
-				})
+				// clearInterval(this.timer);
+				// this.timer = null;
+				// this.payStatus = 1;
+				// if (this.payResultAli.codeUrl !== '') {
+				// 	this.timer = setInterval(() => {
+				// 		this.queryPayStatus(this.payResultAli.code);
+				// 	}, 6000)
+				// 	return;
+				// }
+				// this.payForm.goodsid = this.$route.params.id
+				// this.payForm.price = this.classData.price
+				// this.payForm.bid = this.classData.busid
+				// this.payForm.paysort = this.payStatus
+				// this.payForm.code = this.payResultAli.code
+				// this.$http.post("syssystem/wx/getNativeCodeUrl", this.payForm).then(res => {
+				// 	if (res.data.code === 2000) {
+				// 		this.payResultAli.codeUrl = res.data.data.codeUrl;
+				// 		this.payResultAli.code = res.data.data.orderNo;
+				// 		this.payResult.code = res.data.data.orderNo;
+				// 		this.payResultAli.total_fee = res.data.data.price;
+				// 		this.timer = setInterval(() => {
+				// 			this.queryPayStatus(this.payResultAli.code);
+				// 		}, 6000)
+				// 	} else if (res.data.code === 5001) {
+				// 		this.$message.error(res.data.msg)
+				// 	} else {
+				// 		this.$message.error("当前库存不充足,请更改数量后再尝试")
+				// 	}
+				// })
 			},
 			choosePay() {
+
 				if (this.payForm.addrid != null && this.payForm.addrid !== "") {
+				// this.payForm=[]
+
+						// console.log(this.orderData);
+						this.payForm.goodsid = this.$route.params.id
+						this.payForm.price = this.classData.price
+						this.payForm.uid = sessionStorage.getItem("userId")
+						this.payForm.bid =  this.classData.busid
+						this.payForm.totalmoney =  this.classData.price * this.payForm.num
+						this.payForm.state =  1
 					this.payDialogVisible = true;
+					var goodsids = [];
+					var nums = []
+						goodsids[0] = this.$route.params.id
+						nums[0] = this.payForm.num
+					//减去商品数量
+					this.$http.post("syssystem/o-stock/subtractResidue?goodsIds=" + goodsids + "&nums=" + nums).then(
+					res => {
+						if (res.data.data) {
+							//生成订单
+							
+							this.$http.post("sys-order/o-order/settlementOne", this.payForm).then(res => {
+								console.log(res.data.data.code);
+									sessionStorage.setItem("uuid",res.data.data.uuid)
+									this.orderInfo = res.data.data
+									console.log(res.data.data);
+									console.log(this.orderInfo);
+									this.$message.success(res.data.msg)
+							})
+						} else {
+							this.$message.success(res.data.msg)
+						}
+					})
 				} else {
 					this.$message.warning("请选择收货地址后再购买")
 				}
@@ -459,8 +498,6 @@
 				this.$http.get("syssystem/o-stock/getGoodsSellNum/" + this.$route.params.id).then(res => {
 					if (res.data.code === 2000) {
 						this.sellNum = res.data.data[0].sellNum
-
-
 					}
 				})
 			},
@@ -470,11 +507,8 @@
 				this.$http.get("/syssystem/u-collection/isGoodsCollection?id=" + this.$route.params.id + "&userId=" +
 					sessionStorage.getItem("userId")).then(function(resp) {
 					if (resp.data.code === 2000) {
-
 						that.shouChangStatus = resp.data.data[0].status;
-
 					}
-
 				})
 			},
 			goLogin() {

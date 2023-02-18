@@ -43,7 +43,7 @@ public class OOrder implements Serializable {
     /**
      * 商品单价
      */
-    private BigDecimal price;
+    private Integer price;
 
     /**
      * 订单编号

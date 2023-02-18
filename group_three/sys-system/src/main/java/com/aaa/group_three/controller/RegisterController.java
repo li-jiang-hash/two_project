@@ -4,6 +4,7 @@ package com.aaa.group_three.controller;
 import com.aaa.entity.UUserInfo;
 import com.aaa.group_three.service.IUUserInfoService;
 import com.aaa.util.Result;
+import com.aaa.util.Send;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class RegisterController {
     public RegisterController() {
     }
 
+    ///注册方法
     @PostMapping({"/signInsert/{phone}/{password}"})
     public Result Register(@PathVariable String phone, @PathVariable String password) {
 //        Map<String, String> Key = PassTools.makePasswordSalt(password);
@@ -77,6 +79,7 @@ public class RegisterController {
     @Value("${com.aliyun.templateCode3}")
     private String templateCode;
 
+    //手机号发送验证码
     @GetMapping({"/noteByPhone/{phone}"})
     public Result KeyCode(@PathVariable String phone) throws Exception {
         System.out.println("phone = " + phone);
@@ -87,11 +90,8 @@ public class RegisterController {
             return new Result(RCode);
         } else {
             String code = Integer.toString((int) ((Math.random() * 9 + 1) * 100000));
-            System.out.println("phone = " + phone);
-            System.out.println("random = " + code);
-//            boolean isSend = Send.SendCode(AccessKey_ID, AccessKey_Secret, templateCode, phone, code);
-//            System.out.println("是否发送成功 : " + isSend);
-            if (true) {
+            boolean isSend = Send.SendCode(AccessKey_ID, AccessKey_Secret, templateCode, phone, code);
+            if (isSend) {
                 redisTemplate.opsForValue().set(phone, code, 300L, TimeUnit.SECONDS);
                 System.out.println("发送成功：" + code);
                 return new Result(code);

@@ -97,7 +97,7 @@ public class BBusinessInfoController {
         queryWrapper.eq("telephone", phone);
         return new Result(bBusinessInfoService.getOne(queryWrapper));
     }
-
+    //根据用户名查询用户信息
     @GetMapping("/getUserByName/{username}")
     public BBusinessInfo getBusiness(@PathVariable String username) {
         QueryWrapper queryWrapper = new QueryWrapper<>();

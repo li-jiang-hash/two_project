@@ -27,7 +27,6 @@ public class EEmpInfoController {
     @PostMapping
     public Result getAllEmp(PageInfo page, EEmpInfo empInfo){
         Page page1 = empInfoService.getPageData(page, empInfo);
-        System.out.println("dfjdkljfkldj="+page+"dhfjkdhn="+empInfo);
         return new Result(page1);
     }
 

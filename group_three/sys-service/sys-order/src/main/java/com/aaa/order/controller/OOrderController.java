@@ -1,8 +1,8 @@
-package com.aaa.group_three.controller;
+package com.aaa.order.controller;
 
 
 import com.aaa.entity.OOrder;
-import com.aaa.group_three.service.IOOrderService;
+import com.aaa.order.service.IOOrderService;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -65,6 +65,22 @@ public class OOrderController {
             oOrder.setOrderdate(LocalDateTime.now());
         }
         return new Result<>(orderService.saveOrUpdateBatch(orderList),"添加订单成功！");
+    }
+    @PostMapping("settlementOne")
+    public Result settlement(@RequestBody OOrder order){
+        System.out.println("order = " + order);
+        String s = UUID.randomUUID().toString();
+        order.setCode(s);
+        order.setOrderdate(LocalDateTime.now());
+        boolean b = orderService.saveOrUpdate(order);
+        Result result=new Result<>();
+        if (b){
+            System.out.println("order.getCode() = " + s);
+            result.setData(order);
+            result.setMsg("添加订单成功了");
+            return result;
+        }
+        return new Result<>(null);
     }
 }
 
