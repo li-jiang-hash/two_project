@@ -68,5 +68,10 @@ public class GSortController {
         boolean byId = gSortService.update(updateWrapper);
         return new Result(byId);
     }
+
+    @GetMapping("getSort")
+    public Result getSort(){
+        return new Result(gSortService.list());
+    }
 }
 

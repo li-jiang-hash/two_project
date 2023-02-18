@@ -22,11 +22,12 @@ public class TRoleController {
     @Resource
     private ITRoleService roleService;
 
-    public TRoleController() {
-    }
 
     @GetMapping({"{uid}"})
     public List<TRole> findByUid(@PathVariable Integer uid) {
         return roleService.getByUid(uid);
     }
+
+
+
 }

@@ -44,9 +44,9 @@ public class WxController {
     @PostMapping("getNativeCodeUrl")
 //    @ApiImplicitParams({@ApiImplicitParam(name="order")})
     public Result getNativeCodeUrl(@ModelAttribute Order order) {
-        String num=Integer.toString((int) ((Math.random() * 9 + 1) * 100000));
+        String num=Integer.toString((int) ((Math.random() * 9 + 1) * 100000));;
+        order.setOrderNum(num+"");
         System.out.println("orderorderorderorderorderorder11111111111111 = " + order);
-        order.setOrderNum(num+"a");
         Map map = payService.getNativeByOrder(order);
         System.out.println("mapmapmapmapmapmapmapmapmapmapmapmap = " + map);
         return new Result(map);

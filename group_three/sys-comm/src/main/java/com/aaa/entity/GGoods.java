@@ -121,4 +121,10 @@ public class GGoods implements Serializable {
     @TableField(exist = false)
     private String unitname;
 
+
+    //商品数量
+    @TableField(exist = false)
+    private Integer totalnum;
+
+
 }

@@ -38,7 +38,7 @@ public class OStock implements Serializable {
     /**
      * 商品价格
      */
-    private BigDecimal price;
+    private String price;
 
     /**
      * 商品售出数量

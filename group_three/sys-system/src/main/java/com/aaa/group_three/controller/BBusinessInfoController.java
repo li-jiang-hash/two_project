@@ -1,10 +1,11 @@
 package com.aaa.group_three.controller;
 
-
 import com.aaa.entity.BBusinessInfo;
 import com.aaa.entity.EEmpInfo;
+import com.aaa.entity.TbZoneBusiness;
 import com.aaa.group_three.service.impl.BBusinessInfoServiceImpl;
 import com.aaa.group_three.service.impl.EEmpInfoServiceImpl;
+import com.aaa.group_three.service.impl.TbZoneBusinessServiceImpl;
 import com.aaa.util.DateUtil;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -34,32 +36,32 @@ public class BBusinessInfoController {
     private BBusinessInfoServiceImpl bBusinessInfoService;
 
     @Resource
-    private EEmpInfoServiceImpl empInfoService;
+    private TbZoneBusinessServiceImpl tbZoneBusinessService;
 
+    //查询入住审核
     @PostMapping("ruzhu")
     public Result getAllApp(PageInfo page, @RequestBody BBusinessInfo bBusinessInfo) {
         Page page1 = bBusinessInfoService.getPageData(page, bBusinessInfo);
         return new Result(page1);
     }
 
-    //商家审核
+    //审核操作
     @PostMapping("shenhe")
     public Result getById(@RequestBody BBusinessInfo bBusinessInfo) {
+        System.out.println("111111111111111111111111111111111 = " + bBusinessInfo);
         UpdateWrapper<BBusinessInfo> wrapper = new UpdateWrapper<>();
         wrapper.set("status", bBusinessInfo.getStatus());
         wrapper.set("reason", bBusinessInfo.getReason());
+        wrapper.set("password",new BCryptPasswordEncoder().encode(bBusinessInfo.getPassword()));
         wrapper.eq("id", bBusinessInfo.getId());
-        //审核完成后把数据插入商家表
-        EEmpInfo empInfo = new EEmpInfo();
-        empInfo.setTelephone(bBusinessInfo.getTelephone());
-        empInfo.setPassword(new BCryptPasswordEncoder().encode(bBusinessInfo.getPassword()));
-        empInfo.setEname(bBusinessInfo.getSname());
-        Date date = new Date();
-        DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        String format = dateFormat.format(date);
-        empInfo.setGmtCreate(format);
-        empInfoService.save(empInfo);
+
         boolean byId = bBusinessInfoService.update(wrapper);
+    //审核操作时添加专区表数据
+        TbZoneBusiness tbZoneBusiness=new TbZoneBusiness();
+        tbZoneBusiness.setZoneId(bBusinessInfo.getSortid());
+        tbZoneBusiness.setGmtCreate(LocalDateTime.now());
+        tbZoneBusiness.setBid(bBusinessInfo.getId());
+        tbZoneBusinessService.save(tbZoneBusiness);
         return new Result(byId);
     }
 

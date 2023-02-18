@@ -4,7 +4,7 @@
       <!--头部搜索-->
       <el-form :inline="true" :model="searchForm" class="demo-form-inline" size="mini">
         <el-form-item label="商品名称">
-          <el-input v-model="searchForm.goodsname" placeholder="请输入商品名称"></el-input>
+          <el-input v-model="searchForm.gname" placeholder="请输入商品名称"></el-input>
         </el-form-item>
         <el-form-item label="审核状态">
           <el-select v-model="searchForm.state" placeholder="请选择审核状态">
@@ -173,7 +173,7 @@
             <el-upload
                     style="float: left;margin-right: 40px"
                     class="avatar-uploader"
-                    action="http://192.168.1.23:8000/user/upload01"
+                    action="http://localhost:7500/syssystem/file/upload"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload">
@@ -209,9 +209,9 @@
             </el-select>
           </el-form-item>
           <el-form-item label="商品类别" label-width="80px">
-            <el-select disabled v-model="addForm.sortid" placeholder="请选择">
+            <el-select v-model="addForm.sortid" placeholder="请选择">
               <el-option
-                      :label="sortname"
+                      :label="sortname.sortname"
                       :value="addForm.sortid">
               </el-option>
             </el-select>
@@ -259,7 +259,7 @@
             <el-upload
                     style="float: left;margin-right: 40px"
                     class="avatar-uploader"
-                    action="http://192.168.1.23:8000/user/upload01"
+                    action="http://localhost:7500/syssystem/file/upload"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload">
@@ -295,7 +295,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="商品类别" label-width="80px">
-            <el-select disabled v-model="updateForm.sortid" placeholder="请选择">
+            <el-select v-model="updateForm.sortid" placeholder="请选择">
               <el-option
                       :label="updateForm.sort.sortname"
                       :value="updateForm.sortid">
@@ -389,16 +389,26 @@ export default {
     this.initBrand();
     this.initDeposit();
     this.getSort();
+    this.gitbusinessId()
   },
   methods:{
     getSort(){
-      this.$http.post("commodity/goods/getSort").then(res=>{
+      this.$http.get("syssystem/g-sort/getSort").then(res=>{
+        console.log(res.data.data);
         if (res.data.code===2000){
-          this.addForm.sortid = res.data.data.sortid;
-          this.sortname=res.data.data.sortname;
+          this.sort = res.data.data;
+          // this.addForm.sortname=res.data.data;
+          console.log(this.sort);
         }
       })
-    },
+
+    }
+    ,
+    gitbusinessId(){
+      sessionStorage.getItem("bisid")
+      
+    }
+    ,
     updateConfirm(){
       this.$http.post("commodity/goods/updateGoods",this.updateForm).then(res=>{
         if (res.data.code===2000){
@@ -419,7 +429,10 @@ export default {
       this.updateForm = row;
     },
     addGoods(){
-      this.$http.post("commodity/goods/addGoods",this.addForm).then(res=>{
+       
+      console.log( this.addForm)
+      this.addForm.bid = sessionStorage.getItem("bisid")
+      this.$http.post("syssystem/g-goods/addGoods",this.addForm).then(res=>{
         if (res.data.code===2000){
           this.$message.success(res.data.msg);
           this.addDialogFormVisible = false;
@@ -433,14 +446,15 @@ export default {
       console.log(value);
     },
     initDeposit(){
-      this.$http.post("commodity/deposit/findAllDeposit").then(res=>{
+      this.$http.post("syssystem/g-deposit/findAllDeposit").then(res=>{
         if (res.data.code===2000){
           this.depositForm = res.data.data;
         }
       })
     },
     initBrand(){
-      this.$http.post("commodity/brand/selectAllBrand").then(res=>{
+      this.$http.post("syssystem/g-brand/brand").then(res=>{
+        console.log(res);
         if (res.data.code===2000){
           this.brandForm = res.data.data;
         }
@@ -448,7 +462,7 @@ export default {
     },
     //页面加载查询所有单位
     initUnit(){
-      this.$http.post("commodity/unit/selectAllUnit").then(res=>{
+      this.$http.get("syssystem/g-unit/selectAllUnit").then(res=>{
         if (res.data.code===2000){
           this.unitForm = res.data.data;
         }
@@ -548,7 +562,8 @@ export default {
     /*页面加载时获取所有的信息*/
     init(){
       var that=this;
-      this.$http.post(`/commodity/goods/selectAllGoodsInfoByBusinessId/${this.currentPage}/${this.pageSize}`,this.searchForm).then(function (resp) {
+      console.log(this.searchForm);
+      this.$http.post(`/syssystem/g-goods/selectAllGoodsInfoByBusinessId/${this.currentPage}/${this.pageSize}/${sessionStorage.getItem("bisid")}`,this.searchForm).then(function (resp) {
         if (resp.data.code===2000){
           that.tableData=resp.data.data.records;
           that.total=resp.data.data.total;
