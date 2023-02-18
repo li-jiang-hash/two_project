@@ -3,7 +3,6 @@ package com.aaa.group_three.controller;
 
 import com.aaa.entity.OOrder;
 import com.aaa.group_three.service.IOOrderService;
-import com.aaa.group_three.service.IOStockService;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -29,9 +28,6 @@ public class OOrderController {
 
     @Resource
     private IOOrderService orderService;
-
-    @Resource
-    private IOStockService stockService;
 
     /**
      * 查询用户是否买过这个商品
