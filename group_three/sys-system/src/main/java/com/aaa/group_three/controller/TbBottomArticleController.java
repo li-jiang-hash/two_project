@@ -6,7 +6,9 @@ import com.aaa.group_three.service.ITbBottomArticleService;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -32,12 +34,12 @@ public class TbBottomArticleController {
     private ITbBottomArticleService bottomArticleService;
 
     // 查询所有
-    @PostMapping("getAllBottomArticle")
-    public Result getAllBottom(PageInfo page, TbBottomArticle bottomArticle){
-        Page page1 = bottomArticleService.getPageData(page, bottomArticle);
-        System.out.println("page="+page+"bottomArticle="+bottomArticle);
-        return new Result(page1);
-    }
+//    @PostMapping("getAllBottomArticle")
+//    public Result getAllBottom(PageInfo page, TbBottomArticle bottomArticle){
+//        Page page1 = bottomArticleService.getPageData(page, bottomArticle);
+//        System.out.println("page="+page+"bottomArticle="+bottomArticle);
+//        return new Result(page1);
+//    }
 
 
     /**
@@ -123,6 +125,65 @@ public class TbBottomArticleController {
         }
 
         return new Result<>(articleList);
+    }
+
+
+    /**
+     * 商户端首页底部文章
+     * @return
+     */
+    @PostMapping("/getAllBottomArticle")
+    public Result getAllBottomArticle(String name,String isDisable){
+        List<TbBottomArticle> articleList=new ArrayList<>();
+
+        QueryWrapper<TbBottomArticle> wrapper = new QueryWrapper<>();
+        if (isDisable!=null){
+            wrapper.eq("is_disable",isDisable);
+        }
+        wrapper.eq("parent_id","0");
+        if(name!=null){
+            wrapper.like("name",name);
+        }
+        List<TbBottomArticle> parentList = bottomArticleService.list(wrapper);  //查询父节点
+        boolean flag =true;
+        if (parentList.size()!=0){
+             flag = false;
+        }
+
+
+
+        wrapper.clear();
+        if (isDisable!=null){
+            wrapper.eq("is_disable",isDisable);
+        }
+        wrapper.ne("parent_id","0");
+        if (flag) {
+            if(name!=null){
+                wrapper.like("name",name);
+            }
+        }
+        List<TbBottomArticle> childList = bottomArticleService.list(wrapper); //查询字节点
+
+        int i = 0;
+        for (TbBottomArticle parent : parentList){
+            //添加父节点
+            articleList.add(parent);
+            for (TbBottomArticle child : childList){
+                if (parent.getId().equals(child.getParentId())){
+                    //将子节点放入 children
+                    articleList.get(i).getChildren().add(child);
+                }
+            }
+            i++;
+        }
+
+        int curr = 1;
+        int size = 5;
+        IPage page = new Page(curr,size);
+        page.setRecords(articleList);
+        page.setTotal(articleList.size());
+        System.out.println("articleList="+articleList);
+        return new Result<>(page);
     }
 }
 
