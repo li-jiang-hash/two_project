@@ -8,6 +8,6 @@
             inner join g_goods g on g.id = c.goods_id
             left join o_stock s on s.goods_id = g.id
             left join u_addr a on a.id = c.addrid
-        where c.is_deleted = 0 and c.uid = 1
+        where c.is_deleted = 0 and c.uid = #{userId}
     </select>
 </mapper>

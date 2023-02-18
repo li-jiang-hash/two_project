@@ -6,6 +6,7 @@ import com.aaa.group_three.service.IOOrderService;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,6 +66,18 @@ public class OOrderController {
             oOrder.setOrderdate(LocalDateTime.now());
         }
         return new Result<>(orderService.saveOrUpdateBatch(orderList),"添加订单成功！");
+    }
+
+    /**
+     * 删除/取消订单
+     * @return
+     */
+    @GetMapping("deleteOrder/{id}/{state}")
+    public Result deleteOrder(@PathVariable Integer id, @PathVariable Integer state){
+        UpdateWrapper<OOrder> wrapper = new UpdateWrapper<>();
+        wrapper.set("state",state);
+        wrapper.eq("id",id);
+        return new Result<>(orderService.update(wrapper));
     }
 }
 
