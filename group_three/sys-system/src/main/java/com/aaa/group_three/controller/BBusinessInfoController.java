@@ -38,8 +38,6 @@ public class BBusinessInfoController {
     @Resource
     private TbZoneBusinessServiceImpl tbZoneBusinessService;
 
-    @Resource
-    private EEmpInfoServiceImpl empInfoService;
     //查询入住审核
     @PostMapping("ruzhu")
     public Result getAllApp(PageInfo page, @RequestBody BBusinessInfo bBusinessInfo) {
@@ -88,9 +86,6 @@ public class BBusinessInfoController {
     //保存入驻商家审核信息
     @PostMapping("/storeinsert")
     public Result storeinsert(@RequestBody BBusinessInfo bBusinessInfo) {
-
-
-
         boolean save = bBusinessInfoService.saveOrUpdate(bBusinessInfo);
         return new Result(save);
     }
