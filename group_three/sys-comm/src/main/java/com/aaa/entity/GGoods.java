@@ -118,4 +118,7 @@ public class GGoods implements Serializable {
     @TableField(exist = false)
     private GSort sortname;
 
+    @TableField(exist = false)
+    private String unitname;
+
 }

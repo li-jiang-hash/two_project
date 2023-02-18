@@ -3,11 +3,10 @@ package com.aaa.order.controller;
 
 import com.aaa.entity.OOrder;
 import com.aaa.order.service.IOOrderService;
-import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -50,8 +49,7 @@ public class OOrderController {
      */
     @GetMapping("findOrder/{pageCurrent}/{pageSize}")
     public Result findOrder(@PathVariable Integer pageCurrent, @PathVariable Integer pageSize,Integer zhuangtai,String userId){
-        PageInfo pageInfo = new PageInfo(pageCurrent, pageSize);
-        Page page = orderService.findOrder(pageInfo,userId,zhuangtai);
+        IPage<OOrder> page = orderService.findOrder(pageCurrent,pageSize,userId,zhuangtai);
         return new Result<>(page);
     }
 
@@ -69,7 +67,7 @@ public class OOrderController {
     }
 
     /**
-     * 删除/取消订单
+     * 删除/取消/失效订单
      * @return
      */
     @GetMapping("deleteOrder/{id}/{state}")

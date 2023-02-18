@@ -1,8 +1,7 @@
 package com.aaa.order.service;
 
 import com.aaa.entity.OOrder;
-import com.aaa.util.PageInfo;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -15,5 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IOOrderService extends IService<OOrder> {
 
-    Page findOrder(PageInfo pageInfo, String userId, Integer zhuangtai);
+    IPage<OOrder> findOrder(Integer pageCurrent, Integer pageSize, String userId, Integer zhuangtai);
 }

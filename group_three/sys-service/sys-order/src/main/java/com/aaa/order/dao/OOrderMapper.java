@@ -1,9 +1,9 @@
 package com.aaa.order.dao;
 
 import com.aaa.entity.OOrder;
-import com.aaa.util.PageInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,5 +15,5 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
  */
 public interface OOrderMapper extends BaseMapper<OOrder> {
 
-    Page findOrder(PageInfo pageInfo, String userId, Integer zhuangtai);
+    List<OOrder> findOrder(String userId, Integer zhuangtai);
 }

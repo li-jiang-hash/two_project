@@ -7,7 +7,8 @@
              inner join g_goods g on g.bid = b.id
              left join tb_zone_business z on z.bid = b.id
              left join o_stock s on s.goods_id = g.id
-        group by z.bid, z.zone_id, b.bicon, b.sname
+        group by z.bid, z.zone_id, b.bicon, b.sname ,z.sort
+        order by z.sort
     </select>
 
     <select id="findBusinessByName" resultType="java.util.Map">
