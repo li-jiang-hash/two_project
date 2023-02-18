@@ -56,7 +56,6 @@ public class LoginController {
             ERole byId = roleService.getById(rEmpRole.getRoleId());
             roleList.add("ROLE_" + byId.getRoleName());
         }
-        System.out.println("1212121212111111111111111111111 = " + roleList+":"+eid);
         return roleList;
     }
     @GetMapping

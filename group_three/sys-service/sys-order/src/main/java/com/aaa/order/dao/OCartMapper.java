@@ -1,19 +1,19 @@
-package com.aaa.group_three.service;
+package com.aaa.order.dao;
 
 import com.aaa.entity.OCart;
 import com.aaa.util.PageInfo;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- * 购物车 服务类
+ * 购物车 Mapper 接口
  * </p>
  *
  * @author wanglei
  * @since 2023-02-11
  */
-public interface IOCartService extends IService<OCart> {
+public interface OCartMapper extends BaseMapper<OCart> {
 
     Page findCart(String userId, PageInfo pageInfo);
 }

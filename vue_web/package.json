@@ -39,6 +39,7 @@
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "vue-cli-plugin-element": "^1.0.1",
+    "vue-qriously": "^1.1.1",
     "vue-template-compiler": "^2.6.11",
     "vuex": "^3.6.2"
   }
