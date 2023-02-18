@@ -151,8 +151,6 @@
 				payData: null,
 				notdata: false,
 				zhuangtai: "",
-				//用户id
-				HuiYuanId: window.sessionStorage.getItem("memberId"),
 				timer1: '',
 				dialogVisible: false, //弹出框
 				//得到响应的结果
@@ -280,7 +278,6 @@
 			},
 			//剩余时间格式化
 			timeFormat(lastTime, id, index) {
-				console.log(lastTime)
 				if (lastTime > 1000) {
 					let days = this.addZero(
 						Math.floor(lastTime / 1000 / 60 / 60 / 24)
