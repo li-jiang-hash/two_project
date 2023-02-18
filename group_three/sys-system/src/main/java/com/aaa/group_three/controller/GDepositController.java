@@ -61,6 +61,10 @@ public class GDepositController {
         boolean byId = gDepositService.update(updateWrapper);
         return new Result(byId);
     }
+    @PostMapping("/findAllDeposit")
+    public Result getAllDeposit(){
+        return new Result(gDepositService.list());
+    }
 
 }
 

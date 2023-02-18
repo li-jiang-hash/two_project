@@ -102,8 +102,8 @@
 				ipInfo: {},
 				obj: {
 					telephone: '18749021423',
-					password: '123456',
-					loginType: 'USER_PHONE'
+					password: '552157',
+					loginType: 'BUSINESS_PHONE'
 				},
 				pobj: {
 					mobile: '',
@@ -181,6 +181,10 @@
 								if (resp.data.code === 2000) {
 									sessionStorage.setItem("userId", resp.data.data.id);
 								}
+							})
+							this.$http.get("syssystem/b-business-info/getUserByName/" + sessionStorage.getItem("telephone")).then(resp => {
+								console.log(resp.data);
+									sessionStorage.setItem("bisid", resp.data.id);
 							})
 							this.$router.push("/")
 					} else {

@@ -367,7 +367,7 @@
 				// this.payForm.describe = this.payResult.code
 				this.D.orderNum = this.orderInfo.code
 				this.D.money = this.orderInfo.price * this.payForm.num
-				this.D.describe= this.classData.gname
+				this.D.describe= "aaa"
 				console.log(this.D);
 				console.log(this.orderInfo);
 				this.$http.post("syssystem/wx/getNativeCodeUrl", qs.stringify(this.D)).then(res => {

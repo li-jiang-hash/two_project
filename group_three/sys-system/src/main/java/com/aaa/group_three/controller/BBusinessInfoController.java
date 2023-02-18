@@ -45,9 +45,11 @@ public class BBusinessInfoController {
     //商家审核
     @PostMapping("shenhe")
     public Result getById(@RequestBody BBusinessInfo bBusinessInfo) {
+        System.out.println("111111111111111111111111111111111 = " + bBusinessInfo);
         UpdateWrapper<BBusinessInfo> wrapper = new UpdateWrapper<>();
         wrapper.set("status", bBusinessInfo.getStatus());
         wrapper.set("reason", bBusinessInfo.getReason());
+        wrapper.set("password",new BCryptPasswordEncoder().encode(bBusinessInfo.getPassword()));
         wrapper.eq("id", bBusinessInfo.getId());
         //审核完成后把数据插入商家表
         EEmpInfo empInfo = new EEmpInfo();
@@ -58,7 +60,7 @@ public class BBusinessInfoController {
         DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String format = dateFormat.format(date);
         empInfo.setGmtCreate(format);
-        empInfoService.save(empInfo);
+//        empInfoService.save(empInfo);
         boolean byId = bBusinessInfoService.update(wrapper);
         return new Result(byId);
     }
