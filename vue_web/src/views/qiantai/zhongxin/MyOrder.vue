@@ -18,7 +18,7 @@
 					<span class="time">下单时间：{{item.orderdate}}</span>
 					<span id="sname"><i class="el-icon-s-shop"></i> {{item.sname}}</span>
 					<el-link style="float: right;margin-right: 20px;color: #ec7e00"
-						@click="delOrder(item.code,item.state)">
+						@click="delOrder(item.id,item.state)">
 						<i class="el-icon-delete">删除订单</i>
 					</el-link>
 					<i class="money" style="float:right;margin-right: 30px;color: red">总计:￥{{item.totalmoney}}</i>
@@ -29,7 +29,7 @@
 					<li class="alipay" v-if="item.state === 1" v-loading="loading" element-loading-background="white">
 						等待支付,剩余<br>
 						<span style="color: red">
-							{{ timeFormat(item.lastTime,item.code,index) }}
+							{{ timeFormat(item.lastTime,item.id,index) }}
 						</span>
 					</li>
 					<li class="alipay" v-if="item.state === 0">已支付</li>
@@ -151,8 +151,6 @@
 				payData: null,
 				notdata: false,
 				zhuangtai: "",
-				//用户id
-				HuiYuanId: window.sessionStorage.getItem("memberId"),
 				timer1: '',
 				dialogVisible: false, //弹出框
 				//得到响应的结果
@@ -264,7 +262,7 @@
 			daojishi(i, obj) {
 				var that = this
 				// 计算剩余时间戳
-				var paytime = new Date(obj.time);
+				var paytime = new Date(obj.orderdate);
 				paytime.setMinutes(paytime.getMinutes() + 30)
 				let daojishi = setInterval(() => {
 					let residue = paytime - new Date();
@@ -279,8 +277,7 @@
 				}, 1000);
 			},
 			//剩余时间格式化
-			timeFormat(lastTime, code, index) {
-				console.log(lastTime)
+			timeFormat(lastTime, id, index) {
 				if (lastTime > 1000) {
 					let days = this.addZero(
 						Math.floor(lastTime / 1000 / 60 / 60 / 24)
@@ -295,7 +292,7 @@
 					return `${minutes}分钟${seconds}秒`;
 				} else if (lastTime < 1000 && lastTime > 0) {
 					setTimeout(() => {
-						this.$http.post("order/order/updateStateToFailure?code=" + code).then(res => {
+						this.$http.post("order/order/updateStateToFailure?id=" + id).then(res => {
 							if (res.data.code === 2000) {
 								this.pageObj.order[index].state = 3
 								that.pageObj.pageCurrent = 1;
@@ -306,7 +303,8 @@
 					}, 1000);
 					return "00分钟01秒";
 				} else if (lastTime === -1) {
-					this.$http.post("order/order/updateStateToFailure?code=" + code).then(res => {
+					var state = 3
+					this.$http.get("sys-order/o-order/deleteOrder/" + id + "/" + state).then(res => {
 						if (res.data.code === 2000) {
 							this.pageObj.order[index].state = 3
 							this.pageObj.pageCurrent = 1;
@@ -320,10 +318,11 @@
 				return parseInt(d) < 10 ? "0" + d : d;
 			},
 			//删除订单
-			delOrder(code, state) {
+			delOrder(id, state) {
 				if (state != 1) {
-					this.$http.get("sys-order/o-order/deleteOrder/" + code).then(res => {
-						if (res.data.code === 2000) {
+					state = 2
+					this.$http.get("sys-order/o-order/deleteOrder/" + id + "/" + state).then(res => {
+						if (res.data.data) {
 							this.$message.success(res.data.msg);
 							this.pageObj.pageCurrent = 1;
 							this.initOrderList();
@@ -415,7 +414,7 @@
 				})
 			},
 
-			//取消支付
+			//取消订单
 			quxiao(id) {
 				this.$confirm(`确定要取消订单吗?`, {
 					confirmButtonText: '确定',
@@ -423,7 +422,8 @@
 					type: 'warning'
 				}).then(() => {
 					var that = this;
-					this.$http.get("/order/order/delOrder/" + id).then(function(resp) {
+					var state = 4;
+					this.$http.get("/sys-order/o-order/deleteOrder/" + id + "/" + state).then(function(resp) {
 						if (resp.data.code === 2000) {
 							that.$message.success(resp.data.msg);
 						} else {
@@ -436,11 +436,9 @@
 				}).catch(() => {
 					this.$message({
 						type: 'info',
-						message: '取消支付失败'
+						message: '已取消操作'
 					});
 				})
-
-
 			}
 
 		},
