@@ -401,7 +401,7 @@ export default {
           console.log(this.sort);
         }
       })
-      
+
     }
     ,
     gitbusinessId(){
@@ -454,6 +454,7 @@ export default {
     },
     initBrand(){
       this.$http.post("syssystem/g-brand/brand").then(res=>{
+        console.log(res);
         if (res.data.code===2000){
           this.brandForm = res.data.data;
         }

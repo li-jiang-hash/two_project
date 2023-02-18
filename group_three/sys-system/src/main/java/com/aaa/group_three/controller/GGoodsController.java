@@ -80,6 +80,7 @@ public class GGoodsController {
         queryWrapper.like(goods.getStatus() != null, "status", goods.getStatus());
 
         List list = goodsService.list(queryWrapper);
+        System.out.println("list = " + list);
         IPage page = new Page(currentPage, pageSize);
         page.setRecords(list);
         page.setTotal(list.size());

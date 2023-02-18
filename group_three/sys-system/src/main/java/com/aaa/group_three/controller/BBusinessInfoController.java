@@ -48,29 +48,13 @@ public class BBusinessInfoController {
     //审核操作
     @PostMapping("shenhe")
     public Result getById(@RequestBody BBusinessInfo bBusinessInfo) {
-<<<<<<< HEAD
         System.out.println("111111111111111111111111111111111 = " + bBusinessInfo);
         UpdateWrapper<BBusinessInfo> wrapper = new UpdateWrapper<>();
-=======
-        UpdateWrapper wrapper = new UpdateWrapper<>();
->>>>>>> 2e36eb57fac9a5d5a1fecc6ec134669811acb910
         wrapper.set("status", bBusinessInfo.getStatus());
         wrapper.set("reason", bBusinessInfo.getReason());
         wrapper.set("password",new BCryptPasswordEncoder().encode(bBusinessInfo.getPassword()));
         wrapper.eq("id", bBusinessInfo.getId());
-<<<<<<< HEAD
-        //审核完成后把数据插入商家表
-        EEmpInfo empInfo = new EEmpInfo();
-        empInfo.setTelephone(bBusinessInfo.getTelephone());
-        empInfo.setPassword(new BCryptPasswordEncoder().encode(bBusinessInfo.getPassword()));
-        empInfo.setEname(bBusinessInfo.getSname());
-        Date date = new Date();
-        DateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        String format = dateFormat.format(date);
-        empInfo.setGmtCreate(format);
-//        empInfoService.save(empInfo);
-=======
->>>>>>> 2e36eb57fac9a5d5a1fecc6ec134669811acb910
+
         boolean byId = bBusinessInfoService.update(wrapper);
     //审核操作时添加专区表数据
         TbZoneBusiness tbZoneBusiness=new TbZoneBusiness();
