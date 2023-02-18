@@ -55,7 +55,7 @@ public class BBusinessInfoController {
         wrapper.set("reason", bBusinessInfo.getReason());
         wrapper.eq("id", bBusinessInfo.getId());
         boolean byId = bBusinessInfoService.update(wrapper);
-    //专区商家关联表
+    //审核操作时添加专区表数据
         TbZoneBusiness tbZoneBusiness=new TbZoneBusiness();
         tbZoneBusiness.setZoneId(bBusinessInfo.getSortid());
         tbZoneBusiness.setGmtCreate(LocalDateTime.now());
