@@ -32,7 +32,7 @@ public class PayServiceImpl implements PayService {
             m.put(PayConfigUtil.APP_ID, PayConfigUtil.APPID);
             m.put("mch_id", PayConfigUtil.MCH_ID);
             //"1558950191"
-            m.put("out_trade_no", order.getDescribe());
+            m.put("out_trade_no", order.getOrderNum());
             //1.00    1
             m.put("total_fee", new BigDecimal(order.getMoney()).multiply(new BigDecimal("100")).longValue() + "");
             //单位 分

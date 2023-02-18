@@ -74,6 +74,8 @@ public class GGoodsController {
     public Result getAll(@PathVariable Integer currentPage, @PathVariable Integer pageSize, @PathVariable String id, @RequestBody GGoods goods) {
         QueryWrapper queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("bid", id);
+        queryWrapper.eq("status", 0);
+        queryWrapper.eq("isdeleted", 0);
         System.out.println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG = " + goods);
         queryWrapper.like(goods.getGname() != null, "gname", goods.getGname());
         queryWrapper.like(goods.getState() != null, "state", goods.getState());
@@ -93,8 +95,9 @@ public class GGoodsController {
     //添加商品
     @PostMapping("addGoods")
     public Result AddGoods(@RequestBody GGoods goods) {
-        System.out.println("gggggggggggggggggggggggg = " + goods);
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa = " + goods);
         goods.setState(2);
+        goods.setStatus(0);
         goods.setIsdeleted(0);
         goods.setAddtime(LocalDateTime.now());
         boolean save = goodsService.save(goods);
@@ -106,5 +109,19 @@ public class GGoodsController {
         return new Result();
     }
 
+    //下架商品
+    @PostMapping("updateStatus")
+    public Result UPGoods(@RequestBody GGoods goods) {
+        return new Result(goodsService.updateById(goods));
+    }
+
+    //删除商品
+    @PostMapping("deleteGoodsById/{id}")
+    public Result DelGoods(@PathVariable String id) {
+        GGoods goods = new GGoods();
+        goods.setId(Integer.parseInt(id));
+        goods.setIsdeleted(1);
+        return new Result(goodsService.updateById(goods));
+    }
 }
 

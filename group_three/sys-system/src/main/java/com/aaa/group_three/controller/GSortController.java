@@ -69,7 +69,7 @@ public class GSortController {
         return new Result(byId);
     }
 
-    @GetMapping("getSort")
+    @PostMapping("getSort")
     public Result getSort(){
         return new Result(gSortService.list());
     }
