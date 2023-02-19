@@ -37,7 +37,7 @@
 					<li class="alipay" v-if="item.state === 4" style="color: #ec7e00">订单已取消</li>
 
 					<li v-if="item.state === 1 ">
-						<a class="go_btn go_pay" @click="choosePaySort(item.code)">
+						<a class="go_btn go_pay" @click="choosePaySort(item.code,item.totalmoney)">
 							继续支付
 						</a>
 						<a @click="quxiao(item.id,item.num,item.goodsList)" class="cancel"
@@ -131,6 +131,7 @@
 	import YSide from '@/components/account/Side'
 	import DPage from '@/components/Page'
 	import vueQr from 'vue-qr'
+	import qs from "qs"
 
 	export default {
 		name: "MyOrder",
@@ -139,6 +140,7 @@
 			return {
 				//订单编号
 				code: 0,
+				totalmoney: 0,
 				//选择支付类型的弹出层
 				dialogVisible3: false,
 				//支付宝支付弹出层
@@ -158,7 +160,7 @@
 				payResult: {
 					codeUrl: "", //二维码的地址
 					code: "", //订单号
-					price: 0.00, //支付的金额
+					price: 0, //支付的金额
 					logoSrc: "/src/assets/img/wx.jpg" //微信二维码中间小logo
 				},
 				pageObj: {
@@ -184,6 +186,7 @@
 						time: '',
 					}, ]
 				},
+				D: {},
 				order_no: this.$route.query.out_trade_no,
 			}
 		},
@@ -191,12 +194,15 @@
 			//微信支付
 			payByWx() {
 				var that = this;
-				var code = this.code;
-				this.$http.post("/order/order/payForOrder/0/" + this.code).then(function(resp) {
+				this.D.orderNum = this.code;
+				this.D.money = this.totalmoney
+				this.D.describe = "aaa"
+				this.$http.post("syssystem/wx/getNativeCodeUrl", qs.stringify(this.D)).then(function(resp) {
 					if (resp.data.code === 2000) {
 						that.dialogVisible = true
-						that.payResult = resp.data.data;
-						that.payResult.code = code;
+						this.payResult.codeUrl = res.data.data.code_url;
+						that.payResult.price = resp.data.data.price;
+						that.payResult.code = resp.data.data.orderNo;
 						//定时器
 						that.timer = setInterval(() => {
 							that.queryPayStatus();
@@ -243,9 +249,10 @@
 				this.code = 0;
 			},
 			//选择支付类型的方法
-			choosePaySort(code) {
+			choosePaySort(code, totalmoney) {
 				this.dialogVisible3 = true;
 				this.code = code;
+				this.totalmoney = totalmoney;
 
 			},
 			//关闭微信支付页面
