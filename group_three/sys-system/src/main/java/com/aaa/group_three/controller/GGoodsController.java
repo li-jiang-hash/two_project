@@ -76,7 +76,6 @@ public class GGoodsController {
         queryWrapper.eq("bid", id);
         queryWrapper.eq("status", 0);
         queryWrapper.eq("isdeleted", 0);
-        System.out.println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG = " + goods);
         queryWrapper.like(goods.getGname() != null, "gname", goods.getGname());
         queryWrapper.like(goods.getState() != null, "state", goods.getState());
         queryWrapper.like(goods.getStatus() != null, "status", goods.getStatus());
@@ -101,11 +100,13 @@ public class GGoodsController {
         goods.setIsdeleted(0);
         goods.setAddtime(LocalDateTime.now());
         boolean save = goodsService.save(goods);
+        System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCc = " + save);
         OStock oStock = new OStock();
         oStock.setPrice(goods.getPrice());
         oStock.setTotalNum(goods.getTotalnum());
         oStock.setGoodsId(goods.getId());
-        ioStockService.save(oStock);
+        boolean save1 = ioStockService.save(oStock);
+        System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS = " + save1);
         return new Result();
     }
 

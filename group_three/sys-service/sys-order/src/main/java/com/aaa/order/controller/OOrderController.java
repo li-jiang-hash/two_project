@@ -1,12 +1,16 @@
 package com.aaa.order.controller;
 
 
+import com.aaa.entity.GGoods;
 import com.aaa.entity.OOrder;
+import com.aaa.entity.Order;
+import com.aaa.order.service.IGGoodsService;
 import com.aaa.order.service.IOOrderService;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -90,6 +94,47 @@ public class OOrderController {
             System.out.println("order.getCode() = " + s);
             result.setData(order);
             result.setMsg("添加订单成功了");
+            return result;
+        }
+        return new Result<>(null);
+    }
+
+@Resource
+private IGGoodsService igGoodsService;
+
+    //订单管理查询订单
+    @PostMapping("selectAll/{bid}/{pageCurrent}/{pageSize}")
+    public Result GoodsOrder(@PathVariable String bid,@PathVariable Integer pageCurrent, @PathVariable Integer pageSize,@RequestBody OOrder order){
+        System.out.println("pageCurrent = " +":"+bid+ pageCurrent+":"+pageSize+":"+order);
+//        orderService.list();
+        QueryWrapper queryWrapper1 = new QueryWrapper<>();
+        queryWrapper1.eq("gname",order.getGname());
+        queryWrapper1.select("id");
+        GGoods one = igGoodsService.getOne(queryWrapper1);
+        System.out.println("one = " + one);
+        QueryWrapper queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("bid", bid);
+        queryWrapper.like(order.getSend() != null ,"send",order.getSend());
+        if(one !=null) queryWrapper.like("goodsid",one.getId());
+        List list = orderService.list(queryWrapper);
+        System.out.println("list = " + list);
+        IPage page = new Page(pageCurrent, pageSize);
+        page.setRecords(list);
+        page.setTotal(list.size());
+        return new Result<>(page);
+    }
+    //更新订单状态
+    @PostMapping("updateSend/{id}/{code}")
+    public Result UpOrder(@PathVariable Integer id,@PathVariable String code){
+        OOrder order = new OOrder();
+        order.setId(id);
+        order.setCode(code);
+        order.setSend(1);
+        System.out.println("order11111111111111111111111 = " + order);
+        orderService.updateById(order);
+        Result result=new Result<>();
+        if (true){
+            result.setMsg("修改订单成功了");
             return result;
         }
         return new Result<>(null);

@@ -101,4 +101,7 @@ public class OOrder implements Serializable {
     @TableField(exist = false)
     private List<GGoods> goodsList;
 
+    @TableField(exist = false)
+    private String gname;
+
 }

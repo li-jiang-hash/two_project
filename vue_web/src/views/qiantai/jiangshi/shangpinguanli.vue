@@ -151,7 +151,7 @@
                 </el-date-picker>
               </el-form-item>
               <el-form-item label="商品价格" label-width="80px">
-                <el-input-number v-model="addForm.price" @change="handleChange" :min="1" :max="10"
+                  <el-input-number v-model="addForm.price" @change="handleChange" :min="1" :max="10000"
                   label="描述文字"></el-input-number>
                 <span style="padding-left: 20px">(单位:元)</span>
               </el-form-item>
@@ -451,11 +451,9 @@ export default {
       console.log(this.searchForm);
       this.$http.post(`/syssystem/g-goods/selectAllGoodsInfoByBusinessId/${this.currentPage}/${this.pageSize}/${sessionStorage.getItem("bisid")}`, this.searchForm).then(function (resp) {
         if (resp.data.code === 2000) {
-          console.log();
+          console.log(that);
           that.tableData = resp.data.data.records;
           that.total = resp.data.data.total;
-          //that.addForm.sortid = that.tableData[0].sortid
-          //that.sortname= that.tableData[0].sort.sortname
           console.log(that.tableData);
         }
       })
