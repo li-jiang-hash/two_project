@@ -37,7 +37,7 @@
 					<li class="alipay" v-if="item.state === 4" style="color: #ec7e00">订单已取消</li>
 
 					<li v-if="item.state === 1 ">
-						<a class="go_btn go_pay" @click="choosePaySort(item.code)">
+						<a class="go_btn go_pay" @click="choosePaySort(item.code,item.totalmoney)">
 							继续支付
 						</a>
 						<a @click="quxiao(item.id,item.num,item.goodsList)" class="cancel"
@@ -131,6 +131,7 @@
 	import YSide from '@/components/account/Side'
 	import DPage from '@/components/Page'
 	import vueQr from 'vue-qr'
+	import qs from "qs"
 
 	export default {
 		name: "MyOrder",
@@ -139,6 +140,7 @@
 			return {
 				//订单编号
 				code: 0,
+				totalmoney: 0,
 				//选择支付类型的弹出层
 				dialogVisible3: false,
 				//支付宝支付弹出层
@@ -158,7 +160,7 @@
 				payResult: {
 					codeUrl: "", //二维码的地址
 					code: "", //订单号
-					price: 0.00, //支付的金额
+					price: 0, //支付的金额
 					logoSrc: "/src/assets/img/wx.jpg" //微信二维码中间小logo
 				},
 				pageObj: {
@@ -184,6 +186,7 @@
 						time: '',
 					}, ]
 				},
+				D: {},
 				order_no: this.$route.query.out_trade_no,
 			}
 		},
@@ -191,12 +194,16 @@
 			//微信支付
 			payByWx() {
 				var that = this;
-				var code = this.code;
-				this.$http.post("/order/order/payForOrder/0/" + this.code).then(function(resp) {
-					if (resp.data.code === 2000) {
+				that.D.orderNum = this.code;
+				that.D.money = this.totalmoney
+				that.D.describe = "aaa"
+				that.$http.post("syssystem/wx/getNativeCodeUrl", qs.stringify(this.D)).then(function(res) {
+					if (res.data.code === 2000) {
+						console.log(res.data.data.code_url)
+						that.payResult.codeUrl = res.data.data.code_url;
+						that.payResult.price = res.data.data.price;
+						that.payResult.code = res.data.data.orderNo;
 						that.dialogVisible = true
-						that.payResult = resp.data.data;
-						that.payResult.code = code;
 						//定时器
 						that.timer = setInterval(() => {
 							that.queryPayStatus();
@@ -205,9 +212,9 @@
 						that.$message.error(resp.data.msg)
 					}
 					if (resp.data.code === 7000) {
-						that.$message.error(resp.data.msg);
-						that.dialogVisible3 = false
-						that.initOrderList();
+						this.$message.error(resp.data.msg);
+						this.dialogVisible3 = false
+						this.initOrderList();
 
 					}
 
@@ -243,9 +250,10 @@
 				this.code = 0;
 			},
 			//选择支付类型的方法
-			choosePaySort(code) {
+			choosePaySort(code, totalmoney) {
 				this.dialogVisible3 = true;
 				this.code = code;
+				this.totalmoney = totalmoney;
 
 			},
 			//关闭微信支付页面
@@ -336,25 +344,25 @@
 			},
 			queryPayStatus() {
 				//继续支付
-				var that = this;
-				this.$http.get("order/payLog/paystatus/" + this.payResult.code).then(r => {
-					if (r.data.code === 2000) {
-						clearInterval(this.timer);
-						//如果支付成功，清除定时器
-						that.$message.success(r.data.msg);
-						//消除定时器
-						clearInterval(this.timer);
-						that.timer = null;
-						that.dialogVisible = false;
-						that.dialogVisible2 = false;
-						that.dialogVisible3 = false;
-						//刷新界面
-						that.initOrderList();
-						//that.$router.go(0);
-						//跳转到课程详情页面观看视频
-						// that.$router.push({path: '/DetailId/:id' + that.payResult.course_id})
-					}
-				})
+				// var that = this;
+				// this.$http.get("order/payLog/paystatus/" + this.payResult.code).then(r => {
+				// 	if (r.data.code === 2000) {
+				// 		clearInterval(this.timer);
+				// 		//如果支付成功，清除定时器
+				// 		that.$message.success(r.data.msg);
+				// 		//消除定时器
+				// 		clearInterval(this.timer);
+				// 		that.timer = null;
+				// 		that.dialogVisible = false;
+				// 		that.dialogVisible2 = false;
+				// 		that.dialogVisible3 = false;
+				// 		//刷新界面
+				// 		that.initOrderList();
+				// 		//that.$router.go(0);
+				// 		//跳转到课程详情页面观看视频
+				// 		// that.$router.push({path: '/DetailId/:id' + that.payResult.course_id})
+				// 	}
+				// })
 			},
 			pay(item) {
 				this.payData = item;

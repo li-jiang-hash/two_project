@@ -8,229 +8,233 @@
         </el-form-item>
         <el-form-item label="审核状态">
           <el-select v-model="searchForm.state" placeholder="请选择审核状态">
-                <el-option label="审核通过" :value="0" />
-                <el-option label="审核驳回" :value="1" />
-                <el-option label="等待审核" :value="2" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="商品状态">
-              <el-select v-model="searchForm.status" placeholder="请选择审核状态">
-                <el-option label="下架" :value="1"></el-option>
-                <el-option label="上架" :value="0"></el-option>
-              </el-select>
-            </el-form-item>
-    
-            <el-form-item>
-              <el-button icon='el-icon-search' size="mini" type="primary" @click="handleCheck">查询</el-button>
-              <el-button icon='el-icon-refresh' size="mini" @click="handleReset">重置</el-button>
-              <el-button type="primary" icon="el-icon-refresh" round @click="addDialogFormVisible = true">新增</el-button>
-            </el-form-item>
-          </el-form>
-    
-          <!--表格数据-->
-          <div>
-            <el-table v-loading="ctrl.loading" size="medium" :data="tableData" stripe border style="width: 100%">
-              <el-table-column prop="cardfront" label="商品图片" width="122" fixed header-align="center" align="center">
-                <template slot-scope="scope">
-                  <img :src="scope.row.img" width="100" height="60">
-                </template>
-              </el-table-column>
-              <el-table-column prop="gname" label="商品名称" align="center" width="100px">
-              </el-table-column>
-              <el-table-column prop="totalnum" label="库存量" align="center" width="100px">
-              </el-table-column>
-              <el-table-column prop="stocknum" label="剩余量" align="center" width="100px">
-              </el-table-column>
-              <el-table-column prop="sortname" label="商品分类" align="center" width="100px">
-              </el-table-column>
-              <el-table-column prop="remark" label="商品描述" align="center" width="100px">
-              </el-table-column>
-              <el-table-column prop="unitname" label="商品单位" align="center" width="100px">
-              </el-table-column>
-              <el-table-column prop="brandname" label="商品品牌" align="center" width="100px">
-              </el-table-column>
-              <el-table-column prop="deposit.depositname" label="储藏方式" align="center" width="100px">
-              </el-table-column>
-              <el-table-column prop="expirationtime" label="保质期" align="center" width="100px">
-              </el-table-column>
-              <el-table-column prop="checkContent" label="驳回理由" align="center" width="100px">
-              </el-table-column>
-              <el-table-column prop="price" label="商品价格" align="center" width="100px">
-                <template slot-scope="scope">
-                  {{ scope.row.price }}元updateGoods
-                </template>
-              </el-table-column>
-              <el-table-column prop="state" label="审核状态" align="center" fixed="right" width="100px">
-                <template slot-scope="scope">
-                  <el-button v-if="scope.row.state === 0" type="success" plain>审核通过</el-button>
-                  <el-button v-if="scope.row.state === 1" type="danger" plain>审核驳回</el-button>
-                  <el-button v-if="scope.row.state === 2" type="warning" plain>等待审核</el-button>
-                </template>
-              </el-table-column>
-              <el-table-column prop="status" label="商品状态" align="center" fixed="right" width="70px">
-                <template slot-scope="scope">
-                  <el-button v-if="scope.row.status === 0" type="success" plain>上架</el-button>
-                  <el-button v-if="scope.row.status === 1" type="danger" plain>下架</el-button>
-                </template>
-              </el-table-column>
-              <el-table-column fixed="right" label="操作" align="center" width="200px">
-                <template slot-scope="scope">
-                  <ul class="list-item-actions">
-                    <li>
-                      <el-button type="primary" @click="updateGoods(scope.row)" size="mini">修改</el-button>
-                      <el-button type="danger" @click="deleteGoods(scope.row.id)" size="mini">删除</el-button>
-                      <el-button v-if="scope.row.status === 1 && scope.row.state === 0" type="success"
-                        @click="changeStatus(scope.row)" size="mini">上架</el-button>
-                      <el-button v-if="scope.row.status === 1 && scope.row.state !== 0" disabled type="success"
-                        size="mini">上架</el-button>
-                      <el-button v-if="scope.row.status === 0" type="warning" @click="changeStatus(scope.row)"
-                        size="mini">下架</el-button>
-                    </li>
-                  </ul>
-                </template>
-              </el-table-column>
-            </el-table>
-    
-            <el-divider><i class="el-icon-moon-night"></i></el-divider>
-            <div class="mgt20">
-              <el-pagination background style="float: right;margin-top: 20px; margin-bottom: 22px"
-                @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-                :page-sizes="[1, 5, 10, 15]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper"
-                :total="total">
-              </el-pagination>
-            </div>
-    
-          </div>
-    
-          <!--添加的弹出层-->
-          <el-dialog title="商品信息" :visible.sync="addDialogFormVisible">
-            <el-form :model="addForm" style="width: 400px;">
-              <el-form-item label="商品名称" label-width="80px">
-                <el-input v-model="addForm.gname"></el-input>
-              </el-form-item>
-              <el-form-item label="商品图片" label-width="80px">
-                <el-upload style="float: left;margin-right: 40px" class="avatar-uploader"
-                  action="http://localhost:7500/syssystem/file/upload" :show-file-list="false"
-                  :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-                  <img v-if="imgUrl" v-model="addForm.img" :src="imgUrl" class="avatar" alt="">
-                  <i v-else class="el-icon-plus avatar-uploader avatar-uploader-icon"
-                    style="border-radius: 6px;border: 1px dashed #d9d9d9;"></i>
-                </el-upload>
-              </el-form-item>
-              <el-form-item label="商品描述" label-width="80px">
-                <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="addForm.remark">
-                </el-input>
-              </el-form-item>
-              <el-form-item label="商品单位" label-width="80px">
-                <el-select v-model="addForm.unitid" placeholder="请选择">
-                  <el-option v-for="item in unitForm" :label="item.unitname" :value="item.id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="商品品牌" label-width="80px">
-                <el-select v-model="addForm.brandid" placeholder="请选择">
-                  <el-option v-for="item in brandForm" :label="item.brandname" :value="item.id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="商品类别" label-width="80px">
-                <el-select v-model="addForm.sortid" placeholder="请选择">
-                  <el-option v-for="item in SortForm" :label="item.sortname" :value="item.id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="储藏方式" label-width="80px">
-                <el-select v-model="addForm.depositid" placeholder="请选择">
-                  <el-option v-for="item in depositForm" :label="item.depositname" :value="item.id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="保质期" label-width="80px">
-                <el-date-picker value-format="yyyy-MM-dd hh:mm:ss" v-model="addForm.expirationtime" type="datetime"
-                  placeholder="选择日期时间">
-                </el-date-picker>
-              </el-form-item>
-              <el-form-item label="商品价格" label-width="80px">
-                  <el-input-number v-model="addForm.price" @change="handleChange" :min="1" :max="10000"
-                  label="描述文字"></el-input-number>
-                <span style="padding-left: 20px">(单位:元)</span>
-              </el-form-item>
-              <el-form-item label="商品库存" label-width="80px">
-                <el-input-number v-model="addForm.totalnum" @change="handleChange" :min="1" label="描述文字"></el-input-number>
-              </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="addDialogFormVisible = false">取 消</el-button>
-              <el-button type="primary" @click="addGoods">确 定</el-button>
-            </div>
-          </el-dialog>
-    
-    
-    
-          <!--修改的弹出层-->
-          <el-dialog title="商品信息" :visible.sync="updateDialogFormVisible">
-            <el-form :model="updateForm" style="width: 400px;">
-              <el-form-item label="商品名称" label-width="80px">
-                <el-input v-model="updateForm.gname"></el-input>
-              </el-form-item>
-              <el-form-item label="商品图片" label-width="80px">
-                <el-upload style="float: left;margin-right: 40px" class="avatar-uploader"
-                  action="http://localhost:7500/syssystem/file/upload" :show-file-list="false"
-                  :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-                  <img v-if="imgUrl" v-model="updateForm.img" :src="imgUrl" class="avatar" alt="">
-                  <i v-else class="el-icon-plus avatar-uploader avatar-uploader-icon"
-                    style="border-radius: 6px;border: 1px dashed #d9d9d9;"></i>
-                </el-upload>
-              </el-form-item>
-              <el-form-item label="商品描述" label-width="80px">
-                <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="updateForm.remark">
-                </el-input>
-              </el-form-item>
-              <el-form-item label="商品单位" label-width="80px">
-                <el-select v-model="updateForm.unitid" placeholder="请选择">
-                  <el-option v-for="item in unitForm" :label="item.unitname" :value="item.id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="商品品牌" label-width="80px">
-                <el-select v-model="updateForm.brandid" placeholder="请选择">
-                  <el-option v-for="item in brandForm" :label="item.brandname" :value="item.id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="商品类别" label-width="80px">
-                <el-select v-model="updateForm.sortid" placeholder="请选择">
-                  <el-option :label="updateForm.sort.sortname" :value="updateForm.sortid">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="储藏方式" label-width="80px">
-                <el-select v-model="updateForm.depositid" placeholder="请选择">
-                  <el-option v-for="item in depositForm" :label="item.depositname" :value="item.id">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="保质期" label-width="80px">
-                <el-date-picker value-format="yyyy-MM-dd hh:mm:ss" v-model="updateForm.expirationtime" type="datetime"
-                  placeholder="选择日期时间">
-                </el-date-picker>
-              </el-form-item>
-              <el-form-item label="商品价格" label-width="80px">
-                <el-input-number v-model="updateForm.price" @change="handleChange" :min="1" :max="10"
-                  label="描述文字"></el-input-number>
-                <span style="padding-left: 20px">(单位:元)</span>
-              </el-form-item>
-              <el-form-item label="商品库存" label-width="80px">
-                <el-input-number v-model="updateForm.totalnum" @change="handleChange" :min="1" label="描述文字"></el-input-number>
-              </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="updateDialogFormVisible = false">取 消</el-button>
-              <el-button type="primary" @click="updateConfirm">确 定</el-button>
-            </div>
-          </el-dialog>
-        </el-card>
+            <el-option label="审核通过" :value="0" />
+            <el-option label="审核驳回" :value="1" />
+            <el-option label="等待审核" :value="2" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="商品状态">
+          <el-select v-model="searchForm.status" placeholder="请选择审核状态">
+            <el-option label="下架" :value="1"></el-option>
+            <el-option label="上架" :value="0"></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button icon='el-icon-search' size="mini" type="primary" @click="handleCheck">查询</el-button>
+          <el-button icon='el-icon-refresh' size="mini" @click="handleReset">重置</el-button>
+          <el-button type="primary" icon="el-icon-refresh" round @click="addDialogFormVisible = true">新增
+          </el-button>
+        </el-form-item>
+      </el-form>
+
+      <!--表格数据-->
+      <div>
+        <el-table v-loading="ctrl.loading" size="medium" :data="tableData" stripe border style="width: 100%">
+          <el-table-column prop="cardfront" label="商品图片" width="122" fixed header-align="center" align="center">
+            <template slot-scope="scope">
+              <img :src="scope.row.img" width="100" height="60">
+            </template>
+          </el-table-column>
+          <el-table-column prop="gname" label="商品名称" align="center" width="100px">
+          </el-table-column>
+          <el-table-column prop="totalnum" label="库存量" align="center" width="100px">
+          </el-table-column>
+          <el-table-column prop="stocknum" label="剩余量" align="center" width="100px">
+          </el-table-column>
+          <el-table-column prop="sortname" label="商品分类" align="center" width="100px">
+          </el-table-column>
+          <el-table-column prop="remark" label="商品描述" align="center" width="100px">
+          </el-table-column>
+          <el-table-column prop="unitname" label="商品单位" align="center" width="100px">
+          </el-table-column>
+          <el-table-column prop="brandname" label="商品品牌" align="center" width="100px">
+          </el-table-column>
+          <el-table-column prop="depositname" label="储藏方式" align="center" width="100px">
+          </el-table-column>
+          <el-table-column prop="expirationtime" label="保质期" align="center" width="100px">
+          </el-table-column>
+          <el-table-column prop="checkContent" label="驳回理由" align="center" width="100px">
+          </el-table-column>
+          <el-table-column prop="price" label="商品价格" align="center" width="100px">
+            <template slot-scope="scope">
+              {{ scope.row.price }}元
+            </template>
+          </el-table-column>
+          <el-table-column prop="state" label="审核状态" align="center" fixed="right" width="100px">
+            <template slot-scope="scope">
+              <el-button v-if="scope.row.state === 0" type="success" plain>审核通过</el-button>
+              <el-button v-if="scope.row.state === 1" type="danger" plain>审核驳回</el-button>
+              <el-button v-if="scope.row.state === 2" type="warning" plain>等待审核</el-button>
+            </template>
+          </el-table-column>
+          <el-table-column prop="status" label="商品状态" align="center" fixed="right" width="70px">
+            <template slot-scope="scope">
+              <el-button v-if="scope.row.status === 0" type="success" plain>上架</el-button>
+              <el-button v-if="scope.row.status === 1" type="danger" plain>下架</el-button>
+            </template>
+          </el-table-column>
+          <el-table-column fixed="right" label="操作" align="center" width="200px">
+            <template slot-scope="scope">
+              <ul class="list-item-actions">
+                <li>
+                  <el-button type="primary" @click="updateGoods(scope.row)" size="mini">修改</el-button>
+                  <el-button type="danger" @click="deleteGoods(scope.row.id)" size="mini">删除
+                  </el-button>
+                  <el-button v-if="scope.row.status === 1 && scope.row.state === 0" type="success"
+                    @click="changeStatus(scope.row)" size="mini">上架</el-button>
+                  <el-button v-if="scope.row.status === 1 && scope.row.state !== 0" disabled type="success"
+                    size="mini">上架</el-button>
+                  <el-button v-if="scope.row.status === 0" type="warning" @click="changeStatus(scope.row)"
+                    size="mini">下架</el-button>
+                </li>
+              </ul>
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <el-divider><i class="el-icon-moon-night"></i></el-divider>
+        <div class="mgt20">
+          <el-pagination background style="float: right;margin-top: 20px; margin-bottom: 22px"
+            @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
+            :page-sizes="[1, 5, 10, 15]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper"
+            :total="total">
+          </el-pagination>
+        </div>
+
       </div>
+
+      <!--添加的弹出层-->
+      <el-dialog title="商品信息" :visible.sync="addDialogFormVisible">
+        <el-form :model="addForm" style="width: 400px;">
+          <el-form-item label="商品名称" label-width="80px">
+            <el-input v-model="addForm.gname"></el-input>
+          </el-form-item>
+          <el-form-item label="商品图片" label-width="80px">
+            <el-upload style="float: left;margin-right: 40px" class="avatar-uploader"
+              action="http://localhost:7500/syssystem/file/upload" :show-file-list="false"
+              :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+              <img v-if="imgUrl" v-model="addForm.img" :src="imgUrl" class="avatar" alt="">
+              <i v-else class="el-icon-plus avatar-uploader avatar-uploader-icon"
+                style="border-radius: 6px;border: 1px dashed #d9d9d9;"></i>
+            </el-upload>
+          </el-form-item>
+          <el-form-item label="商品描述" label-width="80px">
+            <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="addForm.remark">
+            </el-input>
+          </el-form-item>
+          <el-form-item label="商品单位" label-width="80px">
+            <el-select v-model="addForm.unitid" placeholder="请选择">
+              <el-option v-for="item in unitForm" :label="item.unitname" :value="item.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="商品品牌" label-width="80px">
+            <el-select v-model="addForm.brandid" placeholder="请选择">
+              <el-option v-for="item in brandForm" :label="item.brandname" :value="item.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="商品类别" label-width="80px">
+            <el-select v-model="addForm.sortid" placeholder="请选择">
+              <el-option v-for="item in SortForm" :label="item.sortname" :value="item.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="储藏方式" label-width="80px">
+            <el-select v-model="addForm.depositid" placeholder="请选择">
+              <el-option v-for="item in depositForm" :label="item.depositname" :value="item.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="保质期" label-width="80px">
+            <el-date-picker value-format="yyyy-MM-dd hh:mm:ss" v-model="addForm.expirationtime" type="datetime"
+              placeholder="选择日期时间">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="商品价格" label-width="80px">
+            <el-input-number v-model="addForm.price" @change="handleChange" :min="1" :max="10" label="描述文字">
+            </el-input-number>
+            <span style="padding-left: 20px">(单位:元)</span>
+          </el-form-item>
+          <el-form-item label="商品库存" label-width="80px">
+            <el-input-number v-model="addForm.totalnum" @change="handleChange" :min="1" label="描述文字">
+            </el-input-number>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="addDialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="addGoods">确 定</el-button>
+        </div>
+      </el-dialog>
+
+
+
+      <!--修改的弹出层-->
+      <el-dialog title="商品信息" :visible.sync="updateDialogFormVisible">
+        <el-form :model="updateForm" style="width: 400px;">
+          <el-form-item label="商品名称" label-width="80px">
+            <el-input v-model="updateForm.gname"></el-input>
+          </el-form-item>
+          <el-form-item label="商品图片" label-width="80px">
+            <el-upload style="float: left;margin-right: 40px" class="avatar-uploader"
+              action="http://localhost:7500/syssystem/file/upload" :show-file-list="false"
+              :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+              <img v-if="imgUrl" v-model="updateForm.img" :src="imgUrl" class="avatar" alt="">
+              <i v-else class="el-icon-plus avatar-uploader avatar-uploader-icon"
+                style="border-radius: 6px;border: 1px dashed #d9d9d9;"></i>
+            </el-upload>
+          </el-form-item>
+          <el-form-item label="商品描述" label-width="80px">
+            <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="updateForm.remark">
+            </el-input>
+          </el-form-item>
+          <el-form-item label="商品单位" label-width="80px">
+            <el-select v-model="updateForm.unitid" placeholder="请选择">
+              <el-option v-for="item in unitForm" :label="item.unitname" :value="item.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="商品品牌" label-width="80px">
+            <el-select v-model="updateForm.brandid" placeholder="请选择">
+              <el-option v-for="item in brandForm" :label="item.brandname" :value="item.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="商品类别" label-width="80px">
+            <el-select v-model="updateForm.sortid" placeholder="请选择">
+              <el-option :label="updateForm.sort.sortname" :value="updateForm.sortid">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="储藏方式" label-width="80px">
+            <el-select v-model="updateForm.depositid" placeholder="请选择">
+              <el-option v-for="item in depositForm" :label="item.depositname" :value="item.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="保质期" label-width="80px">
+            <el-date-picker value-format="yyyy-MM-dd hh:mm:ss" v-model="updateForm.expirationtime" type="datetime"
+              placeholder="选择日期时间">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="商品价格" label-width="80px">
+            <el-input-number v-model="updateForm.price" @change="handleChange" :min="1" :max="10"
+              label="描述文字"></el-input-number>
+            <span style="padding-left: 20px">(单位:元)</span>
+          </el-form-item>
+          <el-form-item label="商品库存" label-width="80px">
+            <el-input-number v-model="updateForm.totalnum" @change="handleChange" :min="1" label="描述文字">
+            </el-input-number>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="updateDialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="updateConfirm">确 定</el-button>
+        </div>
+      </el-dialog>
+    </el-card>
+  </div>
 </template>
 
 <script>
@@ -265,8 +269,7 @@ export default {
         status: 0
       },
 
-      SortForm: {
-      },
+      SortForm: {},
 
       // 页面控制数据，例如形式弹窗，显示加载中等
       ctrl: {
@@ -310,7 +313,7 @@ export default {
       })
     },
     updateGoods(row) {
-      this.imgUrl = row.img
+      // this.imgUrl = row.img
       this.updateDialogFormVisible = true;
       this.updateForm = row;
     },
@@ -387,8 +390,9 @@ export default {
       this.$http.post("syssystem/g-goods/updateStatus", this.statusForm).then(res => {
         if (res.data.code === 2000) {
           this.$message.success(res.data.msg);
-          this.init();
+
           this.statusForm = {}
+          this.init();
         }
       })
     },
@@ -449,14 +453,18 @@ export default {
     init() {
       var that = this;
       console.log(this.searchForm);
-      this.$http.post(`/syssystem/g-goods/selectAllGoodsInfoByBusinessId/${this.currentPage}/${this.pageSize}/${sessionStorage.getItem("bisid")}`, this.searchForm).then(function (resp) {
-        if (resp.data.code === 2000) {
-          console.log(that);
-          that.tableData = resp.data.data.records;
-          that.total = resp.data.data.total;
-          console.log(that.tableData);
-        }
-      })
+      this.$http.post(
+        `/syssystem/g-goods/selectAllGoodsInfoByBusinessId/${this.currentPage}/${this.pageSize}/${sessionStorage.getItem("bisid")}`,
+        this.searchForm).then(function (resp) {
+          if (resp.data.code === 2000) {
+            console.log();
+            that.tableData = resp.data.data.records;
+            that.total = resp.data.data.total;
+            //that.addForm.sortid = that.tableData[0].sortid
+            //that.sortname= that.tableData[0].sort.sortname
+            console.log(that.tableData);
+          }
+        })
     },
 
     //删除

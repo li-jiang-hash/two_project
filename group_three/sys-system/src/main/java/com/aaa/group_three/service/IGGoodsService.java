@@ -22,4 +22,5 @@ public interface IGGoodsService extends IService<GGoods> {
 
     Map<String, Object> getGoodsByGoodsid(Integer id);
 
+    Page getAll(PageInfo pageInfo, String id, GGoods goods);
 }

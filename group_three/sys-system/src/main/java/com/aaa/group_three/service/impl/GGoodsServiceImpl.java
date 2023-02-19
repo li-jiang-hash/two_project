@@ -39,4 +39,9 @@ public class GGoodsServiceImpl extends ServiceImpl<GGoodsMapper, GGoods> impleme
         return goodsMapper.getGoodsByGoodsid(id);
     }
 
+    @Override
+    public Page getAll(PageInfo pageInfo, String id, GGoods goods) {
+        return goodsMapper.getAll(pageInfo,id,goods);
+    }
+
 }
