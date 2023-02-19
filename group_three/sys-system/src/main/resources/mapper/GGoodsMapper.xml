@@ -21,7 +21,7 @@
 
     <select id="getGoodsAll" resultType="map">
         select g.id,g.img,g.gname,g.remark,g.price from b_business_info b,g_goods g
-        where b.id = g.bid and b.id = #{id} and g.status = 0
+        where b.id = g.bid and b.id = #{id} and g.status = 0 and g.state = 0
     </select>
 
     <select id="getGoodsByGoodsid" resultType="java.util.Map">
@@ -30,6 +30,24 @@
             inner join b_business_info b on b.id = g.bid
             left join g_unit u on u.id = g.unitid
         where g.id = #{id}
+    </select>
+
+    <select id="getAll" resultType="java.util.Map">
+        select g.id, g.img, g.gname, st.total_num totalnum, st.residue stocknum, s.sortname,
+               g.remark,u.unitname, b.brandname, d.depositname, g.expirationtime, g.check_content checkContent,
+               g.price, g.state,g.status
+        from g_goods g, g_sort s, o_stock st, g_deposit d ,g_unit u ,g_brand b
+        where g.sortid = s.id and g.id = st.goods_id and g.depositid = d.id and g.unitid = u.id
+          and g.brandid = b.id and g.bid = #{id} and g.isdeleted = 0
+        <if test="goods.gname!=null and goods.gname!=''">
+            and g.gname like concat('%',#{goods.gname},'%')
+        </if>
+        <if test="goods.state!=null">
+            and g.state = #{goods.state}
+        </if>
+        <if test="goods.status!=null">
+            and g.status = #{goods.status}
+        </if>
     </select>
 
 </mapper>

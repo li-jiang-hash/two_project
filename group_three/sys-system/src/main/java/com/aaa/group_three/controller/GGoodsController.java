@@ -7,15 +7,11 @@ import com.aaa.group_three.service.IGGoodsService;
 import com.aaa.group_three.service.IOStockService;
 import com.aaa.util.PageInfo;
 import com.aaa.util.Result;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import lombok.val;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -72,20 +68,8 @@ public class GGoodsController {
     //查询所有商品
     @PostMapping("selectAllGoodsInfoByBusinessId/{currentPage}/{pageSize}/{id}")
     public Result getAll(@PathVariable Integer currentPage, @PathVariable Integer pageSize, @PathVariable String id, @RequestBody GGoods goods) {
-        QueryWrapper queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("bid", id);
-        queryWrapper.eq("status", 0);
-        queryWrapper.eq("isdeleted", 0);
-        System.out.println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG = " + goods);
-        queryWrapper.like(goods.getGname() != null, "gname", goods.getGname());
-        queryWrapper.like(goods.getState() != null, "state", goods.getState());
-        queryWrapper.like(goods.getStatus() != null, "status", goods.getStatus());
-
-        List list = goodsService.list(queryWrapper);
-        System.out.println("list = " + list);
-        IPage page = new Page(currentPage, pageSize);
-        page.setRecords(list);
-        page.setTotal(list.size());
+        PageInfo pageInfo = new PageInfo(currentPage, pageSize);
+        Page page = goodsService.getAll(pageInfo,id,goods);
         return new Result(page);
     }
 
@@ -95,10 +79,6 @@ public class GGoodsController {
     //添加商品
     @PostMapping("addGoods")
     public Result AddGoods(@RequestBody GGoods goods) {
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa = " + goods);
-        goods.setState(2);
-        goods.setStatus(0);
-        goods.setIsdeleted(0);
         goods.setAddtime(LocalDateTime.now());
         boolean save = goodsService.save(goods);
         OStock oStock = new OStock();

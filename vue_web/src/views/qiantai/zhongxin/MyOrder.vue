@@ -194,15 +194,16 @@
 			//微信支付
 			payByWx() {
 				var that = this;
-				this.D.orderNum = this.code;
-				this.D.money = this.totalmoney
-				this.D.describe = "aaa"
-				this.$http.post("syssystem/wx/getNativeCodeUrl", qs.stringify(this.D)).then(function(resp) {
-					if (resp.data.code === 2000) {
+				that.D.orderNum = this.code;
+				that.D.money = this.totalmoney
+				that.D.describe = "aaa"
+				that.$http.post("syssystem/wx/getNativeCodeUrl", qs.stringify(this.D)).then(function(res) {
+					if (res.data.code === 2000) {
+						console.log(res.data.data.code_url)
+						that.payResult.codeUrl = res.data.data.code_url;
+						that.payResult.price = res.data.data.price;
+						that.payResult.code = res.data.data.orderNo;
 						that.dialogVisible = true
-						this.payResult.codeUrl = res.data.data.code_url;
-						that.payResult.price = resp.data.data.price;
-						that.payResult.code = resp.data.data.orderNo;
 						//定时器
 						that.timer = setInterval(() => {
 							that.queryPayStatus();
@@ -211,9 +212,9 @@
 						that.$message.error(resp.data.msg)
 					}
 					if (resp.data.code === 7000) {
-						that.$message.error(resp.data.msg);
-						that.dialogVisible3 = false
-						that.initOrderList();
+						this.$message.error(resp.data.msg);
+						this.dialogVisible3 = false
+						this.initOrderList();
 
 					}
 
@@ -343,25 +344,25 @@
 			},
 			queryPayStatus() {
 				//继续支付
-				var that = this;
-				this.$http.get("order/payLog/paystatus/" + this.payResult.code).then(r => {
-					if (r.data.code === 2000) {
-						clearInterval(this.timer);
-						//如果支付成功，清除定时器
-						that.$message.success(r.data.msg);
-						//消除定时器
-						clearInterval(this.timer);
-						that.timer = null;
-						that.dialogVisible = false;
-						that.dialogVisible2 = false;
-						that.dialogVisible3 = false;
-						//刷新界面
-						that.initOrderList();
-						//that.$router.go(0);
-						//跳转到课程详情页面观看视频
-						// that.$router.push({path: '/DetailId/:id' + that.payResult.course_id})
-					}
-				})
+				// var that = this;
+				// this.$http.get("order/payLog/paystatus/" + this.payResult.code).then(r => {
+				// 	if (r.data.code === 2000) {
+				// 		clearInterval(this.timer);
+				// 		//如果支付成功，清除定时器
+				// 		that.$message.success(r.data.msg);
+				// 		//消除定时器
+				// 		clearInterval(this.timer);
+				// 		that.timer = null;
+				// 		that.dialogVisible = false;
+				// 		that.dialogVisible2 = false;
+				// 		that.dialogVisible3 = false;
+				// 		//刷新界面
+				// 		that.initOrderList();
+				// 		//that.$router.go(0);
+				// 		//跳转到课程详情页面观看视频
+				// 		// that.$router.push({path: '/DetailId/:id' + that.payResult.course_id})
+				// 	}
+				// })
 			},
 			pay(item) {
 				this.payData = item;
