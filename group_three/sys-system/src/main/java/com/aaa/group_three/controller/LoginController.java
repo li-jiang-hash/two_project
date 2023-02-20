@@ -31,7 +31,6 @@ public class LoginController {
 
     @GetMapping("/getUserByName/{username}")
     public EEmpInfo getByUserName(@PathVariable String username) {
-        System.out.println("username = " + username);
         QueryWrapper<EEmpInfo> queryWrapper = new QueryWrapper();
         queryWrapper.eq("telephone", username);
         EEmpInfo one = empInfoService.getOne(queryWrapper);

@@ -37,19 +37,6 @@ public class TbHeadNavController {
     }
 
 
-//    /**
-//     * 添加角色信息
-//     * @param headNav
-//     * @return
-//     */
-//    @PostMapping("insertEmp")
-//    public Result addEmp(TbHeadNav headNav){
-//        //saveOrUpdate  添加或修改
-//        //role  对象有id的值的时候 修改
-//        //id没有值的时候 添加
-//        return new Result(headNavService.saveOrUpdate(headNav));
-//    }
-
     /**
      * 首页导航栏
      * @return
@@ -76,7 +63,6 @@ public class TbHeadNavController {
     @PostMapping("insertNavigation")
     public Result addheadNav(TbHeadNav headNav){
         boolean b=headNavService.saveOrUpdate(headNav);
-        System.out.println("headNav的添加"+headNav);
         return new Result(b);
     }
 

@@ -3,13 +3,8 @@ package com.aaa.group_three.controller;
 import com.aaa.entity.OOrder;
 import com.aaa.entity.Order;
 import com.aaa.group_three.service.PayService;
-import com.aaa.group_three.service.impl.PayServiceImpl;
 import com.aaa.util.Result;
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -46,9 +41,7 @@ public class WxController {
     public Result getNativeCodeUrl(@ModelAttribute Order order) {
         String num=Integer.toString((int) ((Math.random() * 9 + 1) * 100000));;
         order.setOrderNum(num+"");
-        System.out.println("orderorderorderorderorderorder11111111111111 = " + order);
         Map map = payService.getNativeByOrder(order);
-        System.out.println("mapmapmapmapmapmapmapmapmapmapmapmap = " + map);
         return new Result(map);
     }
 }

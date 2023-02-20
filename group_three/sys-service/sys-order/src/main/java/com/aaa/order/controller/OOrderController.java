@@ -84,14 +84,12 @@ public class OOrderController {
 
     @PostMapping("settlementOne")
     public Result settlement(@RequestBody OOrder order){
-        System.out.println("order = " + order);
         String s = UUID.randomUUID().toString();
         order.setCode(s);
         order.setOrderdate(LocalDateTime.now());
         boolean b = orderService.saveOrUpdate(order);
         Result result=new Result<>();
         if (b){
-            System.out.println("order.getCode() = " + s);
             result.setData(order);
             result.setMsg("添加订单成功了");
             return result;
@@ -105,7 +103,6 @@ private IGGoodsService igGoodsService;
     //订单管理查询订单
     @PostMapping("selectAll/{bid}/{pageCurrent}/{pageSize}")
     public Result GoodsOrder(@PathVariable String bid,@PathVariable Integer pageCurrent, @PathVariable Integer pageSize,@RequestBody OOrder order){
-        System.out.println("pageCurrent = " +":"+bid+ pageCurrent+":"+pageSize+":"+order);
 //        orderService.list();
         QueryWrapper queryWrapper1 = new QueryWrapper<>();
         queryWrapper1.eq("gname",order.getGname());
@@ -117,7 +114,6 @@ private IGGoodsService igGoodsService;
         queryWrapper.like(order.getSend() != null ,"send",order.getSend());
         if(one !=null) queryWrapper.like("goodsid",one.getId());
         List list = orderService.list(queryWrapper);
-        System.out.println("list = " + list);
         IPage page = new Page(pageCurrent, pageSize);
         page.setRecords(list);
         page.setTotal(list.size());
@@ -130,7 +126,6 @@ private IGGoodsService igGoodsService;
         order.setId(id);
         order.setCode(code);
         order.setSend(1);
-        System.out.println("order11111111111111111111111 = " + order);
         orderService.updateById(order);
         Result result=new Result<>();
         if (true){

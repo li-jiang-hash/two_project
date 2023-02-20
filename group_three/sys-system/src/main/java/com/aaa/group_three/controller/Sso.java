@@ -36,7 +36,6 @@ public class Sso {
     private String bucketName;
     @PostMapping("/upload")
     public Result upload(@RequestParam("file") MultipartFile file){
-        System.out.println(file);
         //获取原始文件名
         String filename = file.getOriginalFilename();
         // Endpoint以华东1（杭州）为例，其它Region请按实际情况填写。

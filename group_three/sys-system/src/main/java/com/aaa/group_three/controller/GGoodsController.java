@@ -95,13 +95,11 @@ public class GGoodsController {
     public Result AddGoods(@RequestBody GGoods goods) {
         goods.setAddtime(LocalDateTime.now());
         boolean save = goodsService.save(goods);
-        System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCc = " + save);
         OStock oStock = new OStock();
         oStock.setPrice(goods.getPrice());
         oStock.setTotalNum(goods.getTotalnum());
         oStock.setGoodsId(goods.getId());
         boolean save1 = ioStockService.save(oStock);
-        System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS = " + save1);
         return new Result();
     }
 

@@ -43,7 +43,6 @@ public class RegisterController {
         QueryWrapper<UUserInfo> queryWrapper = new QueryWrapper();
         queryWrapper.eq("telephone", phone);
         int list = iuUserInfoService.list(queryWrapper).size();
-        System.out.println("list = " + list);
         if (list == 0) {
             UUserInfo uUserInfo = new UUserInfo();
             System.out.println(LocalDateTime.now());
@@ -82,18 +81,14 @@ public class RegisterController {
     //手机号发送验证码
     @GetMapping({"/noteByPhone/{phone}"})
     public Result KeyCode(@PathVariable String phone) throws Exception {
-        System.out.println("phone = " + phone);
         String RCode = redisTemplate.opsForValue().get(phone);
-        System.out.println("RedisCode = " + RCode);
         if (!StringUtils.isEmpty(RCode)) {
-            System.out.println("验证码已存在：" + RCode);
             return new Result(RCode);
         } else {
             String code = Integer.toString((int) ((Math.random() * 9 + 1) * 100000));
             boolean isSend = Send.SendCode(AccessKey_ID, AccessKey_Secret, templateCode, phone, code);
             if (isSend) {
                 redisTemplate.opsForValue().set(phone, code, 300L, TimeUnit.SECONDS);
-                System.out.println("发送成功：" + code);
                 return new Result(code);
             } else {
                 return new Result();
