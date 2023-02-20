@@ -7,6 +7,7 @@
              inner join g_goods g on g.bid = b.id
              left join tb_zone_business z on z.bid = b.id
              left join o_stock s on s.goods_id = g.id
+        where b.status = 0 and b.state = 0
         group by z.bid, z.zone_id, b.bicon, b.sname ,z.sort
         order by z.sort
     </select>
