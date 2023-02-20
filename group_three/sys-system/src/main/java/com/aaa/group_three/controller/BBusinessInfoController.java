@@ -1,10 +1,8 @@
 package com.aaa.group_three.controller;
 
 import com.aaa.entity.BBusinessInfo;
-import com.aaa.entity.EEmpInfo;
 import com.aaa.entity.TbZoneBusiness;
 import com.aaa.group_three.service.impl.BBusinessInfoServiceImpl;
-import com.aaa.group_three.service.impl.EEmpInfoServiceImpl;
 import com.aaa.group_three.service.impl.TbZoneBusinessServiceImpl;
 import com.aaa.util.DateUtil;
 import com.aaa.util.PageInfo;
@@ -16,10 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * <p>
@@ -48,7 +43,6 @@ public class BBusinessInfoController {
     //审核操作
     @PostMapping("shenhe")
     public Result getById(@RequestBody BBusinessInfo bBusinessInfo) {
-        System.out.println("111111111111111111111111111111111 = " + bBusinessInfo);
         UpdateWrapper<BBusinessInfo> wrapper = new UpdateWrapper<>();
         wrapper.set("status", bBusinessInfo.getStatus());
         wrapper.set("reason", bBusinessInfo.getReason());
@@ -109,7 +103,6 @@ public class BBusinessInfoController {
     }
     @PostMapping("/updatePassword/{phone}/{newPassword}")
     public Result UpdateEmp(@PathVariable String phone,@PathVariable String newPassword){
-        System.out.println("phone = " + phone);
         QueryWrapper queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("telephone",phone);
         BBusinessInfo one = bBusinessInfoService.getOne(queryWrapper);

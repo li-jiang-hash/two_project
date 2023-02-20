@@ -61,7 +61,6 @@ public class TbZoneController {
         TbZone zone=new TbZone();
         zone.setId(id);
         zone.setIsDisable(isDisable);
-        System.out.println("1215jhbjb"+zone);
         return new Result(zoneService.updateById(zone));
     }
 
@@ -81,13 +80,11 @@ public class TbZoneController {
      */
     @PostMapping("addPrefecture")
     public Result addZone(TbZone zone){
-        System.out.println("155nnnnnnnnnnnnnnnnnnn"+zone);
         return new Result( zoneService.save(zone));
     }
 
     @PostMapping("updatePrefecture")
     public Result updZone(TbZone zone){
-        System.out.println("888nnnnnnnnnnnnnnnnnnn"+zone);
         return new Result( zoneService.updateById(zone));
     }
 

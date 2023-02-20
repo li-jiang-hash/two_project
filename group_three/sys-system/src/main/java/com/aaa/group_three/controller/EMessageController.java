@@ -32,8 +32,7 @@ public class EMessageController {
      */
     @PostMapping
     public Result getAllMessage(PageInfo page, @RequestParam(defaultValue = "1") String startTime,String endTime){
-        System.out.println("startTime = " + startTime);
-        System.out.println("startTime = " + (startTime.equals("1")));
+
         Page page1 = messageService.getPageData(page,startTime,endTime);
         return new Result(page1);
     }
@@ -71,7 +70,6 @@ public class EMessageController {
      */
     @DeleteMapping("delmessage/{id}")
     public Result delMessage(@PathVariable Integer id){
-        System.out.println("jkdvhjk="+id);
 //        messageService.removeById()
         return new Result(messageService.removeById(id));
     }

@@ -80,14 +80,12 @@ public class OOrderController {
 
     @PostMapping("settlementOne")
     public Result settlement(@RequestBody OOrder order){
-        System.out.println("order = " + order);
         String s = UUID.randomUUID().toString();
         order.setCode(s);
         order.setOrderdate(LocalDateTime.now());
         boolean b = orderService.saveOrUpdate(order);
         Result result=new Result<>();
         if (b){
-            System.out.println("order.getCode() = " + s);
             result.setData(order);
             result.setMsg("添加订单成功了");
             return result;

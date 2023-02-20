@@ -14,7 +14,6 @@ import javax.annotation.Resource;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 
 @RestController
@@ -88,7 +87,6 @@ public class EEmpInfoController {
      */
     @PostMapping("/updatePassword/{phone}/{newPassword}")
     public Result UpdateEmp(@PathVariable String phone,@PathVariable String newPassword){
-        System.out.println("phone = " + phone);
         QueryWrapper queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("telephone",phone);
         EEmpInfo one = empInfoService.getOne(queryWrapper);

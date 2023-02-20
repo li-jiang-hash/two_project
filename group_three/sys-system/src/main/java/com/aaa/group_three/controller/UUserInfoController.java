@@ -1,7 +1,6 @@
 package com.aaa.group_three.controller;
 
 
-import com.aaa.entity.EEmpInfo;
 import com.aaa.entity.UUserInfo;
 import com.aaa.group_three.service.IUUserInfoService;
 import com.aaa.util.PageInfo;
@@ -34,7 +33,6 @@ public class UUserInfoController {
     public UUserInfo getUser(@PathVariable String username){
         QueryWrapper<UUserInfo> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("uname",username);
-        System.out.println(queryWrapper);
         return userInfoService.getOne(queryWrapper);
     }
     //根据用户手机号获取信息
@@ -43,7 +41,6 @@ public class UUserInfoController {
         QueryWrapper queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("telephone",telephone);
         UUserInfo one = userInfoService.getOne(queryWrapper);
-        System.out.println("one = " + one);
         return one;
     }
     //添加
