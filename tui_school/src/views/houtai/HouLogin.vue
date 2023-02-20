@@ -59,7 +59,7 @@ export default {
       smdl: true,
       //登录信息都是一起发送过去的
       loginFormData: {
-        telephone: "110",
+        telephone: "15632102310",
         password: "123456",
         loginType: "EMP_PHONE",
       },

@@ -5,6 +5,7 @@ import com.aaa.entity.TbArticle;
 import com.aaa.group_three.service.ITbArticleService;
 import com.aaa.util.Result;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,8 +65,10 @@ public class TbArticleController {
         article.setGmtCreate(format);
         article.setGmtModified(format);
         article.setIsDeleted(0);
-        return new Result(articleService.updateById(article));
+        return new Result(articleService.saveOrUpdate(article));
     }
+
+
 
 }
 
