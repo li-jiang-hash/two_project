@@ -93,115 +93,116 @@
                         align="center"
                         label="操作">
                     <template slot-scope="scope">
-                        <el-button type="primary" size="mini" v-if="scope.row.send===0" @click="sendConfirm(scope.row.code)">点我已发货</el-button>
-                    </template>
-                </el-table-column>
-
-
-            </el-table>
-            <el-divider><i class="el-icon-moon-night"></i></el-divider>
-            <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page="currentPage"
-                    style="float: right;margin-top: 20px; margin-bottom: 22px"
-                    :page-sizes="[5, 10, 15, 20]"
-                    :page-size="pageSize"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="allTotal">
-            </el-pagination>
-        </el-card>
-
-
-    </div>
+                                    <el-button type="primary" size="mini" v-if="scope.row.send === 0" @click="sendConfirm(scope.row)">点我已发货</el-button>
+                                </template>
+                            </el-table-column>
+            
+            
+                        </el-table>
+                        <el-divider><i class="el-icon-moon-night"></i></el-divider>
+                        <el-pagination
+                                @size-change="handleSizeChange"
+                                @current-change="handleCurrentChange"
+                                :current-page="currentPage"
+                                style="float: right;margin-top: 20px; margin-bottom: 22px"
+                                :page-sizes="[5, 10, 15, 20]"
+                                :page-size="pageSize"
+                                layout="total, sizes, prev, pager, next, jumper"
+                                :total="allTotal">
+                        </el-pagination>
+                    </el-card>
+            
+            
+                </div>
 </template>
 
 <script>
-    export default {
-        name: "UserList",
-        created() {
-            this.initTable();
-            this.getRole();
-        },
-        data() {
-            return {
-                rolenames: [],
-                //控制权限的弹框显示
-                visible: false,
+export default {
+    name: "UserList",
+    created() {
+        this.initTable();
+        this.getRole();
+    },
+    data() {
+        return {
+            rolenames: [],
+            //控制权限的弹框显示
+            visible: false,
 
-                checkAll: false,    //全选
-                checkedRoles: [],   //用户具有的权限
-                roles: [],          //查询具有的所有权限
-                allRoles: [],
-                userId: "",          //用户id
-                isIndeterminate: true,
+            checkAll: false,    //全选
+            checkedRoles: [],   //用户具有的权限
+            roles: [],          //查询具有的所有权限
+            allRoles: [],
+            userId: "",          //用户id
+            isIndeterminate: true,
 
-                roleFormData: {  //权限搜索框的内容
-                    roleName: "",
-                },
+            roleFormData: {  //权限搜索框的内容
+                roleName: "",
+            },
 
-                //当前页面--》page
-                roleCurrentPage: 1,
-                //每页几条--》limit
-                rolePageSize: 5,
-                //总条数
-                roleAllTotal: 0,
+            //当前页面--》page
+            roleCurrentPage: 1,
+            //每页几条--》limit
+            rolePageSize: 5,
+            //总条数
+            roleAllTotal: 0,
 
 
-                idlist: [],
+            idlist: [],
 
-                //新增用户的表单元素判断
-                addFormRules: {
-                    ename: [
-                        {required: true, message: '用户名不能为空'},
-                        {min: 2, max: 10, message: "账号的长度[2~10]", trigger: "blur"},
-                    ],
-                },
-
-                //控制修改框的是否显示
-                updateUserDialog: false,
-                //修改用户的表单数据
-                updateUserFormData: {},
-                //修改的表单校验规则
-                updateUserFormRule: {},
-
-                //当前页面--》page
-                currentPage: 1,
-                //每页几条--》limit
-                pageSize: 5,
-                //总条数
-                allTotal: 0,
-                tableFormName: '',
-                tableData: [
-                    {
-                        rid: "",
-                    }
+            //新增用户的表单元素判断
+            addFormRules: {
+                ename: [
+                    { required: true, message: '用户名不能为空' },
+                    { min: 2, max: 10, message: "账号的长度[2~10]", trigger: "blur" },
                 ],
-                formData: {
-                    gname: "",
-                    send:null,
-                },
+            },
 
-                //控制添加弹出对话框是否显示
-                dialogFormVisible: false,
-                //添加按钮弹出层表单数据
-                form: {
-                    ename: ''
-                },
+            //控制修改框的是否显示
+            updateUserDialog: false,
+            //修改用户的表单数据
+            updateUserFormData: {},
+            //修改的表单校验规则
+            updateUserFormRule: {},
 
-            }
+            //当前页面--》page
+            currentPage: 1,
+            //每页几条--》limit
+            pageSize: 5,
+            //总条数
+            allTotal: 0,
+            tableFormName: '',
+            tableData: [
+                {
+                    rid: "",
+                }
+            ],
+            formData: {
+                gname: "",
+                send: null,
+            },
 
-        },
-        methods: {
+            //控制添加弹出对话框是否显示
+            dialogFormVisible: false,
+            //添加按钮弹出层表单数据
+            form: {
+                ename: ''
+            },
 
-            //确认发货按钮
-            sendConfirm(code) {
-                this.$confirm('确认将发货状态更改为已发货吗', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.$http.post("order/order/updateSend?code="+code).then(res=>{
+        }
+
+    },
+    methods: {
+
+        //确认发货按钮
+        sendConfirm(row) {
+            console.log(row);
+            this.$confirm('确认将发货状态更改为已发货吗', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$http.post("sys-order/o-order/updateSend/" + row.id + "/" + row.code).then(res => {
                         if (res.data.code===2000){
                             this.$message.success(res.data.msg);
                             this.initTable()
@@ -251,9 +252,13 @@
             //加载表格数据
             initTable() {
                 var that = this;
-                this.$http.post("/order/order/selectAll?currentPage=" + this.currentPage + "&pageSize=" + this.pageSize, this.formData).then(function (resp) {
-                    that.tableData = resp.data.data.tableList;
-                    that.allTotal = resp.data.data.total;
+
+            this.$http.post("/sys-order/o-order/selectAll/" + sessionStorage.getItem("bisid") + "/" + this.currentPage + "/" + this.pageSize, this.formData).then(function (resp) {
+                console.log(resp);
+                that.tableData = resp.data.data.records
+                    ;
+
+                that.allTotal = resp.data.data.total;
                 })
             },
 

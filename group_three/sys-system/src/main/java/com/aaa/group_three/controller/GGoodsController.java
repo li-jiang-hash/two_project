@@ -68,6 +68,20 @@ public class GGoodsController {
     //查询所有商品
     @PostMapping("selectAllGoodsInfoByBusinessId/{currentPage}/{pageSize}/{id}")
     public Result getAll(@PathVariable Integer currentPage, @PathVariable Integer pageSize, @PathVariable String id, @RequestBody GGoods goods) {
+//        QueryWrapper queryWrapper = new QueryWrapper<>();
+//        queryWrapper.eq("bid", id);
+//        queryWrapper.eq("status", 0);
+//        queryWrapper.eq("isdeleted", 0);
+//        queryWrapper.like(goods.getGname() != null, "gname", goods.getGname());
+//        queryWrapper.like(goods.getState() != null, "state", goods.getState());
+//        queryWrapper.like(goods.getStatus() != null, "status", goods.getStatus());
+//
+//        List list = goodsService.list(queryWrapper);
+//        System.out.println("list = " + list);
+//        IPage page = new Page(currentPage, pageSize);
+//        page.setRecords(list);
+//        page.setTotal(list.size());
+
         PageInfo pageInfo = new PageInfo(currentPage, pageSize);
         Page page = goodsService.getAll(pageInfo,id,goods);
         return new Result(page);
@@ -85,7 +99,7 @@ public class GGoodsController {
         oStock.setPrice(goods.getPrice());
         oStock.setTotalNum(goods.getTotalnum());
         oStock.setGoodsId(goods.getId());
-        ioStockService.save(oStock);
+        boolean save1 = ioStockService.save(oStock);
         return new Result();
     }
 
